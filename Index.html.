@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffe0e5">
+  <title>Destinya</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 20px;
+      display: grid;
+      place-items: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(145deg,#fff0ed,#ffd6df,#ffe8d6);
+      color: #593b49;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 430px;
+      padding: 30px 24px;
+      background: white;
+      border-radius: 28px;
+      box-shadow: 0 12px 35px #b76b7b30;
+      text-align: center;
+    }
+
+    h1 { color: #d65c82; font-size: 40px; }
+    h2 { color: #bd5275; }
+    .heart { font-size: 55px; }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0;
+      border: 1px solid #f2c2d0;
+      border-radius: 14px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      margin: 8px 0;
+      border: 0;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .primary { background: #d65c82; color: white; }
+    .secondary { background: #ffe1e8; color: #a94368; }
+    .hidden { display: none; }
+    #message { overflow-wrap: anywhere; color: #a94368; }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+
+    <section id="home">
+      <div class="heart">💕</div>
+      <h1>Destinya</h1>
+      <p>De belles rencontres et de nouvelles amitiés.</p>
+
+      <button class="primary" onclick="showPage('register')">
+        Créer un compte
+      </button>
+
+      <button class="secondary" onclick="showPage('login')">
+        Se connecter
+      </button>
+    </section>
+
+    <section id="register" class="hidden">
+      <h2>Créer mon compte</h2>
+
+      <form id="registerForm">
+        <input id="name" type="text"
+          placeholder="Ton prénom" maxlength="40" required>
+
+        <input id="email" type="email"
+          placeholder="Ton adresse e-mail" required>
+
+        <input id="password" type="password"
+          placeholder="Mot de passe (8 caractères minimum)"
+          minlength="8" required>
+
+        <button class="primary" type="submit">
+          Créer mon compte
+        </button>
+      </form>
+
+      <button class="secondary" onclick="showPage('home')">
+        Retour
+      </button>
+    </section>
+
+    <section id="login" class="hidden">
+      <h2>Connexion</h2>
+
+      <form id="loginForm">
+        <input id="loginEmail" type="email"
+          placeholder="Adresse e-mail" required>
+
+        <input id="loginPassword" type="password"
+          placeholder="Mot de passe" required>
+
+        <button class="primary" type="submit">
+          Se connecter
+        </button>
+      </form>
+
+      <button class="secondary" onclick="showPage('home')">
+        Retour
+      </button>
+    </section>
+
+    <section id="account" class="hidden">
+      <div class="heart">💗</div>
+      <h2>Bienvenue sur Destinya !</h2>
+      <p id="userEmail"></p>
+      <button class="secondary" id="logout">
+        Se déconnecter
+      </button>
+    </section>
+
+    <p id="message" role="status" aria-live="polite"></p>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from
+      "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged,
+      updateProfile
+    } from
+      "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+    // REMPLACE les valeurs ci-dessous par celles de Firebase.
+    const firebaseConfig = {
+      apiKey: "TON_API_KEY",
+      authDomain: "TON_AUTH_DOMAIN",
+      projectId: "TON_PROJECT_ID",
+      storageBucket: "TON_STORAGE_BUCKET",
+      messagingSenderId: "TON_MESSAGING_SENDER_ID",
+      appId: "TON_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    window.showPage = function(page) {
+      document.querySelectorAll("section").forEach(section => {
+        section.classList.add("hidden");
+      });
+      document.getElementById(page).classList.remove("hidden");
+      document.getElementById("message").textContent = "";
+    };
+
+    const message = document.getElementById("message");
+
+    document.getElementById("registerForm")
+      .addEventListener("submit", async event => {
+        event.preventDefault();
+
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+
+        try {
+          const result = await createUserWithEmailAndPassword(
+            auth, email, password
+          );
+
+          await updateProfile(result.user, {
+            displayName: name
+          });
+
+          message.textContent = "Compte créé avec succès !";
+        } catch (error) {
+          message.textContent = "Erreur : " + error.message;
+        }
+      });
+
+    document.getElementById("loginForm")
+      .addEventListener("submit", async event => {
+        event.preventDefault();
+
+        const email = document.getElementById("loginEmail").value.trim();
+        const password = document.getElementById("loginPassword").value;
+
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
+          message.textContent = "Connexion réussie !";
+        } catch (error) {
+          message.textContent = "Erreur : " + error.message;
+        }
+      });
+
+    document.getElementById("logout")
+      .addEventListener("click", async () => {
+        await signOut(auth);
+        showPage("home");
+      });
+
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        document.getElementById("userEmail").textContent = user.email;
+        showPage("account");
+      } else {
+        showPage("home");
+      }
+    });
+  </script>
+</body>
+</html>
