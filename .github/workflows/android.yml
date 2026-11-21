@@ -1,0 +1,36 @@
+
+name: Destinya Android
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Recuperer le projet
+        uses: actions/checkout@v4
+
+      - name: Installer Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Installer Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Verifier le projet Android
+        run: |
+          if [ ! -f gradlew ]; then
+            echo "Projet Android manquant."
+            echo "Il faut ajouter les fichiers Gradle."
+            exit 1
+          fi
+
+      - name: Construire le fichier AAB
+        run: |
+          chmod +x gradlew
+          ./gradlew bundleRelease
+          
