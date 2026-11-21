@@ -6,10 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffe0e5">
   <title>Destinya 💕</title>
-
   <style>
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       min-height: 100vh;
@@ -18,9 +16,8 @@
       place-items: center;
       font-family: Arial, sans-serif;
       color: #593b49;
-      background: linear-gradient(145deg, #fff0ed, #ffd6df, #ffe8d6);
+      background: linear-gradient(145deg,#fff0ed,#ffd6df,#ffe8d6);
     }
-
     .container {
       width: 100%;
       max-width: 430px;
@@ -30,23 +27,15 @@
       box-shadow: 0 12px 35px #b76b7b30;
       text-align: center;
     }
-
-    h1 {
-      color: #d65c82;
-      font-size: 40px;
-      margin-bottom: 12px;
-    }
-
+    h1 { color: #d65c82; font-size: 40px; }
     h2 { color: #bd5275; }
     .heart { font-size: 55px; }
-
     label {
       display: block;
       text-align: left;
       margin-top: 10px;
       font-size: 14px;
     }
-
     input {
       width: 100%;
       padding: 15px;
@@ -55,7 +44,6 @@
       border-radius: 14px;
       font-size: 16px;
     }
-
     button {
       width: 100%;
       padding: 15px;
@@ -66,565 +54,415 @@
       font-weight: bold;
       cursor: pointer;
     }
-
-    .primary {
-      background: #d65c82;
-      color: white;
-    }
-
-    .secondary {
-      background: #ffe1e8;
-      color: #a94368;
-    }
-
+    .primary { background: #d65c82; color: white; }
+    .secondary { background: #ffe1e8; color: #a94368; }
     .hidden { display: none !important; }
-
-    small {
-      display: block;
-      margin: 12px 0;
-      line-height: 1.5;
-    }
-
-    #message {
-      color: #a94368;
-      overflow-wrap: anywhere;
-      min-height: 1.4em;
-    }
-
+    small { display: block; margin: 12px 0; line-height: 1.5; }
+    #message { color: #a94368; min-height: 1.5em; }
     .profile-card {
       padding: 20px;
       border-radius: 25px;
-      background: linear-gradient(160deg, #fff0f4, #ffe5dc);
-      border: 1px solid #f6cbd7;
+      background: linear-gradient(160deg,#fff0f4,#ffe5dc);
       margin: 18px 0;
     }
-
-    .avatar {
-      width: 145px;
-      height: 145px;
-      border-radius: 50%;
-      background: white;
-      display: grid;
-      place-items: center;
-      font-size: 76px;
-      margin: 0 auto 15px;
-      border: 5px solid white;
-      box-shadow: 0 6px 20px #d65c8230;
-    }
-
+    .avatar { font-size: 76px; margin: 15px; }
     .profile-name {
       color: #bd5275;
       font-size: 26px;
       font-weight: bold;
-      margin: 10px 0;
     }
-
-    .interests {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      margin: 16px 0;
-    }
-
     .tag {
+      display: inline-block;
       padding: 8px 12px;
+      margin: 4px;
       border-radius: 30px;
       background: white;
       color: #a94368;
       font-size: 13px;
     }
-
-    .demo-label {
-      color: #a94368;
-      font-size: 12px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    .profile-count {
-      color: #a94368;
-      font-size: 13px;
-    }
   </style>
 </head>
-
 <body>
-  <main class="container">
+<main class="container">
 
-    <!-- ACCUEIL -->
-    <section id="home">
-      <div class="heart">💕</div>
-      <h1>Destinya</h1>
+  <section id="home">
+    <div class="heart">💕</div>
+    <h1>Destinya</h1>
+    <p>De belles rencontres et de nouvelles amitiés.</p>
+    <button class="primary" onclick="showPage('register')">
+      Créer un compte
+    </button>
+    <button class="secondary" onclick="showPage('login')">
+      Se connecter
+    </button>
+    <button class="secondary" onclick="openProfiles()">
+      🌸 Découvrir les profils fictifs
+    </button>
+    <small>Application réservée aux adultes de 18 ans et plus.</small>
+  </section>
 
-      <p>
-        De belles rencontres et de nouvelles amitiés.
-      </p>
+  <section id="register" class="hidden">
+    <h2>Créer mon compte 💗</h2>
+    <form id="registerForm">
+      <label for="name">Pseudo</label>
+      <input id="name" maxlength="40" required>
 
-      <button class="primary" type="button"
-        onclick="showPage('register')">
-        Créer un compte
-      </button>
+      <label for="birthdate">Date de naissance</label>
+      <input id="birthdate" type="date" required>
 
-      <button class="secondary" type="button"
-        onclick="showPage('login')">
-        Se connecter
-      </button>
+      <label for="ville">Ville</label>
+      <input id="ville" maxlength="80" required>
 
-      <button class="secondary" type="button"
-        onclick="openProfiles()">
-        🌸 Découvrir les profils fictifs
-      </button>
+      <label for="objectif">Objectif</label>
+      <select id="objectif" required style="width:100%;padding:15px">
+        <option value="amitie">Amitié</option>
+        <option value="serieux">Relation sérieuse</option>
+        <option value="sans_engagement">Sans engagement</option>
+      </select>
 
-      <small>
-        Prototype de démonstration.
-        Service réel destiné aux adultes.
-      </small>
-    </section>
+      <label for="email">Adresse e-mail</label>
+      <input id="email" type="email" required>
 
-    <!-- INSCRIPTION -->
-    <section id="register" class="hidden">
-      <h2>Créer mon compte 💗</h2>
+      <label for="password">Mot de passe</label>
+      <input id="password" type="password" minlength="8" required>
 
-      <form id="registerForm">
-        <label for="name">Prénom</label>
-        <input id="name" type="text"
-          maxlength="40" required>
+      <button class="primary" type="submit">Créer mon compte</button>
+    </form>
+    <button class="secondary" onclick="showPage('home')">Retour</button>
+  </section>
 
-        <label for="birthdate">Date de naissance</label>
-        <input id="birthdate" type="date" required>
+  <section id="login" class="hidden">
+    <h2>Connexion 💕</h2>
+    <form id="loginForm">
+      <input id="loginEmail" type="email"
+        placeholder="Adresse e-mail" required>
+      <input id="loginPassword" type="password"
+        placeholder="Mot de passe" required>
+      <button class="primary" type="submit">Se connecter</button>
+    </form>
+    <button id="googleLogin" class="secondary">
+      Continuer avec Google
+    </button>
+    <button class="secondary" onclick="showPage('home')">Retour</button>
+  </section>
 
-        <label for="email">Adresse e-mail</label>
-        <input id="email" type="email" required>
+  <section id="account" class="hidden">
+    <div class="heart">💗</div>
+    <h2>Bienvenue sur Destinya !</h2>
+    <p id="userEmail"></p>
+    <p id="verificationInfo"></p>
+    <button id="verifyEmail" class="secondary">
+      Envoyer un e-mail de vérification
+    </button>
+    <button id="refreshVerification" class="secondary">
+      Actualiser la vérification
+    </button>
+    <button class="primary" onclick="openProfiles()">
+      🌸 Voir les profils
+    </button>
+    <button id="logout" class="secondary">Se déconnecter</button>
+  </section>
 
-        <label for="password">Mot de passe</label>
-        <input id="password" type="password"
-          minlength="8"
-          placeholder="8 caractères minimum"
-          required>
+  <section id="profiles" class="hidden">
+    <h2>💕 Découvrir</h2>
+    <p id="profileCount"></p>
+    <div class="profile-card">
+      <div>PROFIL FICTIF</div>
+      <div class="avatar" id="profileAvatar"></div>
+      <div class="profile-name" id="profileName"></div>
+      <p id="profileBio"></p>
+      <div id="profileInterests"></div>
+    </div>
+    <button class="primary" onclick="nextProfile()">
+      💕 Profil suivant
+    </button>
+    <button class="secondary" onclick="showPage('home')">
+      Retour
+    </button>
+  </section>
 
-        <small>
-          Inscription réservée aux personnes
-          de 18 ans et plus.
-        </small>
+  <p id="message" role="status" aria-live="polite"></p>
+</main>
 
-        <button class="primary" type="submit">
-          Créer mon compte
-        </button>
-      </form>
+<script>
+  function showPage(page) {
+    document.querySelectorAll("main section").forEach(section => {
+      section.classList.add("hidden");
+    });
+    document.getElementById(page).classList.remove("hidden");
+    document.getElementById("message").textContent = "";
+  }
 
-      <button class="secondary" type="button"
-        onclick="showPage('home')">
-        Retour
-      </button>
-    </section>
-
-    <!-- CONNEXION -->
-    <section id="login" class="hidden">
-      <h2>Connexion 💕</h2>
-
-      <form id="loginForm">
-        <label for="loginEmail">Adresse e-mail</label>
-        <input id="loginEmail" type="email" required>
-
-        <label for="loginPassword">Mot de passe</label>
-        <input id="loginPassword" type="password" required>
-
-        <button class="primary" type="submit">
-          Se connecter
-        </button>
-      </form>
-
-      <button class="secondary" type="button"
-        onclick="showPage('home')">
-        Retour
-      </button>
-    </section>
-
-    <!-- COMPTE -->
-    <section id="account" class="hidden">
-      <div class="heart">💗</div>
-      <h2>Bienvenue sur Destinya !</h2>
-
-      <p id="userEmail"></p>
-      <p id="verificationInfo"></p>
-
-      <button class="primary" type="button"
-        onclick="openProfiles()">
-        🌸 Voir les profils fictifs
-      </button>
-
-      <button id="verifyEmail" class="secondary"
-        type="button">
-        Envoyer un e-mail de vérification
-      </button>
-
-      <button id="refreshVerification"
-        class="secondary" type="button">
-        Actualiser la vérification
-      </button>
-
-      <button id="logout" class="secondary"
-        type="button">
-        Se déconnecter
-      </button>
-    </section>
-
-    <!-- PROFILS FICTIFS -->
-    <section id="profiles" class="hidden">
-      <h2>💕 Découvrir</h2>
-
-      <p class="profile-count" id="profileCount"></p>
-
-      <div class="profile-card">
-        <div class="demo-label">PROFIL FICTIF</div>
-
-        <div class="avatar" id="profileAvatar">
-          🌸
-        </div>
-
-        <div class="profile-name" id="profileName"></div>
-
-        <p id="profileBio"></p>
-
-        <div class="interests" id="profileInterests"></div>
-      </div>
-
-      <button class="primary" type="button"
-        onclick="nextProfile()">
-        💕 Profil suivant
-      </button>
-
-      <button class="secondary" type="button"
-        onclick="showPage('home')">
-        Retour à l'accueil
-      </button>
-
-      <small>
-        Ces personnages sont inventés.
-        Aucun message ou contact réel n'est possible.
-      </small>
-    </section>
-
-    <p id="message" role="status"
-      aria-live="polite"></p>
-
-  </main>
-
-  <!-- NAVIGATION ET PROFILS -->
-  <script>
-    function showPage(page) {
-      document.querySelectorAll("main section")
-        .forEach(function(section) {
-          section.classList.add("hidden");
-        });
-
-      const target = document.getElementById(page);
-
-      if (target) {
-        target.classList.remove("hidden");
-      }
-
-      document.getElementById("message").textContent = "";
+  const demoProfiles = [
+    {
+      name: "Camille, 26 ans",
+      avatar: "🌸",
+      bio: "J'aime les promenades et les livres.",
+      interests: ["Lecture", "Nature"]
+    },
+    {
+      name: "Alex, 29 ans",
+      avatar: "🎨",
+      bio: "Passionné de musique et de voyages.",
+      interests: ["Musique", "Voyages"]
+    },
+    {
+      name: "Léa, 31 ans",
+      avatar: "🦋",
+      bio: "J'adore cuisiner et découvrir de nouveaux endroits.",
+      interests: ["Cuisine", "Cinéma"]
     }
+  ];
 
-    const demoProfiles = [
-      {
-        name: "Camille, 26 ans",
-        avatar: "🌸",
-        bio: "J'aime les promenades, les livres et les petits cafés chaleureux.",
-        interests: [
-          "📚 Lecture",
-          "☕ Café",
-          "🌿 Nature"
-        ]
-      },
-      {
-        name: "Alex, 29 ans",
-        avatar: "🎨",
-        bio: "Passionné de musique, de photographie et de découvertes.",
-        interests: [
-          "🎵 Musique",
-          "📷 Photo",
-          "✈️ Voyages"
-        ]
-      },
-      {
-        name: "Léa, 31 ans",
-        avatar: "🦋",
-        bio: "J'adore cuisiner, découvrir de nouveaux endroits et rire.",
-        interests: [
-          "🍰 Cuisine",
-          "🎬 Cinéma",
-          "🐾 Animaux"
-        ]
-      }
-    ];
+  let profileIndex = 0;
 
-    let profileIndex = 0;
+  function renderProfile() {
+    const p = demoProfiles[profileIndex];
+    document.getElementById("profileCount").textContent =
+      `Profil ${profileIndex + 1} sur ${demoProfiles.length}`;
+    document.getElementById("profileAvatar").textContent = p.avatar;
+    document.getElementById("profileName").textContent = p.name;
+    document.getElementById("profileBio").textContent = p.bio;
 
-    function renderProfile() {
-      const profile = demoProfiles[profileIndex];
+    const interests = document.getElementById("profileInterests");
+    interests.replaceChildren();
+    p.interests.forEach(item => {
+      const span = document.createElement("span");
+      span.className = "tag";
+      span.textContent = item;
+      interests.appendChild(span);
+    });
+  }
 
-      document.getElementById("profileCount")
-        .textContent =
-          "Profil " + (profileIndex + 1) +
-          " sur " + demoProfiles.length;
+  function openProfiles() {
+    profileIndex = 0;
+    renderProfile();
+    showPage("profiles");
+  }
 
-      document.getElementById("profileAvatar")
-        .textContent = profile.avatar;
+  function nextProfile() {
+    profileIndex = (profileIndex + 1) % demoProfiles.length;
+    renderProfile();
+  }
+</script>
+</escape>
 
-      document.getElementById("profileName")
-        .textContent = profile.name;
+<script type="module">
+  import { initializeApp } from
+    "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 
-      document.getElementById("profileBio")
-        .textContent = profile.bio;
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    GoogleAuthProvider,
+    signOut,
+    onAuthStateChanged,
+    updateProfile,
+    sendEmailVerification,
+    reload
+  } from
+    "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-      const interests =
-        document.getElementById("profileInterests");
+  import {
+    getFirestore,
+    doc,
+    setDoc,
+    getDoc,
+    serverTimestamp
+  } from
+    "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-      interests.replaceChildren();
+  const firebaseConfig = {
+    apiKey: "AIzaSyA2yKCe2eo2WFC09ZNyrgPb-eWjOeQIChM",
+    authDomain: "destinya-4279b.firebaseapp.com",
+    projectId: "destinya-4279b",
+    storageBucket: "destinya-4279b.firebasestorage.app",
+    messagingSenderId: "562278259631",
+    appId: "1:562278259631:web:8e907c2d0c7ab1ee072d5a",
+    measurementId: "G-KJN8SNFXYE"
+  };
 
-      profile.interests.forEach(function(interest) {
-        const tag = document.createElement("span");
-        tag.className = "tag";
-        tag.textContent = interest;
-        interests.appendChild(tag);
-      });
-    }
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const message = document.getElementById("message");
 
-    function openProfiles() {
-      profileIndex = 0;
-      renderProfile();
-      showPage("profiles");
-    }
+  function notice(text) {
+    message.textContent = text;
+  }
 
-    function nextProfile() {
-      profileIndex =
-        (profileIndex + 1) % demoProfiles.length;
+  function calculateAge(value) {
+    if (!value) return -1;
+    const birth = new Date(value + "T12:00:00");
+    const today = new Date();
+    if (Number.isNaN(birth.getTime()) || birth > today) return -1;
 
-      renderProfile();
-    }
-  </script>
+    let age = today.getFullYear() - birth.getFullYear();
+    if (
+      today.getMonth() < birth.getMonth() ||
+      (today.getMonth() === birth.getMonth() &&
+       today.getDate() < birth.getDate())
+    ) age--;
+    return age;
+  }
 
-  <!-- FIREBASE -->
-  <script type="module">
-    import { initializeApp } from
-      "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+  async function createUserProfile(user, details) {
+    const age = calculateAge(details.birthdate);
+    if (age < 18) throw new Error("AGE_INVALIDE");
 
-    import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      signInWithEmailAndPassword,
-      signOut,
-      onAuthStateChanged,
-      updateProfile,
-      sendEmailVerification,
-      reload
-    } from
-      "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+    await setDoc(doc(db, "Users", user.uid), {
+      pseudo: details.pseudo,
+      age: age,
+      bio: "",
+      ville: details.ville,
+      objectif: details.objectif,
+      photoURL: "",
+      profilTest: false,
+      createdAt: serverTimestamp()
+    });
+  }
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyA2yKCe2eo2WFC09ZNyrgPb-eWjOeQIChM",
-      authDomain: "destinya-4279b.firebaseapp.com",
-      projectId: "destinya-4279b",
-      storageBucket: "destinya-4279b.firebasestorage.app",
-      messagingSenderId: "562278259631",
-      appId: "1:562278259631:web:8e907c2d0c7ab1ee072d5a",
-      measurementId: "G-KJN8SNFXYE"
+  function errorText(error) {
+    const messages = {
+      "auth/email-already-in-use": "Adresse e-mail déjà utilisée.",
+      "auth/invalid-email": "Adresse e-mail invalide.",
+      "auth/weak-password": "Mot de passe trop faible.",
+      "auth/invalid-credential": "Identifiants incorrects.",
+      "auth/unauthorized-domain": "Domaine non autorisé.",
+      "permission-denied": "Vérifie les règles de sécurité Firestore.",
+      "AGE_INVALIDE": "Inscription réservée aux adultes."
     };
+    return messages[error.code || error.message] ||
+      "Une erreur est survenue. Réessaie.";
+  }
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const message = document.getElementById("message");
+  document.getElementById("registerForm")
+    .addEventListener("submit", async event => {
+      event.preventDefault();
 
-    function notice(text) {
-      message.textContent = text;
-    }
-
-    function isAdult(value) {
-      if (!value) return false;
-
-      const date = new Date(value + "T12:00:00");
-      const today = new Date();
-
-      if (Number.isNaN(date.getTime()) || date > today) {
-        return false;
-      }
-
-      let age = today.getFullYear() - date.getFullYear();
-
-      if (
-        today.getMonth() < date.getMonth() ||
-        (
-          today.getMonth() === date.getMonth() &&
-          today.getDate() < date.getDate()
-        )
-      ) {
-        age--;
-      }
-
-      return age >= 18;
-    }
-
-    function errorText(error) {
-      const messages = {
-        "auth/email-already-in-use":
-          "Adresse e-mail déjà utilisée.",
-        "auth/invalid-email":
-          "Adresse e-mail invalide.",
-        "auth/weak-password":
-          "Mot de passe trop faible.",
-        "auth/invalid-credential":
-          "E-mail ou mot de passe incorrect.",
-        "auth/too-many-requests":
-          "Trop de tentatives.",
-        "auth/operation-not-allowed":
-          "Active la connexion e-mail dans Firebase.",
-        "auth/unauthorized-domain":
-          "Domaine non autorisé dans Firebase."
+      const details = {
+        pseudo: document.getElementById("name").value.trim(),
+        birthdate: document.getElementById("birthdate").value,
+        ville: document.getElementById("ville").value.trim(),
+        objectif: document.getElementById("objectif").value
       };
 
-      return messages[error.code] ||
-        "Une erreur est survenue.";
-    }
-
-    // INSCRIPTION
-    document.getElementById("registerForm")
-      .addEventListener("submit", async function(event) {
-        event.preventDefault();
-
-        const name =
-          document.getElementById("name").value.trim();
-
-        const birthdate =
-          document.getElementById("birthdate").value;
-
-        const email =
-          document.getElementById("email").value.trim();
-
-        const password =
-          document.getElementById("password").value;
-
-        if (!name || !isAdult(birthdate)) {
-          notice("Inscription réservée aux 18 ans et plus.");
-          return;
-        }
-
-        try {
-          const result =
-            await createUserWithEmailAndPassword(
-              auth,
-              email,
-              password
-            );
-
-          await updateProfile(result.user, {
-            displayName: name
-          });
-
-          try {
-            await sendEmailVerification(result.user);
-            notice("Compte créé. Vérifie ton e-mail.");
-          } catch (mailError) {
-            notice(
-              "Compte créé, mais l'e-mail de vérification n'a pas pu être envoyé."
-            );
-          }
-        } catch (error) {
-          notice(errorText(error));
-        }
-      });
-
-    // CONNEXION
-    document.getElementById("loginForm")
-      .addEventListener("submit", async function(event) {
-        event.preventDefault();
-
-        const email =
-          document.getElementById("loginEmail").value.trim();
-
-        const password =
-          document.getElementById("loginPassword").value;
-
-        try {
-          await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
-        } catch (error) {
-          notice(errorText(error));
-        }
-      });
-
-    // DECONNEXION
-    document.getElementById("logout")
-      .addEventListener("click", async function() {
-        try {
-          await signOut(auth);
-        } catch (error) {
-          notice(errorText(error));
-        }
-      });
-
-    // VERIFICATION E-MAIL
-    document.getElementById("verifyEmail")
-      .addEventListener("click", async function() {
-        try {
-          if (auth.currentUser) {
-            await sendEmailVerification(auth.currentUser);
-            notice("E-mail de vérification envoyé.");
-          }
-        } catch (error) {
-          notice(errorText(error));
-        }
-      });
-
-    document.getElementById("refreshVerification")
-      .addEventListener("click", async function() {
-        try {
-          if (auth.currentUser) {
-            await reload(auth.currentUser);
-            renderAccount(auth.currentUser);
-            notice("Vérification actualisée.");
-          }
-        } catch (error) {
-          notice(errorText(error));
-        }
-      });
-
-    // AFFICHAGE DU COMPTE
-    function renderAccount(user) {
-      if (!user) {
-        showPage("home");
+      if (!details.pseudo || !details.ville ||
+          calculateAge(details.birthdate) < 18) {
+        notice("Vérifie tes informations. Réservé aux 18 ans et plus.");
         return;
       }
 
-      showPage("account");
-
-      document.getElementById("userEmail")
-        .textContent = user.email || "";
-
-      document.getElementById("verificationInfo")
-        .textContent = user.emailVerified
-          ? "Adresse e-mail vérifiée."
-          : "Adresse e-mail non vérifiée.";
-
-      document.getElementById("verifyEmail")
-        .classList.toggle(
-          "hidden",
-          user.emailVerified
+      try {
+        const result = await createUserWithEmailAndPassword(
+          auth,
+          document.getElementById("email").value.trim(),
+          document.getElementById("password").value
         );
 
-      document.getElementById("refreshVerification")
-        .classList.toggle(
-          "hidden",
-          user.emailVerified
+        await updateProfile(result.user, {
+          displayName: details.pseudo
+        });
+
+        await createUserProfile(result.user, details);
+
+        try {
+          await sendEmailVerification(result.user);
+          notice("Compte créé. Vérifie ton e-mail.");
+        } catch {
+          notice("Compte créé. Envoi de vérification indisponible.");
+        }
+      } catch (error) {
+        notice(errorText(error));
+      }
+    });
+
+  document.getElementById("loginForm")
+    .addEventListener("submit", async event => {
+      event.preventDefault();
+      try {
+        await signInWithEmailAndPassword(
+          auth,
+          document.getElementById("loginEmail").value.trim(),
+          document.getElementById("loginPassword").value
         );
+      } catch (error) {
+        notice(errorText(error));
+      }
+    });
+
+  document.getElementById("googleLogin")
+    .addEventListener("click", async () => {
+      try {
+        const result = await signInWithPopup(
+          auth, new GoogleAuthProvider()
+        );
+        const snapshot = await getDoc(doc(db, "Users", result.user.uid));
+        if (!snapshot.exists()) {
+          notice("Connexion Google réussie. Le profil doit encore être complété.");
+        }
+      } catch (error) {
+        notice(errorText(error));
+      }
+    });
+
+  document.getElementById("logout")
+    .addEventListener("click", async () => {
+      try {
+        await signOut(auth);
+      } catch (error) {
+        notice(errorText(error));
+      }
+    });
+
+  document.getElementById("verifyEmail")
+    .addEventListener("click", async () => {
+      try {
+        if (auth.currentUser) {
+          await sendEmailVerification(auth.currentUser);
+          notice("E-mail de vérification envoyé.");
+        }
+      } catch (error) {
+        notice(errorText(error));
+      }
+    });
+
+  document.getElementById("refreshVerification")
+    .addEventListener("click", async () => {
+      try {
+        if (auth.currentUser) {
+          await reload(auth.currentUser);
+          renderAccount(auth.currentUser);
+        }
+      } catch (error) {
+        notice(errorText(error));
+      }
+    });
+
+  function renderAccount(user) {
+    if (!user) {
+      showPage("home");
+      return;
     }
 
-    onAuthStateChanged(auth, renderAccount);
-  </script>
+    showPage("account");
+    document.getElementById("userEmail").textContent =
+      user.email || "";
+
+    document.getElementById("verificationInfo").textContent =
+      user.emailVerified
+        ? "Adresse e-mail vérifiée."
+        : "Adresse e-mail non vérifiée.";
+
+    document.getElementById("verifyEmail")
+      .classList.toggle("hidden", user.emailVerified);
+    document.getElementById("refreshVerification")
+      .classList.toggle("hidden", user.emailVerified);
+  }
+
+  onAuthStateChanged(auth, renderAccount);
+</script>
 </body>
 </html>
