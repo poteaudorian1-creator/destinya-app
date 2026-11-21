@@ -151,7 +151,7 @@
 
     // REMPLACE les valeurs ci-dessous par celles de Firebase.
     const firebaseConfig = {
-      apiKey: "TON_API_KEY",
+      apiKey: "TA_VRAIE_VALEUR",
       authDomain: "TON_AUTH_DOMAIN",
       projectId: "TON_PROJECT_ID",
       storageBucket: "TON_STORAGE_BUCKET",
