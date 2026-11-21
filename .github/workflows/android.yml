@@ -23,8 +23,6 @@ jobs:
         with:
           gradle-version: '8.9'
 
-      - name: Installer Android SDK
-        uses: android-actions/setup-android@v3
 
       - name: Construire le AAB
         run: gradle bundleRelease
