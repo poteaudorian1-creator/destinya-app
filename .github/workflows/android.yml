@@ -24,7 +24,7 @@ jobs:
           gradle-version: '8.9'
           
       - name: Construire APK de test
-        run: gradle -p android/android assembleDebug
+        run: gradle -p android/android assembleDebug --stacktrace
 
       - name: Sauvegarder APK
         uses: actions/upload-artifact@v4
