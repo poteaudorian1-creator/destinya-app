@@ -1183,5 +1183,28 @@ applyDarkMode();
 showPage("home");
 
 </script>
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyA2yKCe2eo2WFC09ZNyrgPb-eWjOeQIChM",
+    authDomain: "destinya-4279b.firebaseapp.com",
+    projectId: "destinya-4279b",
+    storageBucket: "destinya-4279b.firebasestorage.app",
+    messagingSenderId: "562278259631",
+    appId: "1:562278259631:web:26db070a6e1a8495072d5a",
+    measurementId: "G-0DHQ3X7X3B"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  </script>
 </body>
 </html>
