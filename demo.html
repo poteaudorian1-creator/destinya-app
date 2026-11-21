@@ -14,16 +14,13 @@
 body {
   margin: 0;
   min-height: 100vh;
-  padding: 20px;
+  padding: 18px;
   display: grid;
   place-items: center;
   font-family: Arial, sans-serif;
   color: #633e50;
   background: linear-gradient(
-    145deg,
-    #fff0ed,
-    #ffd3e0,
-    #ffe8d6
+    145deg, #fff0ed, #ffd3e0, #ffe8d6
   );
 }
 
@@ -79,9 +76,7 @@ button {
   margin: 20px 0;
   border-radius: 24px;
   background: linear-gradient(
-    150deg,
-    #fff0f5,
-    #ffe5dc
+    150deg, #fff0f5, #ffe5dc
   );
   border: 1px solid #f4c8d5;
 }
@@ -154,19 +149,36 @@ button {
   margin-left: auto;
 }
 
-textarea {
+input, textarea {
   width: 100%;
-  min-height: 75px;
-  margin: 12px 0;
-  padding: 12px;
+  margin: 10px 0;
+  padding: 13px;
   border: 1px solid #edbfd0;
   border-radius: 14px;
   font: inherit;
+}
+
+textarea {
+  min-height: 85px;
   resize: vertical;
 }
 
+label {
+  display: block;
+  text-align: left;
+  font-size: 14px;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+.note {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #996b7e;
+}
+
 #matchScreen {
-  padding: 30px 0;
+  padding: 25px 0;
   animation: appear .5s ease;
 }
 
@@ -175,7 +187,6 @@ textarea {
     opacity: 0;
     transform: scale(.9);
   }
-
   to {
     opacity: 1;
     transform: scale(1);
@@ -191,117 +202,181 @@ textarea {
 <!-- ACCUEIL -->
 
 <section id="home">
-
   <div style="font-size:55px">💕</div>
-
   <h1>Destinya</h1>
-
   <p>Un univers rose et romantique.</p>
-
   <p class="demo">MODE DÉMONSTRATION</p>
 
-  <button
-    class="primary full"
+  <button class="primary full"
     onclick="startDemo()">
     🌸 Découvrir les profils
   </button>
 
-  <button
-    class="secondary full"
+  <button class="secondary full"
+    onclick="openMyProfile()">
+    👤 Mon profil
+  </button>
+
+  <button class="secondary full"
     onclick="openMessages()">
     💬 Conversations fictives
   </button>
 
-  <p style="font-size:13px">
+  <p class="note">
     Tous les personnages et échanges
-    sont inventés.
+    sont inventés. Aucun contact réel.
   </p>
-
 </section>
 
-<!-- PROFILS -->
+<!-- MON PROFIL -->
+
+<section id="myProfile" class="hidden">
+  <h2>👤 Mon profil</h2>
+  <p class="demo">PROFIL DE TEST</p>
+
+  <div class="card">
+    <div class="avatar" id="myAvatar">🌸</div>
+    <h2 id="myName"></h2>
+    <p id="myBio"></p>
+    <div class="tags" id="myTags"></div>
+  </div>
+
+  <button class="primary full"
+    onclick="showPage('editProfile')">
+    ✏️ Modifier mon profil
+  </button>
+
+  <button class="secondary full"
+    onclick="showPage('home')">
+    Retour à l'accueil
+  </button>
+</section>
+
+<!-- MODIFIER MON PROFIL -->
+
+<section id="editProfile" class="hidden">
+  <h2>✏️ Modifier mon profil</h2>
+
+  <form id="profileForm">
+
+    <label for="editName">
+      Prénom fictif
+    </label>
+    <input
+      id="editName"
+      maxlength="30"
+      required>
+
+    <label for="editAvatar">
+      Avatar
+    </label>
+    <select id="editAvatar" style="
+      width:100%;
+      padding:13px;
+      margin:10px 0;
+      border:1px solid #edbfd0;
+      border-radius:14px;
+      font-size:16px;">
+      <option value="🌸">🌸 Fleur</option>
+      <option value="🦋">🦋 Papillon</option>
+      <option value="🎨">🎨 Art</option>
+      <option value="🌻">🌻 Tournesol</option>
+      <option value="🎵">🎵 Musique</option>
+    </select>
+
+    <label for="editBio">
+      Présentation fictive
+    </label>
+    <textarea
+      id="editBio"
+      maxlength="200"
+      required></textarea>
+
+    <label for="editInterests">
+      Centres d'intérêt (séparés par des virgules)
+    </label>
+    <input
+      id="editInterests"
+      maxlength="120"
+      placeholder="Musique, Nature, Cinéma">
+
+    <button class="primary full" type="submit">
+      💗 Enregistrer mon profil
+    </button>
+  </form>
+
+  <button class="secondary full"
+    onclick="openMyProfile()">
+    Annuler
+  </button>
+
+  <p class="note">
+    Utilise uniquement des informations inventées.
+    Les modifications ne sont pas publiées.
+  </p>
+</section>
+
+<!-- PROFILS FICTIFS -->
 
 <section id="profiles" class="hidden">
-
   <h2>💕 Découvrir</h2>
-
   <p id="counter"></p>
 
   <div class="card">
-
     <p class="demo">PROFIL FICTIF</p>
-
     <div class="avatar" id="avatar"></div>
-
     <h2 id="name"></h2>
-
     <p id="bio"></p>
-
     <div class="tags" id="tags"></div>
-
   </div>
 
   <div class="actions">
-
-    <button
-      class="secondary"
+    <button class="secondary"
       onclick="passProfile()">
       ❌ Passer
     </button>
 
-    <button
-      class="primary"
+    <button class="primary"
       onclick="likeProfile()">
       ❤️ J'aime
     </button>
-
   </div>
 
-  <button
-    class="secondary full"
+  <button class="secondary full"
     onclick="showPage('home')">
     Retour
   </button>
-
 </section>
 
 <!-- MATCH FICTIF -->
 
 <section id="matchScreen" class="hidden">
-
   <div style="font-size:75px">💞</div>
-
   <h1>Match !</h1>
 
   <p>
-    Une correspondance fictive
+    Correspondance fictive
     pour tester le design.
   </p>
 
   <h2 id="matchName"></h2>
 
-  <button
-    class="primary full"
+  <button class="primary full"
     onclick="openMessages()">
     💬 Voir la conversation
   </button>
 
-  <button
-    class="secondary full"
+  <button class="secondary full"
     onclick="continueProfiles()">
     Continuer
   </button>
-
 </section>
 
 <!-- MESSAGERIE FICTIVE -->
 
 <section id="messages" class="hidden">
-
   <h2>💬 Messagerie</h2>
-
   <p class="demo">CONVERSATION SIMULÉE</p>
-
   <p id="chatTitle"></p>
 
   <div class="chat" id="chat"></div>
@@ -309,27 +384,22 @@ textarea {
   <textarea
     id="draft"
     maxlength="200"
-    placeholder="Écris un message fictif...">
-  </textarea>
+    placeholder="Écris un message fictif..."></textarea>
 
-  <button
-    class="primary full"
+  <button class="primary full"
     onclick="sendDemoMessage()">
     Envoyer dans la démonstration
   </button>
 
-  <button
-    class="secondary full"
+  <button class="secondary full"
     onclick="showPage('home')">
     Retour à l'accueil
   </button>
 
-  <p style="font-size:12px">
-    Les messages restent uniquement
-    sur cet écran. Ils ne sont pas
-    envoyés à de vraies personnes.
+  <p class="note">
+    Les messages restent sur cet écran.
+    Ils ne sont pas envoyés en ligne.
   </p>
-
 </section>
 
 </main>
@@ -343,33 +413,30 @@ const profiles = [
     name: "Camille, 26 ans",
     avatar: "🌸",
     bio: "J'aime les promenades et les cafés chaleureux.",
-    tags: [
-      "📚 Lecture",
-      "☕ Café",
-      "🌿 Nature"
-    ]
+    tags: ["📚 Lecture", "☕ Café", "🌿 Nature"]
   },
   {
     name: "Alex, 29 ans",
     avatar: "🎨",
     bio: "Passionné de musique et de photographie.",
-    tags: [
-      "🎵 Musique",
-      "📷 Photo",
-      "✈️ Voyages"
-    ]
+    tags: ["🎵 Musique", "📷 Photo", "✈️ Voyages"]
   },
   {
     name: "Léa, 31 ans",
     avatar: "🦋",
     bio: "J'adore cuisiner et découvrir de nouveaux endroits.",
-    tags: [
-      "🍰 Cuisine",
-      "🎬 Cinéma",
-      "🐾 Animaux"
-    ]
+    tags: ["🍰 Cuisine", "🎬 Cinéma", "🐾 Animaux"]
   }
 ];
+
+// PROFIL PERSONNALISABLE DE TEST
+
+let myProfile = {
+  name: "Personnage de test",
+  avatar: "🌸",
+  bio: "J'aime découvrir de nouvelles activités.",
+  interests: ["Musique", "Nature", "Cinéma"]
+};
 
 let current = 0;
 let matchedProfile = null;
@@ -387,7 +454,87 @@ function showPage(id) {
     .classList.remove("hidden");
 }
 
-// AFFICHAGE DES PROFILS
+// AFFICHAGE DES ÉTIQUETTES
+
+function fillTags(containerId, values) {
+  const container = document.getElementById(containerId);
+  container.replaceChildren();
+
+  values.forEach(function(value) {
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = value;
+    container.appendChild(tag);
+  });
+}
+
+// MON PROFIL
+
+function openMyProfile() {
+  document.getElementById("myAvatar")
+    .textContent = myProfile.avatar;
+
+  document.getElementById("myName")
+    .textContent = myProfile.name;
+
+  document.getElementById("myBio")
+    .textContent = myProfile.bio;
+
+  fillTags("myTags", myProfile.interests);
+
+  document.getElementById("editName")
+    .value = myProfile.name;
+
+  document.getElementById("editAvatar")
+    .value = myProfile.avatar;
+
+  document.getElementById("editBio")
+    .value = myProfile.bio;
+
+  document.getElementById("editInterests")
+    .value = myProfile.interests.join(", ");
+
+  showPage("myProfile");
+}
+
+// ENREGISTRER MON PROFIL
+
+document.getElementById("profileForm")
+  .addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("editName")
+      .value.trim();
+
+    const avatar = document.getElementById("editAvatar")
+      .value;
+
+    const bio = document.getElementById("editBio")
+      .value.trim();
+
+    const interests = document.getElementById("editInterests")
+      .value.split(",")
+      .map(function(value) {
+        return value.trim();
+      })
+      .filter(Boolean)
+      .slice(0, 6);
+
+    if (!name || !bio) {
+      return;
+    }
+
+    myProfile = {
+      name: name,
+      avatar: avatar,
+      bio: bio,
+      interests: interests
+    };
+
+    openMyProfile();
+  });
+
+// DÉCOUVRIR LES PROFILS
 
 function startDemo() {
   current = 0;
@@ -412,22 +559,7 @@ function renderProfile() {
   document.getElementById("bio")
     .textContent = profile.bio;
 
-  const tags = document.getElementById("tags");
-
-  tags.replaceChildren();
-
-  profile.tags.forEach(function(value) {
-    const tag = document.createElement("span");
-    tag.className = "tag";
-    tag.textContent = value;
-    tags.appendChild(tag);
-  });
-}
-
-// PASSER UN PROFIL
-
-function passProfile() {
-  nextProfile();
+  fillTags("tags", profile.tags);
 }
 
 function nextProfile() {
@@ -435,7 +567,11 @@ function nextProfile() {
   renderProfile();
 }
 
-// AIMER UN PROFIL
+function passProfile() {
+  nextProfile();
+}
+
+// MATCH SIMULÉ
 
 function likeProfile() {
   matchedProfile = profiles[current];
@@ -447,14 +583,12 @@ function likeProfile() {
   showPage("matchScreen");
 }
 
-// CONTINUER
-
 function continueProfiles() {
   nextProfile();
   showPage("profiles");
 }
 
-// OUVRIR LA MESSAGERIE
+// MESSAGERIE SIMULÉE
 
 function openMessages() {
   if (!matchedProfile) {
@@ -471,11 +605,8 @@ function openMessages() {
   showPage("messages");
 }
 
-// AFFICHER LES MESSAGES
-
 function renderChat() {
   const chat = document.getElementById("chat");
-
   chat.replaceChildren();
 
   const intro = document.createElement("div");
@@ -493,15 +624,11 @@ function renderChat() {
   });
 }
 
-// ENVOYER UN MESSAGE FICTIF
-
 function sendDemoMessage() {
   const field = document.getElementById("draft");
   const text = field.value.trim();
 
-  if (!text) {
-    return;
-  }
+  if (!text) return;
 
   messages.push(text);
   field.value = "";
@@ -512,4 +639,3 @@ function sendDemoMessage() {
 
 </body>
 </html>
-
