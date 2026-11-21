@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "562278259631",
+    "project_id": "destinya-4279b",
+    "storage_bucket": "destinya-4279b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562278259631:android:fe5c83b293aea5fe072d5a",
+        "android_client_info": {
+          "package_name": "com.destinya.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "562278259631-2sfed2vedsu5vjakqp7n5v7j6kukb1fi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlTIfnwACRB9Eq6LLU4f4sJpel0F0xgSo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "562278259631-2sfed2vedsu5vjakqp7n5v7j6kukb1fi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562278259631:android:ab57a32ed0d17b67072d5a",
+        "android_client_info": {
+          "package_name": "com.destinya.demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "562278259631-2sfed2vedsu5vjakqp7n5v7j6kukb1fi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlTIfnwACRB9Eq6LLU4f4sJpel0F0xgSo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "562278259631-2sfed2vedsu5vjakqp7n5v7j6kukb1fi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
