@@ -22,23 +22,21 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
-
-
       - name: Construire APK de test
-        run: gradle assembleDebug
+        run: gradle -p android/android assembleDebug
 
       - name: Sauvegarder APK de test
         uses: actions/upload-artifact@v4
         with:
           name: Destinya-Demo-APK
-          path: app/build/outputs/apk/debug/*.apk
-
+          path: android/android/app/build/outputs/apk/debug/*.apk
 
       - name: Construire le AAB
-        run: gradle bundleRelease
+        run: gradle -p android/android bundleRelease
 
       - name: Sauvegarder le AAB
         uses: actions/upload-artifact@v4
         with:
           name: Destinya-Demo-AAB
-          path: app/build/outputs/bundle/release/*.aab
+          path: android/android/app/build/outputs/bundle/release/*.aab
+          
