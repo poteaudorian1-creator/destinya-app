@@ -5,227 +5,114 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffe0e5">
-  <title>Destinya</title>
-
+  <title>Destinya — Rencontres et amitiés</title>
   <style>
     * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      padding: 20px;
-      display: grid;
-      place-items: center;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(145deg,#fff0ed,#ffd6df,#ffe8d6);
-      color: #593b49;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 430px;
-      padding: 30px 24px;
-      background: white;
-      border-radius: 28px;
-      box-shadow: 0 12px 35px #b76b7b30;
-      text-align: center;
-    }
-
-    h1 { color: #d65c82; font-size: 40px; }
-    h2 { color: #bd5275; }
-    .heart { font-size: 55px; }
-
-    input {
-      width: 100%;
-      padding: 15px;
-      margin: 10px 0;
-      border: 1px solid #f2c2d0;
-      border-radius: 14px;
-      font-size: 16px;
-    }
-
-    button {
-      width: 100%;
-      padding: 15px;
-      margin: 8px 0;
-      border: 0;
-      border-radius: 30px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .primary { background: #d65c82; color: white; }
-    .secondary { background: #ffe1e8; color: #a94368; }
-    .hidden { display: none; }
-    #message { overflow-wrap: anywhere; color: #a94368; }
+    body { margin: 0; min-height: 100vh; padding: 20px; display: grid; place-items: center;
+      font-family: Arial, sans-serif; background: linear-gradient(145deg,#fff0ed,#ffd6df,#ffe8d6); color: #593b49; }
+    .container { width: 100%; max-width: 430px; padding: 30px 24px; background: white;
+      border-radius: 28px; box-shadow: 0 12px 35px #b76b7b30; text-align: center; }
+    h1 { color: #d65c82; font-size: 40px; } h2 { color: #bd5275; } .heart { font-size: 55px; }
+    label { display: block; text-align: left; margin: 12px 0 4px; font-size: 14px; }
+    input { width: 100%; padding: 15px; border: 1px solid #f2c2d0; border-radius: 14px; font-size: 16px; }
+    button { width: 100%; padding: 15px; margin: 8px 0; border: 0; border-radius: 30px;
+      font-size: 16px; font-weight: bold; cursor: pointer; }
+    .primary { background: #d65c82; color: white; } .secondary { background: #ffe1e8; color: #a94368; }
+    .hidden { display: none; } #message { overflow-wrap: anywhere; color: #a94368; min-height: 1.4em; }
+    small { display: block; margin: 10px 0; line-height: 1.5; }
+    a { color: #a94368; }
   </style>
 </head>
-
 <body>
   <main class="container">
-
     <section id="home">
-      <div class="heart">💕</div>
+      <div class="heart" aria-hidden="true">💕</div>
       <h1>Destinya</h1>
       <p>De belles rencontres et de nouvelles amitiés.</p>
-
-      <button class="primary" onclick="showPage('register')">
-        Créer un compte
-      </button>
-
-      <button class="secondary" onclick="showPage('login')">
-        Se connecter
-      </button>
+      <button class="primary" type="button" data-page="register">Créer un compte</button>
+      <button class="secondary" type="button" data-page="login">Se connecter</button>
     </section>
 
     <section id="register" class="hidden">
       <h2>Créer mon compte</h2>
-
       <form id="registerForm">
-        <input id="name" type="text"
-          placeholder="Ton prénom" maxlength="40" required>
-
-        <input id="email" type="email"
-          placeholder="Ton adresse e-mail" required>
-
-        <input id="password" type="password"
-          placeholder="Mot de passe (8 caractères minimum)"
-          minlength="8" required>
-
-        <button class="primary" type="submit">
-          Créer mon compte
-        </button>
+        <label for="name">Prénom</label>
+        <input id="name" type="text" maxlength="40" autocomplete="given-name" required>
+        <label for="birthdate">Date de naissance</label>
+        <input id="birthdate" type="date" required>
+        <label for="email">Adresse e-mail</label>
+        <input id="email" type="email" autocomplete="email" required>
+        <label for="password">Mot de passe (8 caractères minimum)</label>
+        <input id="password" type="password" minlength="8" autocomplete="new-password" required>
+        <small>Réservé aux personnes de 18 ans et plus. La date déclarée n'est pas une vérification d'identité.</small>
+        <button class="primary" type="submit">Créer mon compte</button>
       </form>
-
-      <button class="secondary" onclick="showPage('home')">
-        Retour
-      </button>
+      <button class="secondary" type="button" data-page="home">Retour</button>
     </section>
 
     <section id="login" class="hidden">
       <h2>Connexion</h2>
-
       <form id="loginForm">
-        <input id="loginEmail" type="email"
-          placeholder="Adresse e-mail" required>
-
-        <input id="loginPassword" type="password"
-          placeholder="Mot de passe" required>
-
-        <button class="primary" type="submit">
-          Se connecter
-        </button>
+        <label for="loginEmail">Adresse e-mail</label>
+        <input id="loginEmail" type="email" autocomplete="email" required>
+        <label for="loginPassword">Mot de passe</label>
+        <input id="loginPassword" type="password" autocomplete="current-password" required>
+        <button class="primary" type="submit">Se connecter</button>
       </form>
-
-      <button class="secondary" onclick="showPage('home')">
-        Retour
-      </button>
+      <button class="secondary" type="button" data-page="home">Retour</button>
     </section>
 
     <section id="account" class="hidden">
-      <div class="heart">💗</div>
+      <div class="heart" aria-hidden="true">💗</div>
       <h2>Bienvenue sur Destinya !</h2>
       <p id="userEmail"></p>
-      <button class="secondary" id="logout">
-        Se déconnecter
-      </button>
+      <p id="verificationInfo"></p>
+      <button class="primary hidden" id="resendVerification" type="button">Renvoyer le mail de vérification</button>
+      <button class="secondary" id="logout" type="button">Se déconnecter</button>
     </section>
-
     <p id="message" role="status" aria-live="polite"></p>
   </main>
 
   <script type="module">
-    import { initializeApp } from
-      "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
     import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      signInWithEmailAndPassword,
-      signOut,
-      onAuthStateChanged,
-      updateProfile
-    } from
-      "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+      getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+      signOut, onAuthStateChanged, updateProfile, sendEmailVerification
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-    // REMPLACE les valeurs ci-dessous par celles de Firebase.
-    const firebaseConfig = // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyA2yKCe2eo2WFC09ZNyrgPb-eWjOeQIChM",
-  authDomain: "destinya-4279b.firebaseapp.com",
-  projectId: "destinya-4279b",
-  storageBucket: "destinya-4279b.firebasestorage.app",
-  messagingSenderId: "562278259631",
-  appId: "1:562278259631:web:8e907c2d0c7ab1ee072d5a",
-  measurementId: "G-KJN8SNFXYE"
-};
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    window.showPage = function(page) {
-      document.querySelectorAll("section").forEach(section => {
-        section.classList.add("hidden");
-      });
-      document.getElementById(page).classList.remove("hidden");
-      document.getElementById("message").textContent = "";
+    const firebaseConfig = {
+      apiKey: "AIzaSyA2yKCe2eo2WFC09ZNyrgPb-eWjOeQIChM",
+      authDomain: "destinya-4279b.firebaseapp.com",
+      projectId: "destinya-4279b",
+      storageBucket: "destinya-4279b.firebasestorage.app",
+      messagingSenderId: "562278259631",
+      appId: "1:562278259631:web:8e907c2d0c7ab1ee072d5a",
+      measurementId: "G-KJN8SNFXYE"
     };
 
+    const auth = getAuth(initializeApp(firebaseConfig));
     const message = document.getElementById("message");
+    function notice(text) { message.textContent = text; }
+    function showPage(page) {
+      document.querySelectorAll("main section").forEach(section => section.classList.add("hidden"));
+      document.getElementById(page).classList.remove("hidden");
+      notice("");
+    }
+    document.querySelectorAll("[data-page]").forEach(button =>
+      button.addEventListener("click", () => showPage(button.dataset.page)));
 
-    document.getElementById("registerForm")
-      .addEventListener("submit", async event => {
-        event.preventDefault();
+    function isAdult(dateValue) {
+      if (!dateValue) return false;
+      const dob = new Date(dateValue + "T12:00:00");
+      if (Number.isNaN(dob.getTime()) || dob > new Date()) return false;
+      const today = new Date();
+      let age = today.getFullYear() - dob.getFullYear();
+      if (today.getMonth() < dob.getMonth() ||
+          (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())) age--;
+      return age >= 18;
+    }
 
-        const name = document.getElementById("name").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
-
-        try {
-          const result = await createUserWithEmailAndPassword(
-            auth, email, password
-          );
-
-          await updateProfile(result.user, {
-            displayName: name
-          });
-
-          message.textContent = "Compte créé avec succès !";
-        } catch (error) {
-          message.textContent = "Erreur : " + error.message;
-        }
-      });
-
-    document.getElementById("loginForm")
-      .addEventListener("submit", async event => {
-        event.preventDefault();
-
-        const email = document.getElementById("loginEmail").value.trim();
-        const password = document.getElementById("loginPassword").value;
-
-        try {
-          await signInWithEmailAndPassword(auth, email, password);
-          message.textContent = "Connexion réussie !";
-        } catch (error) {
-          message.textContent = "Erreur : " + error.message;
-        }
-      });
-
-    document.getElementById("logout")
-      .addEventListener("click", async () => {
-        await signOut(auth);
-        showPage("home");
-      });
-
-    onAuthStateChanged(auth, user => {
-      if (user) {
-        document.getElementById("userEmail").textContent = user.email;
-        showPage("account");
-      } else {
-        showPage("home");
-      }
-    });
-  </script>
-</body>
-</html>
+    document.getElementById("registerForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const birthdate = document.getElementById("birthdat
