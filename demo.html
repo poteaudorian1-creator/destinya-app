@@ -7,369 +7,309 @@
 <title>Destinya 💕</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font:16px Arial,sans-serif;
+  color:#684153;
+  background:linear-gradient(135deg,#fff0f5,#f3e5ff);
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  color: #684153;
-  background: linear-gradient(135deg,#fff0f5,#f4e5ff);
+.app{
+  max-width:460px;
+  min-height:100vh;
+  margin:auto;
+  padding:20px 18px 110px;
+  background:#fffafd;
 }
 
-.app {
-  max-width: 460px;
-  min-height: 100vh;
-  margin: auto;
-  padding: 20px 18px 105px;
-  background: #fffafd;
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.logo{
+  font-size:27px;
+  font-weight:bold;
+  color:#d65783;
 }
 
-.logo {
-  color: #d65783;
-  font-size: 27px;
-  font-weight: bold;
+h1,h2{color:#d65783}
+section{text-align:center}
+.hidden{display:none!important}
+
+.card{
+  padding:20px;
+  margin:18px 0;
+  border-radius:25px;
+  background:white;
+  border:1px solid #ffe1eb;
+  box-shadow:0 8px 25px #d7759630;
 }
 
-h1,h2 {
-  color: #d65783;
+.profile-card{
+  background:linear-gradient(155deg,#fff,#ffe4ee);
 }
 
-section {
-  text-align: center;
+/* PORTRAITS */
+
+.avatar{
+  width:170px;
+  height:170px;
+  margin:12px auto 18px;
+  border:5px solid white;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:linear-gradient(135deg,#ffd5e7,#e8d7ff);
+  box-shadow:0 8px 25px #c7668750;
+  font-size:70px;
 }
 
-.hidden {
-  display: none !important;
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
 }
 
-.card {
-  background: white;
-  padding: 20px;
-  margin: 18px 0;
-  border-radius: 25px;
-  box-shadow: 0 8px 25px #d7759630;
-  border: 1px solid #ffe1eb;
+.avatar.camille{background:#ffd0e5}
+.avatar.alex{background:#d4eaff}
+.avatar.lea{background:#ffe1d1}
+
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px;
+  margin:15px 0;
 }
 
-.profile-card {
-  background: linear-gradient(155deg,#fff,#ffe4ee);
+.tag{
+  background:#fff1f5;
+  color:#b84d76;
+  padding:8px 12px;
+  border-radius:20px;
+  font-size:13px;
 }
 
-/* NOUVEAUX AVATARS */
-
-.avatar {
-  width: 155px;
-  height: 155px;
-  border-radius: 50%;
-  margin: 12px auto 18px;
-  display: grid;
-  place-items: center;
-  font-size: 75px;
-  border: 5px solid white;
-  box-shadow: 0 8px 25px #c7668750;
-  transition: transform .3s ease;
-  overflow: hidden;
+button{
+  border:0;
+  border-radius:22px;
+  padding:13px 15px;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.avatar:hover {
-  transform: scale(1.05);
+button:active{transform:scale(.97)}
+
+.primary{
+  background:#d65783;
+  color:white;
 }
 
-.avatar.camille {
-  background: linear-gradient(135deg,#ffc5df,#ffe4f1);
+.secondary{
+  background:#ffe0ea;
+  color:#a9446d;
 }
 
-.avatar.alex {
-  background: linear-gradient(135deg,#d9c7ff,#bfe5ff);
+.full{
+  width:100%;
+  display:block;
+  margin:10px 0;
 }
 
-.avatar.lea {
-  background: linear-gradient(135deg,#ffe0bd,#ffd1dc);
+.actions{
+  display:flex;
+  gap:12px;
 }
 
-.avatar.mine {
-  background: linear-gradient(135deg,#ffd5e7,#e8d7ff);
+.actions button{flex:1}
+
+input,textarea,select{
+  width:100%;
+  padding:13px;
+  margin:10px 0;
+  border:1px solid #ecc2d2;
+  border-radius:14px;
+  font:inherit;
 }
 
-/* BADGES */
+textarea{min-height:90px}
 
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  margin: 15px 0;
+label{
+  display:block;
+  text-align:left;
+  margin-top:12px;
+  font-weight:bold;
 }
 
-.tag {
-  background: #fff1f5;
-  color: #b84d76;
-  border-radius: 20px;
-  padding: 8px 12px;
-  font-size: 13px;
+.demo{
+  color:#c45b83;
+  font-size:12px;
+  font-weight:bold;
 }
 
-/* BOUTONS */
-
-button {
-  border: 0;
-  border-radius: 22px;
-  padding: 13px 15px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
+.note{
+  color:#a8758b;
+  font-size:12px;
+  line-height:1.6;
 }
 
-button:active {
-  transform: scale(.97);
+.chat{
+  background:#fff0f5;
+  border-radius:20px;
+  padding:15px;
+  min-height:150px;
+  text-align:left;
 }
 
-.primary {
-  background: #d65783;
-  color: white;
+.bubble{
+  padding:12px;
+  margin:10px 0;
+  border-radius:16px;
+  max-width:85%;
+  overflow-wrap:anywhere;
 }
 
-.secondary {
-  background: #ffe0ea;
-  color: #a9446d;
+.theirs{background:white}
+
+.bubble.mine{
+  background:#f5b9d0;
+  margin-left:auto;
 }
 
-.full {
-  width: 100%;
-  display: block;
-  margin: 10px 0;
+.notice{
+  padding:14px;
+  margin:10px 0;
+  border-radius:15px;
+  background:#fff0f5;
+  text-align:left;
 }
 
-.actions {
-  display: flex;
-  gap: 12px;
+/* BARRE DU BAS */
+
+.nav{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:460px;
+  display:flex;
+  justify-content:space-around;
+  padding:10px 4px max(12px,env(safe-area-inset-bottom));
+  background:white;
+  box-shadow:0 -4px 20px #ad5b7b20;
+  z-index:10;
 }
 
-.actions button {
-  flex: 1;
+.nav button{
+  min-width:55px;
+  padding:8px 4px;
+  background:transparent;
+  color:#ad6581;
+  font-size:11px;
 }
 
-input,textarea,select {
-  display: block;
-  width: 100%;
-  padding: 13px;
-  margin: 10px 0;
-  border: 1px solid #ecc2d2;
-  border-radius: 14px;
-  font: inherit;
+.nav button.active{
+  background:#fff0f5;
+  color:#d65783;
 }
 
-textarea {
-  min-height: 90px;
-}
-
-label {
-  display: block;
-  text-align: left;
-  margin-top: 12px;
-  font-weight: bold;
-}
-
-.note {
-  color: #a8758b;
-  font-size: 12px;
-  line-height: 1.6;
-}
-
-.demo {
-  color: #c45b83;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-/* MESSAGES */
-
-.chat {
-  background: #fff0f5;
-  border-radius: 20px;
-  padding: 15px;
-  min-height: 150px;
-  text-align: left;
-}
-
-.bubble {
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 16px;
-  max-width: 85%;
-  overflow-wrap: anywhere;
-}
-
-.theirs {
-  background: white;
-}
-
-.bubble.mine {
-  background: #f5b9d0;
-  margin-left: auto;
-}
-
-.notice {
-  background: #fff0f5;
-  border-radius: 15px;
-  padding: 14px;
-  margin: 10px 0;
-  text-align: left;
-}
-
-/* NAVIGATION */
-
-.nav {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 460px;
-  display: flex;
-  justify-content: space-around;
-  background: white;
-  padding: 12px 4px;
-  padding-bottom: max(12px,env(safe-area-inset-bottom));
-  border-top: 1px solid #f4d2df;
-  box-shadow: 0 -4px 20px #ad5b7b20;
-  z-index: 10;
-}
-
-.nav button {
-  background: transparent;
-  color: #ad6581;
-  padding: 8px 4px;
-  font-size: 11px;
-  min-width: 55px;
-}
-
-.nav button.active {
-  color: #d65783;
-  background: #fff0f5;
-}
-
-.symbol {
-  display: block;
-  font-size: 23px;
-  margin-bottom: 4px;
+.symbol{
+  display:block;
+  font-size:23px;
+  margin-bottom:4px;
 }
 
 /* ANIMATIONS */
 
-@keyframes likeAway {
-  to {
-    opacity: 0;
-    transform: translateX(130px) rotate(12deg);
+@keyframes likeAway{
+  to{
+    opacity:0;
+    transform:translateX(130px) rotate(12deg);
   }
 }
 
-@keyframes passAway {
-  to {
-    opacity: 0;
-    transform: translateX(-130px) rotate(-12deg);
+@keyframes passAway{
+  to{
+    opacity:0;
+    transform:translateX(-130px) rotate(-12deg);
   }
 }
 
-@keyframes arrive {
-  from {
-    opacity: 0;
-    transform: scale(.9);
+@keyframes arrive{
+  from{
+    opacity:0;
+    transform:scale(.9);
   }
-  to {
-    opacity: 1;
-    transform: scale(1);
+  to{
+    opacity:1;
+    transform:scale(1);
   }
 }
 
-.like-away {
-  animation: likeAway .3s forwards;
-}
-
-.pass-away {
-  animation: passAway .3s forwards;
-}
-
-.arrive {
-  animation: arrive .35s ease;
-}
+.like-away{animation:likeAway .3s forwards}
+.pass-away{animation:passAway .3s forwards}
+.arrive{animation:arrive .35s ease}
 
 /* MODE SOMBRE */
 
-body.dark {
-  color: #f8dce8;
-  background: #211b29;
+body.dark{
+  background:#211b29;
+  color:#f8dce8;
 }
 
-body.dark .app {
-  background: #302637;
-}
+body.dark .app{background:#302637}
 
-body.dark .card {
-  background: #49354b;
-  border-color: #644a64;
+body.dark .card{
+  background:#49354b;
+  border-color:#644a64;
 }
 
 body.dark h1,
 body.dark h2,
-body.dark .logo {
-  color: #ff9fc4;
-}
+body.dark .logo{color:#ff9fc4}
 
-body.dark .nav {
-  background: #382a40;
-  border-color: #61465e;
-}
+body.dark .nav{background:#382a40}
 
-body.dark .nav button {
-  color: #e5b1c8;
-}
+body.dark .nav button{color:#e5b1c8}
 
-body.dark .nav button.active {
-  background: #62425b;
-  color: white;
+body.dark .nav button.active{
+  background:#62425b;
+  color:white;
 }
 
 body.dark .secondary,
 body.dark .tag,
 body.dark .notice,
-body.dark .chat {
-  background: #62425b;
-  color: white;
+body.dark .chat{
+  background:#62425b;
+  color:white;
 }
 
-body.dark .theirs {
-  background: #6a5068;
-}
-
-body.dark .bubble.mine {
-  background: #a65d83;
-}
+body.dark .theirs{background:#6a5068}
+body.dark .bubble.mine{background:#a65d83}
 
 body.dark input,
 body.dark textarea,
-body.dark select {
-  background: #49354b;
-  color: white;
-  border-color: #80617b;
+body.dark select{
+  background:#49354b;
+  color:white;
+  border-color:#80617b;
 }
 
 body.dark .note,
-body.dark .demo {
-  color: #efb3cc;
-}
+body.dark .demo{color:#efb3cc}
 
-@media (prefers-reduced-motion:reduce) {
-  .like-away,.pass-away,.arrive {
-    animation: none;
+@media(prefers-reduced-motion:reduce){
+  .like-away,.pass-away,.arrive{
+    animation:none;
   }
 }
 </style>
@@ -388,12 +328,16 @@ body.dark .demo {
 <section id="home">
   <div style="font-size:65px">🌸</div>
   <h1 data-t="welcome">Bienvenue sur Destinya</h1>
-  <p data-t="intro">Découvre notre application de démonstration.</p>
+  <p data-t="intro">
+    Découvre notre application de démonstration.
+  </p>
 
   <div class="card">
     <div style="font-size:45px">💗</div>
     <h2 data-t="discover">Découvrir les profils</h2>
-    <p data-t="fiction">Tous les personnages sont fictifs.</p>
+    <p data-t="fiction">
+      Tous les personnages sont fictifs.
+    </p>
     <button class="primary full"
       onclick="startDemo()" data-t="start">
       Commencer
@@ -411,15 +355,21 @@ body.dark .demo {
   </p>
 </section>
 
-<!-- PROFILS -->
+<!-- PROFILS FICTIFS -->
 
 <section id="profiles" class="hidden">
   <h2 data-t="discover">Découvrir les profils</h2>
   <p id="counter"></p>
 
   <div class="card profile-card" id="profileCard">
-    <p class="demo" data-t="fictional">PROFIL FICTIF</p>
-    <div class="avatar camille" id="avatar">🌸</div>
+    <p class="demo" data-t="fictional">
+      PROFIL FICTIF
+    </p>
+
+    <div class="avatar camille" id="avatar">
+      <img src="camille.png" alt="Portrait fictif">
+    </div>
+
     <h2 id="profileName"></h2>
     <p id="profileBio"></p>
     <div class="tags" id="profileTags"></div>
@@ -437,12 +387,14 @@ body.dark .demo {
   </div>
 </section>
 
-<!-- MATCH -->
+<!-- MATCH FICTIF -->
 
 <section id="match" class="hidden">
   <div style="font-size:80px">💞</div>
   <h1>Match !</h1>
-  <p data-t="fakeMatch">C'est un match de démonstration !</p>
+  <p data-t="fakeMatch">
+    C'est un match de démonstration !
+  </p>
   <h2 id="matchName"></h2>
 
   <button class="primary full"
@@ -456,11 +408,14 @@ body.dark .demo {
   </button>
 </section>
 
-<!-- MESSAGES -->
+<!-- MESSAGES SIMULÉS -->
 
 <section id="messages" class="hidden">
   <h2 data-t="messages">💬 Messages</h2>
-  <p class="demo" data-t="simulated">CONVERSATION SIMULÉE</p>
+  <p class="demo" data-t="simulated">
+    CONVERSATION SIMULÉE
+  </p>
+
   <p id="chatTitle"></p>
   <div class="chat" id="chatBox"></div>
 
@@ -480,10 +435,12 @@ body.dark .demo {
 
 <section id="myProfile" class="hidden">
   <h2 data-t="myProfile">👤 Mon profil</h2>
-  <p class="demo" data-t="testProfile">PROFIL DE TEST</p>
+  <p class="demo" data-t="testProfile">
+    PROFIL DE TEST
+  </p>
 
   <div class="card">
-    <div class="avatar mine" id="myAvatar">🌸</div>
+    <div class="avatar" id="myAvatar">🌸</div>
     <h2 id="myName"></h2>
     <p id="myBio"></p>
     <div class="tags" id="myTags"></div>
@@ -495,7 +452,7 @@ body.dark .demo {
   </button>
 </section>
 
-<!-- MODIFIER LE PROFIL -->
+<!-- MODIFIER MON PROFIL -->
 
 <section id="editProfile" class="hidden">
   <h2 data-t="edit">✏️ Modifier</h2>
@@ -527,7 +484,8 @@ body.dark .demo {
     </label>
     <input id="editInterests" maxlength="120">
 
-    <button type="submit" class="primary full" data-t="save">
+    <button type="submit"
+      class="primary full" data-t="save">
       💗 Enregistrer
     </button>
   </form>
@@ -542,7 +500,10 @@ body.dark .demo {
 
 <section id="notifications" class="hidden">
   <h2 data-t="notifications">🔔 Notifications</h2>
-  <p class="demo" data-t="fakeAlerts">ALERTES FICTIVES</p>
+  <p class="demo" data-t="fakeAlerts">
+    ALERTES FICTIVES
+  </p>
+
   <div id="notificationList"></div>
 
   <button class="primary full"
@@ -577,9 +538,13 @@ body.dark .demo {
   <div class="card">
     <h3 data-t="language">🌍 Langue</h3>
     <button class="secondary full"
-      onclick="setLanguage('fr')">🇫🇷 Français</button>
+      onclick="setLanguage('fr')">
+      🇫🇷 Français
+    </button>
     <button class="secondary full"
-      onclick="setLanguage('en')">🇬🇧 English</button>
+      onclick="setLanguage('en')">
+      🇬🇧 English
+    </button>
   </div>
 
   <div class="card">
@@ -598,25 +563,29 @@ body.dark .demo {
 
 </main>
 
-<!-- BARRE DE NAVIGATION -->
+<!-- NAVIGATION -->
 
 <nav class="nav" aria-label="Navigation principale">
   <button data-page="home" onclick="showPage('home')">
     <span class="symbol">🏠</span>
     <span data-t="navHome">Accueil</span>
   </button>
+
   <button data-page="profiles" onclick="openProfiles()">
     <span class="symbol">💗</span>
     <span data-t="navDiscover">Profils</span>
   </button>
+
   <button data-page="messages" onclick="openMessages()">
     <span class="symbol">💬</span>
     <span data-t="navMessages">Messages</span>
   </button>
+
   <button data-page="myProfile" onclick="openMyProfile()">
     <span class="symbol">👤</span>
     <span data-t="navProfile">Profil</span>
   </button>
+
   <button data-page="settings" onclick="showPage('settings')">
     <span class="symbol">⚙️</span>
     <span data-t="navSettings">Réglages</span>
@@ -624,6 +593,8 @@ body.dark .demo {
 </nav>
 
 <script>
+/* DESTINYA - DÉMONSTRATION FICTIVE */
+
 const translations = {
   fr: {
     demo: "DÉMO",
@@ -673,7 +644,7 @@ const translations = {
     alertsOn: "Notifications fictives activées",
     alertsOff: "Notifications fictives désactivées",
     empty: "Aucune notification.",
-    alertWelcome: "🌸 Bienvenue dans Destinya !",
+    alertWelcome: "🌸 Bienvenue sur Destinya !",
     alertMatch: "❤️ Nouveau match fictif !",
     alertMessage: "💬 Conversation de démonstration.",
     chatIntro: "Bonjour ! Bienvenue dans cette conversation fictive 🌸",
@@ -742,7 +713,7 @@ const translations = {
   }
 };
 
-// SAUVEGARDE DES PRÉFÉRENCES
+/* PRÉFÉRENCES */
 
 function loadPreference(key, fallback) {
   try {
@@ -756,28 +727,32 @@ function savePreference(key, value) {
   try {
     localStorage.setItem(key, value);
   } catch (error) {
-    // La démonstration fonctionne sans stockage.
+    // L'application fonctionne sans stockage.
   }
 }
 
-let language = loadPreference("destinya-language", "fr");
+let language = loadPreference(
+  "destinya-language", "fr"
+);
 
 if (!translations[language]) {
   language = "fr";
 }
 
-let darkMode =
-  loadPreference("destinya-dark", "false") === "true";
+let darkMode = loadPreference(
+  "destinya-dark", "false"
+) === "true";
 
 let notificationsEnabled = true;
 let notificationItems = [];
 
-// PROFILS FICTIFS ET AVATARS PASTEL
+/* PROFILS FICTIFS */
 
 const profiles = [
   {
     name: "Camille",
     age: 26,
+    image: "camille.png",
     avatar: "🌸",
     avatarClass: "camille",
     bio: {
@@ -789,6 +764,7 @@ const profiles = [
   {
     name: "Alex",
     age: 29,
+    image: "alex.png",
     avatar: "🎨",
     avatarClass: "alex",
     bio: {
@@ -800,6 +776,7 @@ const profiles = [
   {
     name: "Léa",
     age: 31,
+    image: "lea.png",
     avatar: "🦋",
     avatarClass: "lea",
     bio: {
@@ -826,7 +803,7 @@ function t(key) {
   return translations[language][key] || key;
 }
 
-// NAVIGATION
+/* NAVIGATION */
 
 function showPage(id) {
   document.querySelectorAll("main section")
@@ -849,25 +826,19 @@ function showPage(id) {
       );
     });
 
-  if (id === "settings") {
-    updateSettings();
-  }
-
-  if (id === "notifications") {
-    renderNotifications();
-  }
+  if (id === "settings") updateSettings();
+  if (id === "notifications") renderNotifications();
 
   window.scrollTo(0, 0);
 }
 
-// LANGUE
+/* LANGUES */
 
 function setLanguage(value) {
   if (!translations[value]) return;
 
   language = value;
   savePreference("destinya-language", value);
-
   document.documentElement.lang = value;
 
   document.querySelectorAll("[data-t]")
@@ -888,7 +859,7 @@ function setLanguage(value) {
   }
 }
 
-// MODE SOMBRE
+/* THÈME SOMBRE */
 
 function applyDarkMode() {
   document.body.classList.toggle("dark", darkMode);
@@ -911,7 +882,7 @@ function updateSettings() {
       : t("alertsOff");
 }
 
-// BADGES
+/* BADGES */
 
 function fillTags(id, values) {
   const container = document.getElementById(id);
@@ -925,7 +896,27 @@ function fillTags(id, values) {
   });
 }
 
-// PROFILS ET ANIMATIONS
+/* AFFICHAGE DES PORTRAITS */
+
+function showPortrait(profile) {
+  const avatar = document.getElementById("avatar");
+
+  avatar.className = "avatar " + profile.avatarClass;
+  avatar.replaceChildren();
+
+  const image = document.createElement("img");
+  image.src = profile.image;
+  image.alt = "Portrait fictif de " + profile.name;
+
+  // Si le fichier image manque, afficher l'emoji.
+  image.onerror = function() {
+    avatar.textContent = profile.avatar;
+  };
+
+  avatar.appendChild(image);
+}
+
+/* PROFILS ET ANIMATIONS */
 
 function startDemo() {
   current = 0;
@@ -934,7 +925,6 @@ function startDemo() {
 
 function openProfiles() {
   if (animating) return;
-
   renderProfile();
   showPage("profiles");
 }
@@ -947,10 +937,7 @@ function renderProfile() {
       t("count") + " " + (current + 1) +
       " " + t("of") + " " + profiles.length;
 
-  const avatar = document.getElementById("avatar");
-
-  avatar.className = "avatar " + profile.avatarClass;
-  avatar.textContent = profile.avatar;
+  showPortrait(profile);
 
   document.getElementById("profileName")
     .textContent = profile.name + ", " + profile.age;
@@ -975,10 +962,14 @@ function chooseProfile(liked) {
   const selectedProfile = profiles[current];
 
   card.classList.remove("arrive");
-  card.classList.add(liked ? "like-away" : "pass-away");
+  card.classList.add(
+    liked ? "like-away" : "pass-away"
+  );
 
   setTimeout(() => {
-    card.classList.remove("like-away", "pass-away");
+    card.classList.remove(
+      "like-away", "pass-away"
+    );
 
     if (liked) {
       matchedProfile = selectedProfile;
@@ -986,7 +977,8 @@ function chooseProfile(liked) {
 
       document.getElementById("matchName")
         .textContent =
-          selectedProfile.name + ", " + selectedProfile.age;
+          selectedProfile.name + ", " +
+          selectedProfile.age;
 
       if (notificationsEnabled) {
         notificationItems.unshift("alertMatch");
@@ -1007,13 +999,14 @@ function continueProfiles() {
   showPage("profiles");
 }
 
-// CONVERSATIONS SIMULÉES
+/* MESSAGES SIMULÉS */
 
 function updateChatTitle() {
   if (!matchedProfile) return;
 
   document.getElementById("chatTitle")
-    .textContent = t("chatWith") + matchedProfile.name;
+    .textContent =
+      t("chatWith") + matchedProfile.name;
 }
 
 function openMessages() {
@@ -1052,7 +1045,6 @@ function sendMessage() {
 
   messages.push(message);
   field.value = "";
-
   renderChat();
 
   if (notificationsEnabled) {
@@ -1060,7 +1052,7 @@ function sendMessage() {
   }
 }
 
-// MON PROFIL FICTIF
+/* MON PROFIL FICTIF */
 
 function openMyProfile() {
   document.getElementById("myAvatar")
@@ -1126,7 +1118,7 @@ document.getElementById("profileForm")
     openMyProfile();
   });
 
-// NOTIFICATIONS FICTIVES
+/* NOTIFICATIONS FICTIVES */
 
 function toggleNotifications() {
   notificationsEnabled = !notificationsEnabled;
@@ -1156,10 +1148,16 @@ function clearNotifications() {
 }
 
 function renderNotifications() {
-  const list = document.getElementById("notificationList");
+  const list = document.getElementById(
+    "notificationList"
+  );
+
   list.replaceChildren();
 
-  if (!notificationsEnabled || notificationItems.length === 0) {
+  if (
+    !notificationsEnabled ||
+    notificationItems.length === 0
+  ) {
     const empty = document.createElement("p");
 
     empty.textContent = notificationsEnabled
@@ -1178,7 +1176,7 @@ function renderNotifications() {
   });
 }
 
-// DÉMARRAGE
+/* DÉMARRAGE */
 
 setLanguage(language);
 applyDarkMode();
