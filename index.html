@@ -15,7 +15,7 @@ body{
  background:linear-gradient(145deg,#fff0ed,#ffd6df,#ffe8d6)
 }
 .container{
- width:100%;max-width:430px;padding:25px 20px;
+ width:100%;max-width:440px;padding:25px 20px;
  background:white;border-radius:28px;text-align:center;
  box-shadow:0 12px 35px #b76b7b30
 }
@@ -70,10 +70,10 @@ small{display:block;margin:12px 0;line-height:1.5}
  <button class="secondary" onclick="showPage('login')">
   Se connecter
  </button>
- <button class="secondary" onclick="openProfiles()">
-  🌸 Découvrir les profils fictifs
+ <button class="secondary" onclick="openDemo()">
+  🌸 Découvrir la démonstration
  </button>
- <small>Réservé aux adultes de 18 ans et plus.</small>
+ <small>Application réservée aux adultes de 18 ans et plus.</small>
 </section>
 
 <section id="register" class="hidden">
@@ -99,7 +99,8 @@ small{display:block;margin:12px 0;line-height:1.5}
   <input id="email" type="email" required>
 
   <label for="password">Mot de passe</label>
-  <input id="password" type="password" minlength="8" required>
+  <input id="password" type="password"
+   minlength="8" required>
 
   <button class="primary" type="submit">
    Créer mon compte
@@ -134,14 +135,29 @@ small{display:block;margin:12px 0;line-height:1.5}
  <h2>Bienvenue sur Destinya !</h2>
  <p id="userEmail"></p>
  <p id="verificationInfo"></p>
+
  <button id="verifyEmail" class="secondary">
   Envoyer un e-mail de vérification
  </button>
  <button id="refreshVerification" class="secondary">
   Actualiser la vérification
  </button>
- <button class="primary" onclick="openProfiles()">
-  💕 Découvrir les profils
+
+ <button id="publishProfile" class="primary">
+  🌸 Rendre mon profil visible
+ </button>
+ <button id="hideProfile" class="secondary">
+  🔒 Masquer mon profil
+ </button>
+ <small id="visibilityInfo">
+  Ton profil est privé par défaut.
+ </small>
+
+ <button id="discoverReal" class="primary">
+  💕 Découvrir les vrais profils
+ </button>
+ <button class="secondary" onclick="openDemo()">
+  Voir les profils fictifs
  </button>
  <button id="logout" class="secondary">
   Se déconnecter
@@ -153,7 +169,7 @@ small{display:block;margin:12px 0;line-height:1.5}
  <p id="profileCount"></p>
 
  <div class="profile-card" id="swipeCard">
-  <small>PROFIL FICTIF — DÉMONSTRATION</small>
+  <small id="profileType"></small>
   <div class="avatar" id="profileAvatar"></div>
   <div class="profile-name" id="profileName"></div>
   <p id="profileBio"></p>
@@ -169,9 +185,8 @@ small{display:block;margin:12px 0;line-height:1.5}
   </button>
  </div>
 
- <p id="likesCount">❤️ Likes de démonstration : 0</p>
- <small>Glisse à gauche pour passer, à droite pour aimer.
- Aucun like réel n'est envoyé.</small>
+ <p id="likesCount"></p>
+ <small id="demoNotice"></small>
 
  <button class="secondary" onclick="backFromProfiles()">
   Retour
@@ -182,7 +197,39 @@ small{display:block;margin:12px 0;line-height:1.5}
 </main>
 
 <script>
-let currentPage = "home";
+let currentPage="home";
+let returnPage="home";
+let profileIndex=0;
+let profileMode="demo";
+let activeProfiles=[];
+const likedDemoProfiles=new Set();
+
+const demoProfiles=[
+ {
+  name:"Camille",age:26,ville:"Paris",
+  avatar:"🌸",objectif:"amitie",
+  bio:"J'aime les promenades et les livres.",
+  interests:["Lecture","Nature"]
+ },
+ {
+  name:"Alex",age:29,ville:"Lyon",
+  avatar:"🎨",objectif:"serieux",
+  bio:"Passionné de musique et de voyages.",
+  interests:["Musique","Voyages"]
+ },
+ {
+  name:"Léa",age:31,ville:"Lille",
+  avatar:"🦋",objectif:"sans_engagement",
+  bio:"J'adore cuisiner et le cinéma.",
+  interests:["Cuisine","Cinéma"]
+ }
+];
+
+const objectiveLabels={
+ amitie:"Amitié",
+ serieux:"Relation sérieuse",
+ sans_engagement:"Sans engagement"
+};
 
 function showPage(page){
  document.querySelectorAll("main section").forEach(s=>{
@@ -193,62 +240,91 @@ function showPage(page){
  currentPage=page;
 }
 
-const demoProfiles=[
- {
-  name:"Camille, 26 ans",avatar:"🌸",
-  bio:"J'aime les promenades et les livres.",
-  interests:["Lecture","Nature"]
- },
- {
-  name:"Alex, 29 ans",avatar:"🎨",
-  bio:"Passionné de musique et de voyages.",
-  interests:["Musique","Voyages"]
- },
- {
-  name:"Léa, 31 ans",avatar:"🦋",
-  bio:"J'adore cuisiner et découvrir de nouveaux endroits.",
-  interests:["Cuisine","Cinéma"]
- }
-];
-
-let profileIndex=0;
-let returnPage="home";
-const likedDemoProfiles=new Set();
+function notice(text){
+ document.getElementById("message").textContent=text;
+}
 
 function renderProfile(){
- const p=demoProfiles[profileIndex];
- document.getElementById("profileCount").textContent=
-  `Profil ${profileIndex+1} sur ${demoProfiles.length}`;
- document.getElementById("profileAvatar").textContent=p.avatar;
- document.getElementById("profileName").textContent=p.name;
- document.getElementById("profileBio").textContent=p.bio;
+ const count=document.getElementById("profileCount");
+ const card=document.getElementById("swipeCard");
+ const actions=document.querySelector(".actions");
+
+ if(!activeProfiles.length){
+  count.textContent="Aucun profil disponible pour le moment.";
+  card.classList.add("hidden");
+  actions.classList.add("hidden");
+  document.getElementById("likesCount").textContent="";
+  return;
+ }
+
+ card.classList.remove("hidden");
+ actions.classList.remove("hidden");
+
+ const p=activeProfiles[profileIndex];
+ count.textContent=
+  `Profil ${profileIndex+1} sur ${activeProfiles.length}`;
+
+ document.getElementById("profileType").textContent=
+  profileMode==="demo"?"PROFIL FICTIF":"PROFIL PUBLIC";
+
+ document.getElementById("profileAvatar").textContent=
+  p.avatar||"💗";
+
+ document.getElementById("profileName").textContent=
+  `${p.name}, ${p.age} ans`;
+
+ document.getElementById("profileBio").textContent=
+  p.bio||p.ville||"";
 
  const interests=document.getElementById("profileInterests");
  interests.replaceChildren();
- p.interests.forEach(item=>{
+
+ const tags=profileMode==="demo"
+  ?p.interests
+  :[p.ville,objectiveLabels[p.objectif]||""];
+
+ tags.filter(Boolean).forEach(item=>{
   const span=document.createElement("span");
   span.className="tag";
   span.textContent=item;
   interests.appendChild(span);
  });
+
  document.getElementById("likesCount").textContent=
-  `❤️ Likes de démonstration : ${likedDemoProfiles.size}`;
+  profileMode==="demo"
+   ?`❤️ Likes fictifs : ${likedDemoProfiles.size}`
+   :"❤️ Les likes réels seront disponibles prochainement.";
+
+ document.getElementById("demoNotice").textContent=
+  "Le swipe fonctionne. Aucun like réel n'est enregistré.";
 }
 
-function openProfiles(){
- returnPage=currentPage;
+function showProfiles(){
  profileIndex=0;
  renderProfile();
  showPage("profiles");
 }
 
+function openDemo(){
+ returnPage=currentPage;
+ profileMode="demo";
+ activeProfiles=demoProfiles;
+ showProfiles();
+}
+
 function nextProfile(){
- profileIndex=(profileIndex+1)%demoProfiles.length;
+ if(!activeProfiles.length)return;
+ profileIndex=(profileIndex+1)%activeProfiles.length;
  renderProfile();
 }
 
 function likeProfile(){
- likedDemoProfiles.add(profileIndex);
+ if(!activeProfiles.length)return;
+ if(profileMode==="demo"){
+  likedDemoProfiles.add(profileIndex);
+ }else{
+  notice("Likes réels bientôt disponibles.");
+ }
  nextProfile();
 }
 
@@ -268,32 +344,29 @@ swipeCard.addEventListener("touchend",e=>{
  if(difference>70)likeProfile();
  else if(difference< -70)nextProfile();
 },{passive:true});
-</script>
 
+window.showPage=showPage;
+window.openDemo=openDemo;
+window.nextProfile=nextProfile;
+window.likeProfile=likeProfile;
+window.backFromProfiles=backFromProfiles;
+window.showProfiles=showProfiles;
+</script>
 <script type="module">
 import {initializeApp} from
 "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 
 import {
- getAuth,
- createUserWithEmailAndPassword,
- signInWithEmailAndPassword,
- signInWithPopup,
- GoogleAuthProvider,
- signOut,
- onAuthStateChanged,
- updateProfile,
- sendEmailVerification,
- reload
+ getAuth,createUserWithEmailAndPassword,
+ signInWithEmailAndPassword,signInWithPopup,
+ GoogleAuthProvider,signOut,onAuthStateChanged,
+ updateProfile,sendEmailVerification,reload
 } from
 "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 import {
- getFirestore,
- doc,
- setDoc,
- getDoc,
- serverTimestamp
+ getFirestore,doc,setDoc,getDoc,deleteDoc,
+ collection,getDocs,serverTimestamp
 } from
 "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
@@ -310,11 +383,6 @@ const firebaseConfig={
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
-const message=document.getElementById("message");
-
-function notice(text){
- message.textContent=text;
-}
 
 function calculateAge(value){
  if(!value)return -1;
@@ -327,6 +395,20 @@ function calculateAge(value){
   (today.getMonth()===birth.getMonth()&&
    today.getDate()<birth.getDate()))age--;
  return age;
+}
+
+function errorText(error){
+ const messages={
+  "auth/email-already-in-use":"Adresse e-mail déjà utilisée.",
+  "auth/invalid-email":"Adresse e-mail invalide.",
+  "auth/weak-password":"Mot de passe trop faible.",
+  "auth/invalid-credential":"Identifiants incorrects.",
+  "auth/unauthorized-domain":"Domaine non autorisé.",
+  "permission-denied":"Accès refusé. Vérifie les règles Firestore.",
+  "AGE_INVALIDE":"Inscription réservée aux adultes."
+ };
+ return messages[error.code||error.message]||
+  "Une erreur est survenue. Réessaie.";
 }
 
 async function createUserProfile(user,details){
@@ -345,20 +427,6 @@ async function createUserProfile(user,details){
  });
 }
 
-function errorText(error){
- const messages={
-  "auth/email-already-in-use":"Adresse e-mail déjà utilisée.",
-  "auth/invalid-email":"Adresse e-mail invalide.",
-  "auth/weak-password":"Mot de passe trop faible.",
-  "auth/invalid-credential":"Identifiants incorrects.",
-  "auth/unauthorized-domain":"Domaine non autorisé.",
-  "permission-denied":"Vérifie les règles Firestore.",
-  "AGE_INVALIDE":"Inscription réservée aux adultes."
- };
- return messages[error.code||error.message]||
-  "Une erreur est survenue. Réessaie.";
-}
-
 document.getElementById("registerForm")
 .addEventListener("submit",async event=>{
  event.preventDefault();
@@ -370,9 +438,8 @@ document.getElementById("registerForm")
   objectif:document.getElementById("objectif").value
  };
 
- if(!details.pseudo||!details.ville||
-    calculateAge(details.birthdate)<18||
-    calculateAge(details.birthdate)>120){
+ const age=calculateAge(details.birthdate);
+ if(!details.pseudo||!details.ville||age<18||age>120){
   notice("Vérifie tes informations. Réservé aux 18 ans et plus.");
   return;
  }
@@ -394,7 +461,7 @@ document.getElementById("registerForm")
    await sendEmailVerification(result.user);
    notice("Compte créé. Vérifie ton e-mail.");
   }catch{
-   notice("Compte créé. Vérification à demander depuis ton compte.");
+   notice("Compte créé. Demande la vérification depuis ton compte.");
   }
  }catch(error){
   notice(errorText(error));
@@ -421,12 +488,119 @@ document.getElementById("googleLogin")
   const result=await signInWithPopup(
    auth,new GoogleAuthProvider()
   );
-  const snapshot=await getDoc(
-   doc(db,"Users",result.user.uid)
-  );
+  const snapshot=await getDoc(doc(db,"Users",result.user.uid));
   if(!snapshot.exists()){
-   notice("Connexion Google réussie. Profil adulte à compléter.");
+   notice("Connexion réussie. Complète ton profil adulte avant publication.");
   }
+ }catch(error){
+  notice(errorText(error));
+ }
+});
+
+async function refreshVisibility(){
+ const user=auth.currentUser;
+ if(!user)return;
+
+ try{
+  const snapshot=await getDoc(doc(db,"publicProfiles",user.uid));
+  document.getElementById("visibilityInfo").textContent=
+   snapshot.exists()
+    ?"Ton profil est visible par les membres connectés."
+    :"Ton profil est privé.";
+ }catch(error){
+  document.getElementById("visibilityInfo").textContent=
+   errorText(error);
+ }
+}
+
+document.getElementById("publishProfile")
+.addEventListener("click",async()=>{
+ const user=auth.currentUser;
+ if(!user)return;
+
+ try{
+  await reload(user);
+  if(!user.emailVerified){
+   notice("Vérifie d'abord ton adresse e-mail.");
+   return;
+  }
+
+  const snapshot=await getDoc(doc(db,"Users",user.uid));
+  if(!snapshot.exists()){
+   notice("Profil incomplet. Publication impossible.");
+   return;
+  }
+
+  const p=snapshot.data();
+  if(!Number.isInteger(p.age)||p.age<18||
+     !p.pseudo||!p.ville||
+     !["amitie","serieux","sans_engagement"].includes(p.objectif)){
+   notice("Vérifie ton profil avant de le publier.");
+   return;
+  }
+
+  await setDoc(doc(db,"publicProfiles",user.uid),{
+   pseudo:p.pseudo,
+   age:p.age,
+   ville:p.ville,
+   objectif:p.objectif,
+   visible:true,
+   updatedAt:serverTimestamp()
+  });
+
+  notice("Ton profil est maintenant visible.");
+  await refreshVisibility();
+ }catch(error){
+  notice(errorText(error));
+ }
+});
+
+document.getElementById("hideProfile")
+.addEventListener("click",async()=>{
+ const user=auth.currentUser;
+ if(!user)return;
+
+ try{
+  await deleteDoc(doc(db,"publicProfiles",user.uid));
+  notice("Ton profil public a été masqué.");
+  await refreshVisibility();
+ }catch(error){
+  notice(errorText(error));
+ }
+});
+
+document.getElementById("discoverReal")
+.addEventListener("click",async()=>{
+ const user=auth.currentUser;
+ if(!user){
+  notice("Connecte-toi pour découvrir les profils.");
+  return;
+ }
+
+ try{
+  const snapshot=await getDoc(doc(db,"Users",user.uid));
+  if(!snapshot.exists()){
+   notice("Complète d'abord ton profil.");
+   return;
+  }
+
+  const results=await getDocs(collection(db,"publicProfiles"));
+
+  activeProfiles=results.docs
+   .filter(item=>item.id!==user.uid)
+   .map(item=>({
+    id:item.id,
+    name:item.data().pseudo,
+    age:item.data().age,
+    ville:item.data().ville,
+    objectif:item.data().objectif,
+    avatar:"💗"
+   }))
+   .filter(p=>p.name&&p.age>=18);
+
+  returnPage="account";
+  profileMode="real";
+  showProfiles();
  }catch(error){
   notice(errorText(error));
  }
@@ -484,6 +658,8 @@ function renderAccount(user){
   .classList.toggle("hidden",user.emailVerified);
  document.getElementById("refreshVerification")
   .classList.toggle("hidden",user.emailVerified);
+
+ refreshVisibility();
 }
 
 onAuthStateChanged(auth,renderAccount);
