@@ -2,64 +2,123 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Destinya</title>
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #241044, #a044a8);
-  color: white;
-  text-align: center;
-}
-header {
-  padding: 35px 15px;
-}
-h1 {
-  font-size: 42px;
-}
-.card {
-  background: white;
-  color: #333;
-  margin: 20px;
-  padding: 25px;
-  border-radius: 20px;
-}
-button {
-  background: #a044a8;
-  color: white;
-  border: none;
-  padding: 14px 25px;
-  border-radius: 12px;
-  font-size: 17px;
-}
-input {
-  padding: 13px;
-  margin: 8px;
-  width: 80%;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffe0e5">
+  <title>Destinya - Faites de belles rencontres</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(145deg, #fff0ed, #ffd6df, #ffe8d6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #593b49;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255,255,255,0.85);
+      padding: 40px 25px;
+      border-radius: 28px;
+      box-shadow: 0 12px 35px #b76b7b30;
+    }
+
+    .heart {
+      font-size: 65px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      color: #d65c82;
+      font-size: 42px;
+      margin: 10px 0;
+    }
+
+    .subtitle {
+      font-size: 17px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: #d65c82;
+      color: white;
+    }
+
+    .secondary {
+      background: #ffe1e8;
+      color: #a94368;
+    }
+
+    #message {
+      margin-top: 20px;
+      color: #a94368;
+      font-weight: bold;
+    }
+
+    .languages {
+      margin-top: 25px;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
+  <main class="container">
+    <div class="heart">💕</div>
+    <h1>Destinya</h1>
+    <p class="subtitle" id="subtitle">
+      Faites de belles rencontres, à votre rythme.
+    </p>
 
-<header>
-<h1>💜 Destinya</h1>
-<p>Fais de nouvelles connaissances !</p>
-</header>
+    <button class="primary" onclick="showMessage('Bienvenue sur Destinya !')">
+      Créer un compte
+    </button>
 
-<div class="card">
-<h2>Bienvenue sur Destinya</h2>
-<p>Une application pour rencontrer des personnes et créer de belles amitiés.</p>
-<input placeholder="Ton prénom">
-<br>
-<button onclick="alert('Bienvenue sur Destinya !')">
-Découvrir Destinya
-</button>
-</div>
+    <button class="secondary" onclick="showMessage('Bienvenue ! La connexion arrive bientôt.')">
+      Se connecter
+    </button>
 
+    <p id="message"></p>
+
+    <div class="languages">
+      <button class="secondary" onclick="changeLanguage('fr')">Français</button>
+      <button class="secondary" onclick="changeLanguage('en')">English</button>
+    </div>
+  </main>
+
+  <script>
+    function showMessage(message) {
+      document.getElementById("message").textContent = message;
+    }
+
+    function changeLanguage(language) {
+      const subtitle = document.getElementById("subtitle");
+
+      subtitle.textContent = language === "en"
+        ? "Meet new people, at your own pace."
+        : "Faites de belles rencontres, à votre rythme.";
+    }
+  </script>
 </body>
 </html>
-
