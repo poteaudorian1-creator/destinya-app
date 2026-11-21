@@ -149,7 +149,9 @@ button {
   margin-left: auto;
 }
 
-input, textarea {
+input,
+textarea,
+select {
   width: 100%;
   margin: 10px 0;
   padding: 13px;
@@ -187,10 +189,68 @@ label {
     opacity: 0;
     transform: scale(.9);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
   }
+}
+
+/* MODE SOMBRE */
+
+body.dark {
+  background: #241b2b;
+  color: #f9dce8;
+}
+
+body.dark .app {
+  background: #38283d;
+}
+
+body.dark .card {
+  background: #50344c;
+  border-color: #75506a;
+}
+
+body.dark h1,
+body.dark h2 {
+  color: #ff9fc5;
+}
+
+body.dark .tag,
+body.dark .avatar {
+  background: #63475c;
+  color: #fff0f6;
+}
+
+body.dark .chat {
+  background: #49334a;
+}
+
+body.dark .theirs {
+  background: #674c65;
+}
+
+body.dark .mine {
+  background: #9d5579;
+}
+
+body.dark .secondary {
+  background: #65445c;
+  color: white;
+}
+
+body.dark input,
+body.dark textarea,
+body.dark select {
+  background: #4b354b;
+  color: white;
+  border-color: #8a6280;
+}
+
+body.dark .note,
+body.dark .demo {
+  color: #f1a8c4;
 }
 </style>
 </head>
@@ -202,59 +262,127 @@ label {
 <!-- ACCUEIL -->
 
 <section id="home">
-  <div style="font-size:55px">💕</div>
-  <h1>Destinya</h1>
-  <p>Un univers rose et romantique.</p>
-  <p class="demo">MODE DÉMONSTRATION</p>
 
-  <button class="primary full"
+  <div style="font-size:55px">💕</div>
+
+  <h1>Destinya</h1>
+
+  <p>Un univers rose et romantique.</p>
+
+  <p class="demo">
+    MODE DÉMONSTRATION
+  </p>
+
+  <button
+    class="primary full"
     onclick="startDemo()">
     🌸 Découvrir les profils
   </button>
 
-  <button class="secondary full"
+  <button
+    class="secondary full"
     onclick="openMyProfile()">
     👤 Mon profil
   </button>
 
-  <button class="secondary full"
+  <button
+    class="secondary full"
     onclick="openMessages()">
     💬 Conversations fictives
+  </button>
+
+  <button
+    class="secondary full"
+    onclick="showPage('settings')">
+    ⚙️ Paramètres
   </button>
 
   <p class="note">
     Tous les personnages et échanges
     sont inventés. Aucun contact réel.
   </p>
+
+</section>
+
+<!-- PARAMÈTRES -->
+
+<section id="settings" class="hidden">
+
+  <h2>⚙️ Paramètres</h2>
+
+  <p>Personnalise ton interface Destinya.</p>
+
+  <div class="card">
+
+    <h3>🌙 Apparence</h3>
+
+    <p id="themeStatus">
+      Mode clair activé
+    </p>
+
+    <button
+      class="primary full"
+      onclick="toggleDarkMode()">
+      🌙 Changer le thème
+    </button>
+
+  </div>
+
+  <button
+    class="secondary full"
+    onclick="showPage('home')">
+    🏠 Retour à l'accueil
+  </button>
+
 </section>
 
 <!-- MON PROFIL -->
 
 <section id="myProfile" class="hidden">
+
   <h2>👤 Mon profil</h2>
-  <p class="demo">PROFIL DE TEST</p>
+
+  <p class="demo">
+    PROFIL DE TEST
+  </p>
 
   <div class="card">
-    <div class="avatar" id="myAvatar">🌸</div>
+
+    <div
+      class="avatar"
+      id="myAvatar">
+      🌸
+    </div>
+
     <h2 id="myName"></h2>
+
     <p id="myBio"></p>
-    <div class="tags" id="myTags"></div>
+
+    <div
+      class="tags"
+      id="myTags">
+    </div>
+
   </div>
 
-  <button class="primary full"
+  <button
+    class="primary full"
     onclick="showPage('editProfile')">
     ✏️ Modifier mon profil
   </button>
 
-  <button class="secondary full"
+  <button
+    class="secondary full"
     onclick="showPage('home')">
-    Retour à l'accueil
+    🏠 Retour à l'accueil
   </button>
+
 </section>
 
 <!-- MODIFIER MON PROFIL -->
 
 <section id="editProfile" class="hidden">
+
   <h2>✏️ Modifier mon profil</h2>
 
   <form id="profileForm">
@@ -262,6 +390,7 @@ label {
     <label for="editName">
       Prénom fictif
     </label>
+
     <input
       id="editName"
       maxlength="30"
@@ -270,88 +399,134 @@ label {
     <label for="editAvatar">
       Avatar
     </label>
-    <select id="editAvatar" style="
-      width:100%;
-      padding:13px;
-      margin:10px 0;
-      border:1px solid #edbfd0;
-      border-radius:14px;
-      font-size:16px;">
-      <option value="🌸">🌸 Fleur</option>
-      <option value="🦋">🦋 Papillon</option>
-      <option value="🎨">🎨 Art</option>
-      <option value="🌻">🌻 Tournesol</option>
-      <option value="🎵">🎵 Musique</option>
+
+    <select id="editAvatar">
+
+      <option value="🌸">
+        🌸 Fleur
+      </option>
+
+      <option value="🦋">
+        🦋 Papillon
+      </option>
+
+      <option value="🎨">
+        🎨 Art
+      </option>
+
+      <option value="🌻">
+        🌻 Tournesol
+      </option>
+
+      <option value="🎵">
+        🎵 Musique
+      </option>
+
     </select>
 
     <label for="editBio">
       Présentation fictive
     </label>
+
     <textarea
       id="editBio"
       maxlength="200"
-      required></textarea>
+      required>
+    </textarea>
 
     <label for="editInterests">
-      Centres d'intérêt (séparés par des virgules)
+      Centres d'intérêt
     </label>
+
     <input
       id="editInterests"
       maxlength="120"
       placeholder="Musique, Nature, Cinéma">
 
-    <button class="primary full" type="submit">
+    <button
+      class="primary full"
+      type="submit">
       💗 Enregistrer mon profil
     </button>
+
   </form>
 
-  <button class="secondary full"
+  <button
+    class="secondary full"
     onclick="openMyProfile()">
     Annuler
   </button>
 
   <p class="note">
-    Utilise uniquement des informations inventées.
-    Les modifications ne sont pas publiées.
+    Utilise uniquement des informations
+    inventées. Les modifications ne
+    sont pas publiées.
   </p>
+
 </section>
 
 <!-- PROFILS FICTIFS -->
 
 <section id="profiles" class="hidden">
+
   <h2>💕 Découvrir</h2>
+
   <p id="counter"></p>
 
   <div class="card">
-    <p class="demo">PROFIL FICTIF</p>
-    <div class="avatar" id="avatar"></div>
+
+    <p class="demo">
+      PROFIL FICTIF
+    </p>
+
+    <div
+      class="avatar"
+      id="avatar">
+    </div>
+
     <h2 id="name"></h2>
+
     <p id="bio"></p>
-    <div class="tags" id="tags"></div>
+
+    <div
+      class="tags"
+      id="tags">
+    </div>
+
   </div>
 
   <div class="actions">
-    <button class="secondary"
+
+    <button
+      class="secondary"
       onclick="passProfile()">
       ❌ Passer
     </button>
 
-    <button class="primary"
+    <button
+      class="primary"
       onclick="likeProfile()">
       ❤️ J'aime
     </button>
+
   </div>
 
-  <button class="secondary full"
+  <button
+    class="secondary full"
     onclick="showPage('home')">
-    Retour
+    🏠 Retour
   </button>
+
 </section>
 
 <!-- MATCH FICTIF -->
 
 <section id="matchScreen" class="hidden">
-  <div style="font-size:75px">💞</div>
+
+  <div style="font-size:75px">
+    💞
+  </div>
+
   <h1>Match !</h1>
 
   <p>
@@ -361,45 +536,60 @@ label {
 
   <h2 id="matchName"></h2>
 
-  <button class="primary full"
+  <button
+    class="primary full"
     onclick="openMessages()">
     💬 Voir la conversation
   </button>
 
-  <button class="secondary full"
+  <button
+    class="secondary full"
     onclick="continueProfiles()">
     Continuer
   </button>
+
 </section>
 
 <!-- MESSAGERIE FICTIVE -->
 
 <section id="messages" class="hidden">
+
   <h2>💬 Messagerie</h2>
-  <p class="demo">CONVERSATION SIMULÉE</p>
+
+  <p class="demo">
+    CONVERSATION SIMULÉE
+  </p>
+
   <p id="chatTitle"></p>
 
-  <div class="chat" id="chat"></div>
+  <div
+    class="chat"
+    id="chat">
+  </div>
 
   <textarea
     id="draft"
     maxlength="200"
-    placeholder="Écris un message fictif..."></textarea>
+    placeholder="Écris un message fictif...">
+  </textarea>
 
-  <button class="primary full"
+  <button
+    class="primary full"
     onclick="sendDemoMessage()">
     Envoyer dans la démonstration
   </button>
 
-  <button class="secondary full"
+  <button
+    class="secondary full"
     onclick="showPage('home')">
-    Retour à l'accueil
+    🏠 Retour à l'accueil
   </button>
 
   <p class="note">
-    Les messages restent sur cet écran.
-    Ils ne sont pas envoyés en ligne.
+    Les messages ne sont pas
+    envoyés en ligne.
   </p>
+
 </section>
 
 </main>
@@ -413,29 +603,47 @@ const profiles = [
     name: "Camille, 26 ans",
     avatar: "🌸",
     bio: "J'aime les promenades et les cafés chaleureux.",
-    tags: ["📚 Lecture", "☕ Café", "🌿 Nature"]
+    tags: [
+      "📚 Lecture",
+      "☕ Café",
+      "🌿 Nature"
+    ]
   },
+
   {
     name: "Alex, 29 ans",
     avatar: "🎨",
     bio: "Passionné de musique et de photographie.",
-    tags: ["🎵 Musique", "📷 Photo", "✈️ Voyages"]
+    tags: [
+      "🎵 Musique",
+      "📷 Photo",
+      "✈️ Voyages"
+    ]
   },
+
   {
     name: "Léa, 31 ans",
     avatar: "🦋",
     bio: "J'adore cuisiner et découvrir de nouveaux endroits.",
-    tags: ["🍰 Cuisine", "🎬 Cinéma", "🐾 Animaux"]
+    tags: [
+      "🍰 Cuisine",
+      "🎬 Cinéma",
+      "🐾 Animaux"
+    ]
   }
 ];
 
-// PROFIL PERSONNALISABLE DE TEST
+// MON PROFIL DE TEST
 
 let myProfile = {
   name: "Personnage de test",
   avatar: "🌸",
   bio: "J'aime découvrir de nouvelles activités.",
-  interests: ["Musique", "Nature", "Cinéma"]
+  interests: [
+    "Musique",
+    "Nature",
+    "Cinéma"
+  ]
 };
 
 let current = 0;
@@ -445,6 +653,7 @@ let messages = [];
 // NAVIGATION
 
 function showPage(id) {
+
   document.querySelectorAll("main section")
     .forEach(function(section) {
       section.classList.add("hidden");
@@ -452,25 +661,36 @@ function showPage(id) {
 
   document.getElementById(id)
     .classList.remove("hidden");
+
 }
 
-// AFFICHAGE DES ÉTIQUETTES
+// AFFICHAGE DES CENTRES D'INTÉRÊT
 
 function fillTags(containerId, values) {
-  const container = document.getElementById(containerId);
+
+  const container =
+    document.getElementById(containerId);
+
   container.replaceChildren();
 
   values.forEach(function(value) {
-    const tag = document.createElement("span");
+
+    const tag =
+      document.createElement("span");
+
     tag.className = "tag";
     tag.textContent = value;
+
     container.appendChild(tag);
+
   });
+
 }
 
 // MON PROFIL
 
 function openMyProfile() {
+
   document.getElementById("myAvatar")
     .textContent = myProfile.avatar;
 
@@ -495,25 +715,32 @@ function openMyProfile() {
     .value = myProfile.interests.join(", ");
 
   showPage("myProfile");
+
 }
 
-// ENREGISTRER MON PROFIL
+// ENREGISTRER LE PROFIL
 
 document.getElementById("profileForm")
   .addEventListener("submit", function(event) {
+
     event.preventDefault();
 
-    const name = document.getElementById("editName")
+    const name =
+      document.getElementById("editName")
       .value.trim();
 
-    const avatar = document.getElementById("editAvatar")
+    const avatar =
+      document.getElementById("editAvatar")
       .value;
 
-    const bio = document.getElementById("editBio")
+    const bio =
+      document.getElementById("editBio")
       .value.trim();
 
-    const interests = document.getElementById("editInterests")
-      .value.split(",")
+    const interests =
+      document.getElementById("editInterests")
+      .value
+      .split(",")
       .map(function(value) {
         return value.trim();
       })
@@ -532,17 +759,23 @@ document.getElementById("profileForm")
     };
 
     openMyProfile();
+
   });
 
 // DÉCOUVRIR LES PROFILS
 
 function startDemo() {
+
   current = 0;
+
   renderProfile();
+
   showPage("profiles");
+
 }
 
 function renderProfile() {
+
   const profile = profiles[current];
 
   document.getElementById("counter")
@@ -560,40 +793,57 @@ function renderProfile() {
     .textContent = profile.bio;
 
   fillTags("tags", profile.tags);
+
 }
 
 function nextProfile() {
-  current = (current + 1) % profiles.length;
+
+  current =
+    (current + 1) % profiles.length;
+
   renderProfile();
+
 }
 
 function passProfile() {
+
   nextProfile();
+
 }
 
 // MATCH SIMULÉ
 
 function likeProfile() {
+
   matchedProfile = profiles[current];
+
   messages = [];
 
   document.getElementById("matchName")
     .textContent = matchedProfile.name;
 
   showPage("matchScreen");
+
 }
 
 function continueProfiles() {
+
   nextProfile();
+
   showPage("profiles");
+
 }
 
 // MESSAGERIE SIMULÉE
 
 function openMessages() {
+
   if (!matchedProfile) {
+
     matchedProfile = profiles[0];
+
     messages = [];
+
   }
 
   document.getElementById("chatTitle")
@@ -602,37 +852,76 @@ function openMessages() {
       matchedProfile.name;
 
   renderChat();
+
   showPage("messages");
+
 }
 
 function renderChat() {
-  const chat = document.getElementById("chat");
+
+  const chat =
+    document.getElementById("chat");
+
   chat.replaceChildren();
 
-  const intro = document.createElement("div");
+  const intro =
+    document.createElement("div");
+
   intro.className = "bubble theirs";
+
   intro.textContent =
     "Bonjour ! Bienvenue dans cette conversation de démonstration 🌸";
 
   chat.appendChild(intro);
 
   messages.forEach(function(text) {
-    const bubble = document.createElement("div");
+
+    const bubble =
+      document.createElement("div");
+
     bubble.className = "bubble mine";
+
     bubble.textContent = text;
+
     chat.appendChild(bubble);
+
   });
+
 }
 
 function sendDemoMessage() {
-  const field = document.getElementById("draft");
+
+  const field =
+    document.getElementById("draft");
+
   const text = field.value.trim();
 
-  if (!text) return;
+  if (!text) {
+    return;
+  }
 
   messages.push(text);
+
   field.value = "";
+
   renderChat();
+
+}
+
+// PARAMÈTRES : MODE SOMBRE
+
+function toggleDarkMode() {
+
+  document.body.classList.toggle("dark");
+
+  const darkMode =
+    document.body.classList.contains("dark");
+
+  document.getElementById("themeStatus")
+    .textContent = darkMode
+      ? "Mode sombre activé 🌙"
+      : "Mode clair activé ☀️";
+
 }
 
 </script>
