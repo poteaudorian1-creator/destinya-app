@@ -2,467 +2,491 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#ffe0e5">
-  <title>Destinya 💕</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      padding: 20px;
-      display: grid;
-      place-items: center;
-      font-family: Arial, sans-serif;
-      color: #593b49;
-      background: linear-gradient(145deg,#fff0ed,#ffd6df,#ffe8d6);
-    }
-    .container {
-      width: 100%;
-      max-width: 430px;
-      padding: 28px 22px;
-      background: white;
-      border-radius: 28px;
-      box-shadow: 0 12px 35px #b76b7b30;
-      text-align: center;
-    }
-    h1 { color: #d65c82; font-size: 40px; }
-    h2 { color: #bd5275; }
-    .heart { font-size: 55px; }
-    label {
-      display: block;
-      text-align: left;
-      margin-top: 10px;
-      font-size: 14px;
-    }
-    input {
-      width: 100%;
-      padding: 15px;
-      margin: 10px 0;
-      border: 1px solid #f2c2d0;
-      border-radius: 14px;
-      font-size: 16px;
-    }
-    button {
-      width: 100%;
-      padding: 15px;
-      margin: 8px 0;
-      border: 0;
-      border-radius: 30px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .primary { background: #d65c82; color: white; }
-    .secondary { background: #ffe1e8; color: #a94368; }
-    .hidden { display: none !important; }
-    small { display: block; margin: 12px 0; line-height: 1.5; }
-    #message { color: #a94368; min-height: 1.5em; }
-    .profile-card {
-      padding: 20px;
-      border-radius: 25px;
-      background: linear-gradient(160deg,#fff0f4,#ffe5dc);
-      margin: 18px 0;
-    }
-    .avatar { font-size: 76px; margin: 15px; }
-    .profile-name {
-      color: #bd5275;
-      font-size: 26px;
-      font-weight: bold;
-    }
-    .tag {
-      display: inline-block;
-      padding: 8px 12px;
-      margin: 4px;
-      border-radius: 30px;
-      background: white;
-      color: #a94368;
-      font-size: 13px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffe0e5">
+<title>Destinya 💕</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;min-height:100vh;padding:18px;
+ display:grid;place-items:center;
+ font-family:Arial,sans-serif;color:#593b49;
+ background:linear-gradient(145deg,#fff0ed,#ffd6df,#ffe8d6)
+}
+.container{
+ width:100%;max-width:430px;padding:25px 20px;
+ background:white;border-radius:28px;text-align:center;
+ box-shadow:0 12px 35px #b76b7b30
+}
+h1{color:#d65c82;font-size:40px}
+h2{color:#bd5275}
+.heart{font-size:55px}
+.hidden{display:none!important}
+label{display:block;text-align:left;margin-top:12px}
+input,select{
+ width:100%;padding:14px;margin:8px 0;
+ border:1px solid #f2c2d0;border-radius:14px;
+ font-size:16px;background:white
+}
+button{
+ width:100%;padding:15px;margin:7px 0;
+ border:0;border-radius:30px;font-size:16px;
+ font-weight:bold;cursor:pointer
+}
+.primary{background:#d65c82;color:white}
+.secondary{background:#ffe1e8;color:#a94368}
+small{display:block;margin:12px 0;line-height:1.5}
+#message{color:#a94368;min-height:1.5em}
+.profile-card{
+ padding:20px;border-radius:25px;margin:18px 0;
+ background:linear-gradient(160deg,#fff0f4,#ffe5dc);
+ touch-action:pan-y;user-select:none
+}
+.avatar{font-size:76px;margin:15px}
+.profile-name{
+ color:#bd5275;font-size:26px;font-weight:bold
+}
+.tag{
+ display:inline-block;padding:8px 12px;margin:4px;
+ border-radius:30px;background:white;
+ color:#a94368;font-size:13px
+}
+.actions{display:flex;gap:12px}
+.actions button{flex:1}
+#profileCount,#likesCount{font-weight:bold}
+</style>
 </head>
 <body>
 <main class="container">
 
-  <section id="home">
-    <div class="heart">💕</div>
-    <h1>Destinya</h1>
-    <p>De belles rencontres et de nouvelles amitiés.</p>
-    <button class="primary" onclick="showPage('register')">
-      Créer un compte
-    </button>
-    <button class="secondary" onclick="showPage('login')">
-      Se connecter
-    </button>
-    <button class="secondary" onclick="openProfiles()">
-      🌸 Découvrir les profils fictifs
-    </button>
-    <small>Application réservée aux adultes de 18 ans et plus.</small>
-  </section>
+<section id="home">
+ <div class="heart">💕</div>
+ <h1>Destinya</h1>
+ <p>De belles rencontres et de nouvelles amitiés.</p>
+ <button class="primary" onclick="showPage('register')">
+  Créer un compte
+ </button>
+ <button class="secondary" onclick="showPage('login')">
+  Se connecter
+ </button>
+ <button class="secondary" onclick="openProfiles()">
+  🌸 Découvrir les profils fictifs
+ </button>
+ <small>Réservé aux adultes de 18 ans et plus.</small>
+</section>
 
-  <section id="register" class="hidden">
-    <h2>Créer mon compte 💗</h2>
-    <form id="registerForm">
-      <label for="name">Pseudo</label>
-      <input id="name" maxlength="40" required>
+<section id="register" class="hidden">
+ <h2>Créer mon compte 💗</h2>
+ <form id="registerForm">
+  <label for="name">Pseudo</label>
+  <input id="name" maxlength="40" required>
 
-      <label for="birthdate">Date de naissance</label>
-      <input id="birthdate" type="date" required>
+  <label for="birthdate">Date de naissance</label>
+  <input id="birthdate" type="date" required>
 
-      <label for="ville">Ville</label>
-      <input id="ville" maxlength="80" required>
+  <label for="ville">Ville</label>
+  <input id="ville" maxlength="80" required>
 
-      <label for="objectif">Objectif</label>
-      <select id="objectif" required style="width:100%;padding:15px">
-        <option value="amitie">Amitié</option>
-        <option value="serieux">Relation sérieuse</option>
-        <option value="sans_engagement">Sans engagement</option>
-      </select>
+  <label for="objectif">Objectif</label>
+  <select id="objectif" required>
+   <option value="amitie">Amitié</option>
+   <option value="serieux">Relation sérieuse</option>
+   <option value="sans_engagement">Sans engagement</option>
+  </select>
 
-      <label for="email">Adresse e-mail</label>
-      <input id="email" type="email" required>
+  <label for="email">Adresse e-mail</label>
+  <input id="email" type="email" required>
 
-      <label for="password">Mot de passe</label>
-      <input id="password" type="password" minlength="8" required>
+  <label for="password">Mot de passe</label>
+  <input id="password" type="password" minlength="8" required>
 
-      <button class="primary" type="submit">Créer mon compte</button>
-    </form>
-    <button class="secondary" onclick="showPage('home')">Retour</button>
-  </section>
+  <button class="primary" type="submit">
+   Créer mon compte
+  </button>
+ </form>
+ <button class="secondary" onclick="showPage('home')">
+  Retour
+ </button>
+</section>
 
-  <section id="login" class="hidden">
-    <h2>Connexion 💕</h2>
-    <form id="loginForm">
-      <input id="loginEmail" type="email"
-        placeholder="Adresse e-mail" required>
-      <input id="loginPassword" type="password"
-        placeholder="Mot de passe" required>
-      <button class="primary" type="submit">Se connecter</button>
-    </form>
-    <button id="googleLogin" class="secondary">
-      Continuer avec Google
-    </button>
-    <button class="secondary" onclick="showPage('home')">Retour</button>
-  </section>
+<section id="login" class="hidden">
+ <h2>Connexion 💕</h2>
+ <form id="loginForm">
+  <input id="loginEmail" type="email"
+   placeholder="Adresse e-mail" required>
+  <input id="loginPassword" type="password"
+   placeholder="Mot de passe" required>
+  <button class="primary" type="submit">
+   Se connecter
+  </button>
+ </form>
+ <button id="googleLogin" class="secondary">
+  Continuer avec Google
+ </button>
+ <button class="secondary" onclick="showPage('home')">
+  Retour
+ </button>
+</section>
 
-  <section id="account" class="hidden">
-    <div class="heart">💗</div>
-    <h2>Bienvenue sur Destinya !</h2>
-    <p id="userEmail"></p>
-    <p id="verificationInfo"></p>
-    <button id="verifyEmail" class="secondary">
-      Envoyer un e-mail de vérification
-    </button>
-    <button id="refreshVerification" class="secondary">
-      Actualiser la vérification
-    </button>
-    <button class="primary" onclick="openProfiles()">
-      🌸 Voir les profils
-    </button>
-    <button id="logout" class="secondary">Se déconnecter</button>
-  </section>
+<section id="account" class="hidden">
+ <div class="heart">💗</div>
+ <h2>Bienvenue sur Destinya !</h2>
+ <p id="userEmail"></p>
+ <p id="verificationInfo"></p>
+ <button id="verifyEmail" class="secondary">
+  Envoyer un e-mail de vérification
+ </button>
+ <button id="refreshVerification" class="secondary">
+  Actualiser la vérification
+ </button>
+ <button class="primary" onclick="openProfiles()">
+  💕 Découvrir les profils
+ </button>
+ <button id="logout" class="secondary">
+  Se déconnecter
+ </button>
+</section>
 
-  <section id="profiles" class="hidden">
-    <h2>💕 Découvrir</h2>
-    <p id="profileCount"></p>
-    <div class="profile-card">
-      <div>PROFIL FICTIF</div>
-      <div class="avatar" id="profileAvatar"></div>
-      <div class="profile-name" id="profileName"></div>
-      <p id="profileBio"></p>
-      <div id="profileInterests"></div>
-    </div>
-    <button class="primary" onclick="nextProfile()">
-      💕 Profil suivant
-    </button>
-    <button class="secondary" onclick="showPage('home')">
-      Retour
-    </button>
-  </section>
+<section id="profiles" class="hidden">
+ <h2>💕 Découvrir</h2>
+ <p id="profileCount"></p>
 
-  <p id="message" role="status" aria-live="polite"></p>
+ <div class="profile-card" id="swipeCard">
+  <small>PROFIL FICTIF — DÉMONSTRATION</small>
+  <div class="avatar" id="profileAvatar"></div>
+  <div class="profile-name" id="profileName"></div>
+  <p id="profileBio"></p>
+  <div id="profileInterests"></div>
+ </div>
+
+ <div class="actions">
+  <button class="secondary" onclick="nextProfile()">
+   ❌ Passer
+  </button>
+  <button class="primary" onclick="likeProfile()">
+   ❤️ J'aime
+  </button>
+ </div>
+
+ <p id="likesCount">❤️ Likes de démonstration : 0</p>
+ <small>Glisse à gauche pour passer, à droite pour aimer.
+ Aucun like réel n'est envoyé.</small>
+
+ <button class="secondary" onclick="backFromProfiles()">
+  Retour
+ </button>
+</section>
+
+<p id="message" role="status" aria-live="polite"></p>
 </main>
 
 <script>
-  function showPage(page) {
-    document.querySelectorAll("main section").forEach(section => {
-      section.classList.add("hidden");
-    });
-    document.getElementById(page).classList.remove("hidden");
-    document.getElementById("message").textContent = "";
-  }
+let currentPage = "home";
 
-  const demoProfiles = [
-    {
-      name: "Camille, 26 ans",
-      avatar: "🌸",
-      bio: "J'aime les promenades et les livres.",
-      interests: ["Lecture", "Nature"]
-    },
-    {
-      name: "Alex, 29 ans",
-      avatar: "🎨",
-      bio: "Passionné de musique et de voyages.",
-      interests: ["Musique", "Voyages"]
-    },
-    {
-      name: "Léa, 31 ans",
-      avatar: "🦋",
-      bio: "J'adore cuisiner et découvrir de nouveaux endroits.",
-      interests: ["Cuisine", "Cinéma"]
-    }
-  ];
+function showPage(page){
+ document.querySelectorAll("main section").forEach(s=>{
+  s.classList.add("hidden");
+ });
+ document.getElementById(page).classList.remove("hidden");
+ document.getElementById("message").textContent="";
+ currentPage=page;
+}
 
-  let profileIndex = 0;
+const demoProfiles=[
+ {
+  name:"Camille, 26 ans",avatar:"🌸",
+  bio:"J'aime les promenades et les livres.",
+  interests:["Lecture","Nature"]
+ },
+ {
+  name:"Alex, 29 ans",avatar:"🎨",
+  bio:"Passionné de musique et de voyages.",
+  interests:["Musique","Voyages"]
+ },
+ {
+  name:"Léa, 31 ans",avatar:"🦋",
+  bio:"J'adore cuisiner et découvrir de nouveaux endroits.",
+  interests:["Cuisine","Cinéma"]
+ }
+];
 
-  function renderProfile() {
-    const p = demoProfiles[profileIndex];
-    document.getElementById("profileCount").textContent =
-      `Profil ${profileIndex + 1} sur ${demoProfiles.length}`;
-    document.getElementById("profileAvatar").textContent = p.avatar;
-    document.getElementById("profileName").textContent = p.name;
-    document.getElementById("profileBio").textContent = p.bio;
+let profileIndex=0;
+let returnPage="home";
+const likedDemoProfiles=new Set();
 
-    const interests = document.getElementById("profileInterests");
-    interests.replaceChildren();
-    p.interests.forEach(item => {
-      const span = document.createElement("span");
-      span.className = "tag";
-      span.textContent = item;
-      interests.appendChild(span);
-    });
-  }
+function renderProfile(){
+ const p=demoProfiles[profileIndex];
+ document.getElementById("profileCount").textContent=
+  `Profil ${profileIndex+1} sur ${demoProfiles.length}`;
+ document.getElementById("profileAvatar").textContent=p.avatar;
+ document.getElementById("profileName").textContent=p.name;
+ document.getElementById("profileBio").textContent=p.bio;
 
-  function openProfiles() {
-    profileIndex = 0;
-    renderProfile();
-    showPage("profiles");
-  }
+ const interests=document.getElementById("profileInterests");
+ interests.replaceChildren();
+ p.interests.forEach(item=>{
+  const span=document.createElement("span");
+  span.className="tag";
+  span.textContent=item;
+  interests.appendChild(span);
+ });
+ document.getElementById("likesCount").textContent=
+  `❤️ Likes de démonstration : ${likedDemoProfiles.size}`;
+}
 
-  function nextProfile() {
-    profileIndex = (profileIndex + 1) % demoProfiles.length;
-    renderProfile();
-  }
+function openProfiles(){
+ returnPage=currentPage;
+ profileIndex=0;
+ renderProfile();
+ showPage("profiles");
+}
+
+function nextProfile(){
+ profileIndex=(profileIndex+1)%demoProfiles.length;
+ renderProfile();
+}
+
+function likeProfile(){
+ likedDemoProfiles.add(profileIndex);
+ nextProfile();
+}
+
+function backFromProfiles(){
+ showPage(returnPage);
+}
+
+let touchStartX=0;
+const swipeCard=document.getElementById("swipeCard");
+
+swipeCard.addEventListener("touchstart",e=>{
+ touchStartX=e.changedTouches[0].screenX;
+},{passive:true});
+
+swipeCard.addEventListener("touchend",e=>{
+ const difference=e.changedTouches[0].screenX-touchStartX;
+ if(difference>70)likeProfile();
+ else if(difference< -70)nextProfile();
+},{passive:true});
 </script>
-</escape>
 
 <script type="module">
-  import { initializeApp } from
-    "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import {initializeApp} from
+"https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 
-  import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signInWithPopup,
-    GoogleAuthProvider,
-    signOut,
-    onAuthStateChanged,
-    updateProfile,
-    sendEmailVerification,
-    reload
-  } from
-    "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import {
+ getAuth,
+ createUserWithEmailAndPassword,
+ signInWithEmailAndPassword,
+ signInWithPopup,
+ GoogleAuthProvider,
+ signOut,
+ onAuthStateChanged,
+ updateProfile,
+ sendEmailVerification,
+ reload
+} from
+"https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-  import {
-    getFirestore,
-    doc,
-    setDoc,
-    getDoc,
-    serverTimestamp
-  } from
-    "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import {
+ getFirestore,
+ doc,
+ setDoc,
+ getDoc,
+ serverTimestamp
+} from
+"https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyA2yKCe2eo2WFC09ZNyrgPb-eWjOeQIChM",
-    authDomain: "destinya-4279b.firebaseapp.com",
-    projectId: "destinya-4279b",
-    storageBucket: "destinya-4279b.firebasestorage.app",
-    messagingSenderId: "562278259631",
-    appId: "1:562278259631:web:8e907c2d0c7ab1ee072d5a",
-    measurementId: "G-KJN8SNFXYE"
-  };
+const firebaseConfig={
+ apiKey:"AIzaSyA2yKCe2eo2WFC09ZNyrgPb-eWjOeQIChM",
+ authDomain:"destinya-4279b.firebaseapp.com",
+ projectId:"destinya-4279b",
+ storageBucket:"destinya-4279b.firebasestorage.app",
+ messagingSenderId:"562278259631",
+ appId:"1:562278259631:web:8e907c2d0c7ab1ee072d5a",
+ measurementId:"G-KJN8SNFXYE"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-  const message = document.getElementById("message");
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+const message=document.getElementById("message");
 
-  function notice(text) {
-    message.textContent = text;
+function notice(text){
+ message.textContent=text;
+}
+
+function calculateAge(value){
+ if(!value)return -1;
+ const birth=new Date(value+"T12:00:00");
+ const today=new Date();
+ if(Number.isNaN(birth.getTime())||birth>today)return -1;
+
+ let age=today.getFullYear()-birth.getFullYear();
+ if(today.getMonth()<birth.getMonth()||
+  (today.getMonth()===birth.getMonth()&&
+   today.getDate()<birth.getDate()))age--;
+ return age;
+}
+
+async function createUserProfile(user,details){
+ const age=calculateAge(details.birthdate);
+ if(age<18||age>120)throw new Error("AGE_INVALIDE");
+
+ await setDoc(doc(db,"Users",user.uid),{
+  pseudo:details.pseudo,
+  age:age,
+  bio:"",
+  ville:details.ville,
+  objectif:details.objectif,
+  photoURL:"",
+  profilTest:false,
+  createdAt:serverTimestamp()
+ });
+}
+
+function errorText(error){
+ const messages={
+  "auth/email-already-in-use":"Adresse e-mail déjà utilisée.",
+  "auth/invalid-email":"Adresse e-mail invalide.",
+  "auth/weak-password":"Mot de passe trop faible.",
+  "auth/invalid-credential":"Identifiants incorrects.",
+  "auth/unauthorized-domain":"Domaine non autorisé.",
+  "permission-denied":"Vérifie les règles Firestore.",
+  "AGE_INVALIDE":"Inscription réservée aux adultes."
+ };
+ return messages[error.code||error.message]||
+  "Une erreur est survenue. Réessaie.";
+}
+
+document.getElementById("registerForm")
+.addEventListener("submit",async event=>{
+ event.preventDefault();
+
+ const details={
+  pseudo:document.getElementById("name").value.trim(),
+  birthdate:document.getElementById("birthdate").value,
+  ville:document.getElementById("ville").value.trim(),
+  objectif:document.getElementById("objectif").value
+ };
+
+ if(!details.pseudo||!details.ville||
+    calculateAge(details.birthdate)<18||
+    calculateAge(details.birthdate)>120){
+  notice("Vérifie tes informations. Réservé aux 18 ans et plus.");
+  return;
+ }
+
+ try{
+  const result=await createUserWithEmailAndPassword(
+   auth,
+   document.getElementById("email").value.trim(),
+   document.getElementById("password").value
+  );
+
+  await updateProfile(result.user,{
+   displayName:details.pseudo
+  });
+
+  await createUserProfile(result.user,details);
+
+  try{
+   await sendEmailVerification(result.user);
+   notice("Compte créé. Vérifie ton e-mail.");
+  }catch{
+   notice("Compte créé. Vérification à demander depuis ton compte.");
   }
+ }catch(error){
+  notice(errorText(error));
+ }
+});
 
-  function calculateAge(value) {
-    if (!value) return -1;
-    const birth = new Date(value + "T12:00:00");
-    const today = new Date();
-    if (Number.isNaN(birth.getTime()) || birth > today) return -1;
+document.getElementById("loginForm")
+.addEventListener("submit",async event=>{
+ event.preventDefault();
+ try{
+  await signInWithEmailAndPassword(
+   auth,
+   document.getElementById("loginEmail").value.trim(),
+   document.getElementById("loginPassword").value
+  );
+ }catch(error){
+  notice(errorText(error));
+ }
+});
 
-    let age = today.getFullYear() - birth.getFullYear();
-    if (
-      today.getMonth() < birth.getMonth() ||
-      (today.getMonth() === birth.getMonth() &&
-       today.getDate() < birth.getDate())
-    ) age--;
-    return age;
+document.getElementById("googleLogin")
+.addEventListener("click",async()=>{
+ try{
+  const result=await signInWithPopup(
+   auth,new GoogleAuthProvider()
+  );
+  const snapshot=await getDoc(
+   doc(db,"Users",result.user.uid)
+  );
+  if(!snapshot.exists()){
+   notice("Connexion Google réussie. Profil adulte à compléter.");
   }
+ }catch(error){
+  notice(errorText(error));
+ }
+});
 
-  async function createUserProfile(user, details) {
-    const age = calculateAge(details.birthdate);
-    if (age < 18) throw new Error("AGE_INVALIDE");
+document.getElementById("logout")
+.addEventListener("click",async()=>{
+ try{
+  await signOut(auth);
+ }catch(error){
+  notice(errorText(error));
+ }
+});
 
-    await setDoc(doc(db, "Users", user.uid), {
-      pseudo: details.pseudo,
-      age: age,
-      bio: "",
-      ville: details.ville,
-      objectif: details.objectif,
-      photoURL: "",
-      profilTest: false,
-      createdAt: serverTimestamp()
-    });
+document.getElementById("verifyEmail")
+.addEventListener("click",async()=>{
+ try{
+  if(auth.currentUser){
+   await sendEmailVerification(auth.currentUser);
+   notice("E-mail de vérification envoyé.");
   }
+ }catch(error){
+  notice(errorText(error));
+ }
+});
 
-  function errorText(error) {
-    const messages = {
-      "auth/email-already-in-use": "Adresse e-mail déjà utilisée.",
-      "auth/invalid-email": "Adresse e-mail invalide.",
-      "auth/weak-password": "Mot de passe trop faible.",
-      "auth/invalid-credential": "Identifiants incorrects.",
-      "auth/unauthorized-domain": "Domaine non autorisé.",
-      "permission-denied": "Vérifie les règles de sécurité Firestore.",
-      "AGE_INVALIDE": "Inscription réservée aux adultes."
-    };
-    return messages[error.code || error.message] ||
-      "Une erreur est survenue. Réessaie.";
+document.getElementById("refreshVerification")
+.addEventListener("click",async()=>{
+ try{
+  if(auth.currentUser){
+   await reload(auth.currentUser);
+   renderAccount(auth.currentUser);
   }
+ }catch(error){
+  notice(errorText(error));
+ }
+});
 
-  document.getElementById("registerForm")
-    .addEventListener("submit", async event => {
-      event.preventDefault();
+function renderAccount(user){
+ if(!user){
+  showPage("home");
+  return;
+ }
 
-      const details = {
-        pseudo: document.getElementById("name").value.trim(),
-        birthdate: document.getElementById("birthdate").value,
-        ville: document.getElementById("ville").value.trim(),
-        objectif: document.getElementById("objectif").value
-      };
+ showPage("account");
+ document.getElementById("userEmail").textContent=
+  user.email||"";
 
-      if (!details.pseudo || !details.ville ||
-          calculateAge(details.birthdate) < 18) {
-        notice("Vérifie tes informations. Réservé aux 18 ans et plus.");
-        return;
-      }
+ document.getElementById("verificationInfo").textContent=
+  user.emailVerified
+   ?"Adresse e-mail vérifiée."
+   :"Adresse e-mail non vérifiée.";
 
-      try {
-        const result = await createUserWithEmailAndPassword(
-          auth,
-          document.getElementById("email").value.trim(),
-          document.getElementById("password").value
-        );
+ document.getElementById("verifyEmail")
+  .classList.toggle("hidden",user.emailVerified);
+ document.getElementById("refreshVerification")
+  .classList.toggle("hidden",user.emailVerified);
+}
 
-        await updateProfile(result.user, {
-          displayName: details.pseudo
-        });
-
-        await createUserProfile(result.user, details);
-
-        try {
-          await sendEmailVerification(result.user);
-          notice("Compte créé. Vérifie ton e-mail.");
-        } catch {
-          notice("Compte créé. Envoi de vérification indisponible.");
-        }
-      } catch (error) {
-        notice(errorText(error));
-      }
-    });
-
-  document.getElementById("loginForm")
-    .addEventListener("submit", async event => {
-      event.preventDefault();
-      try {
-        await signInWithEmailAndPassword(
-          auth,
-          document.getElementById("loginEmail").value.trim(),
-          document.getElementById("loginPassword").value
-        );
-      } catch (error) {
-        notice(errorText(error));
-      }
-    });
-
-  document.getElementById("googleLogin")
-    .addEventListener("click", async () => {
-      try {
-        const result = await signInWithPopup(
-          auth, new GoogleAuthProvider()
-        );
-        const snapshot = await getDoc(doc(db, "Users", result.user.uid));
-        if (!snapshot.exists()) {
-          notice("Connexion Google réussie. Le profil doit encore être complété.");
-        }
-      } catch (error) {
-        notice(errorText(error));
-      }
-    });
-
-  document.getElementById("logout")
-    .addEventListener("click", async () => {
-      try {
-        await signOut(auth);
-      } catch (error) {
-        notice(errorText(error));
-      }
-    });
-
-  document.getElementById("verifyEmail")
-    .addEventListener("click", async () => {
-      try {
-        if (auth.currentUser) {
-          await sendEmailVerification(auth.currentUser);
-          notice("E-mail de vérification envoyé.");
-        }
-      } catch (error) {
-        notice(errorText(error));
-      }
-    });
-
-  document.getElementById("refreshVerification")
-    .addEventListener("click", async () => {
-      try {
-        if (auth.currentUser) {
-          await reload(auth.currentUser);
-          renderAccount(auth.currentUser);
-        }
-      } catch (error) {
-        notice(errorText(error));
-      }
-    });
-
-  function renderAccount(user) {
-    if (!user) {
-      showPage("home");
-      return;
-    }
-
-    showPage("account");
-    document.getElementById("userEmail").textContent =
-      user.email || "";
-
-    document.getElementById("verificationInfo").textContent =
-      user.emailVerified
-        ? "Adresse e-mail vérifiée."
-        : "Adresse e-mail non vérifiée.";
-
-    document.getElementById("verifyEmail")
-      .classList.toggle("hidden", user.emailVerified);
-    document.getElementById("refreshVerification")
-      .classList.toggle("hidden", user.emailVerified);
-  }
-
-  onAuthStateChanged(auth, renderAccount);
+onAuthStateChanged(auth,renderAccount);
 </script>
 </body>
 </html>
