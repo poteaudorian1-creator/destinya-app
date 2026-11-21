@@ -4,654 +4,339 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Destinya - Démonstration</title>
-
+<title>Destinya — Démonstration</title>
 <style>
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  padding: 16px;
-  display: grid;
-  place-items: center;
-  font-family: Arial, sans-serif;
-  color: #633e50;
-  background: linear-gradient(145deg, #fff0ed, #ffd3e0, #ffe8d6);
-}
-
-.app {
-  width: 100%;
-  max-width: 430px;
-  padding: 24px;
-  background: white;
-  border-radius: 28px;
-  box-shadow: 0 12px 35px #b76b7b30;
-  text-align: center;
-}
-
-h1, h2 { color: #d65c82; }
-
-button {
-  border: none;
-  border-radius: 24px;
-  padding: 14px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.primary {
-  background: #d65c82;
-  color: white;
-}
-
-.secondary {
-  background: #ffe2ea;
-  color: #a94368;
-}
-
-.full {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-}
-
-.hidden { display: none !important; }
-
-.card {
-  padding: 22px;
-  margin: 18px 0;
-  border-radius: 24px;
-  background: linear-gradient(150deg, #fff0f5, #ffe5dc);
-  border: 1px solid #f4c8d5;
-}
-
-.avatar {
-  width: 135px;
-  height: 135px;
-  border-radius: 50%;
-  margin: 0 auto 14px;
-  background: white;
-  display: grid;
-  place-items: center;
-  font-size: 70px;
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 15px;
-}
-
-.tag {
-  padding: 8px 11px;
-  background: white;
-  border-radius: 20px;
-  font-size: 13px;
-}
-
-.actions {
-  display: flex;
-  gap: 12px;
-}
-
-.actions button { flex: 1; }
-
-.demo {
-  font-size: 12px;
-  font-weight: bold;
-  color: #b85d7c;
-  letter-spacing: 1px;
-}
-
-.chat {
-  background: #fff4f7;
-  border-radius: 20px;
-  padding: 15px;
-  text-align: left;
-  min-height: 150px;
-}
-
-.bubble {
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 16px;
-  max-width: 85%;
-  overflow-wrap: anywhere;
-}
-
-.theirs { background: white; }
-
-.mine {
-  background: #f8c8d8;
-  margin-left: auto;
-}
-
-input, textarea, select {
-  width: 100%;
-  margin: 10px 0;
-  padding: 13px;
-  border: 1px solid #edbfd0;
-  border-radius: 14px;
-  font: inherit;
-}
-
-textarea {
-  min-height: 85px;
-  resize: vertical;
-}
-
-label {
-  display: block;
-  text-align: left;
-  margin-top: 12px;
-  font-weight: bold;
-}
-
-.note {
-  font-size: 12px;
-  line-height: 1.5;
-  color: #996b7e;
-}
-
-.notice {
-  background: #fff0f5;
-  padding: 15px;
-  margin: 12px 0;
-  border-radius: 16px;
-  text-align: left;
-}
-
-/* MODE SOMBRE */
-
-body.dark {
-  background: #241b2b;
-  color: #f9dce8;
-}
-
-body.dark .app { background: #38283d; }
-
-body.dark .card {
-  background: #50344c;
-  border-color: #75506a;
-}
-
-body.dark h1,
-body.dark h2 { color: #ff9fc5; }
-
-body.dark .tag,
-body.dark .avatar,
-body.dark .theirs {
-  background: #63475c;
-  color: white;
-}
-
-body.dark .chat,
-body.dark .notice {
-  background: #49334a;
-}
-
-body.dark .mine { background: #9d5579; }
-
-body.dark .secondary {
-  background: #65445c;
-  color: white;
-}
-
-body.dark input,
-body.dark textarea,
-body.dark select {
-  background: #4b354b;
-  color: white;
-  border-color: #8a6280;
-}
-
-body.dark .note,
-body.dark .demo {
-  color: #f1a8c4;
-}
+*{box-sizing:border-box}
+body{margin:0;font:16px Arial,sans-serif;color:#633e50;background:linear-gradient(135deg,#fff0f4,#ffd3e2)}
+.app{max-width:460px;min-height:100vh;margin:auto;padding:20px 18px 105px;background:#fffafd}
+header{display:flex;justify-content:space-between;align-items:center}
+.logo,h1,h2{color:#d65783}
+.logo{font-size:26px;font-weight:bold}
+section{text-align:center}
+.hidden{display:none!important}
+.card{padding:20px;margin:18px 0;border-radius:24px;background:linear-gradient(145deg,#fff,#ffe4ed);box-shadow:0 8px 25px #c57a9930}
+.avatar{width:140px;height:140px;margin:10px auto;border:5px solid white;border-radius:50%;display:grid;place-items:center;background:#ffe0ec;font-size:70px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:15px 0}
+.tag{background:#fff0f5;color:#a84970;border-radius:20px;padding:8px 12px;font-size:13px}
+button{border:0;border-radius:22px;padding:13px;font:600 15px Arial;cursor:pointer}
+button:active{transform:scale(.97)}
+.primary{background:#d65783;color:white}
+.secondary{background:#ffe1eb;color:#a5446a}
+.full{width:100%;display:block;margin:10px 0}
+.actions{display:flex;gap:12px}
+.actions button{flex:1}
+input,textarea,select{width:100%;padding:12px;margin:9px 0;border:1px solid #ecc2d2;border-radius:12px;font:inherit}
+textarea{min-height:85px}
+label{display:block;text-align:left;margin-top:12px;font-weight:bold}
+.demo,.note{font-size:12px;color:#b85d7c}
+.note{line-height:1.6}
+.chat{background:#fff0f5;border-radius:18px;padding:12px;text-align:left;min-height:140px}
+.bubble{padding:12px;margin:8px 0;border-radius:15px;max-width:85%;overflow-wrap:anywhere}
+.theirs{background:white}
+.mine{background:#f6bfd2;margin-left:auto}
+.notice{padding:13px;margin:9px 0;text-align:left;background:#fff0f5;border-radius:14px}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:460px;width:100%;display:flex;justify-content:space-around;background:white;padding:9px 3px max(12px,env(safe-area-inset-bottom));box-shadow:0 -3px 16px #ac6d8825}
+.nav button{background:transparent;color:#a45d7a;font-size:11px;padding:7px 3px;min-width:55px}
+.nav button.active{background:#ffe5ef;color:#bd4475}
+.symbol{display:block;font-size:22px;margin-bottom:4px}
+@keyframes swipeLeft{to{opacity:0;transform:translateX(-120px) rotate(-10deg)}}
+@keyframes swipeRight{to{opacity:0;transform:translateX(120px) rotate(10deg)}}
+@keyframes appear{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+.pass-away{animation:swipeLeft .3s forwards}
+.like-away{animation:swipeRight .3s forwards}
+.arrive{animation:appear .3s}
+body.dark{background:#241b2b;color:#f5dce8}
+body.dark .app{background:#302637}
+body.dark .card{background:linear-gradient(145deg,#49354b,#63435c)}
+body.dark h1,body.dark h2,body.dark .logo{color:#ff9fc4}
+body.dark .nav{background:#382a40}
+body.dark .nav button{color:#edc2d6}
+body.dark .nav button.active,body.dark .secondary,body.dark .tag,body.dark .notice,body.dark .chat{background:#62425b;color:white}
+body.dark .theirs{background:#70546b}
+body.dark .mine{background:#a65d83}
+body.dark input,body.dark textarea,body.dark select{background:#49354b;color:white;border-color:#80617b}
+body.dark .demo,body.dark .note{color:#f0b4cd}
+@media(prefers-reduced-motion:reduce){.pass-away,.like-away,.arrive{animation:none}}
 </style>
 </head>
-
 <body>
 
 <main class="app">
 
-<!-- ACCUEIL -->
+<header>
+<div class="logo">💕 Destinya</div>
+<span class="demo" data-t="demo">DÉMO</span>
+</header>
 
 <section id="home">
-  <div style="font-size:55px">💕</div>
-  <h1>Destinya</h1>
-
-  <p data-i18n="welcome">
-    Un univers rose et romantique.
-  </p>
-
-  <p class="demo" data-i18n="demo">
-    MODE DÉMONSTRATION
-  </p>
-
-  <button class="primary full"
-    onclick="startDemo()"
-    data-i18n="discover">
-    🌸 Découvrir les profils
-  </button>
-
-  <button class="secondary full"
-    onclick="openMyProfile()"
-    data-i18n="myProfile">
-    👤 Mon profil
-  </button>
-
-  <button class="secondary full"
-    onclick="openMessages()"
-    data-i18n="messages">
-    💬 Conversations fictives
-  </button>
-
-  <button class="secondary full"
-    onclick="showPage('notifications')"
-    data-i18n="notifications">
-    🔔 Notifications
-  </button>
-
-  <button class="secondary full"
-    onclick="showPage('settings')"
-    data-i18n="settings">
-    ⚙️ Paramètres
-  </button>
-
-  <p class="note" data-i18n="fictionNote">
-    Tous les personnages et échanges sont inventés.
-    Aucun contact réel.
-  </p>
+<div style="font-size:64px">🌸</div>
+<h1 data-t="welcome">Bienvenue sur Destinya</h1>
+<p data-t="intro">Une application de démonstration.</p>
+<div class="card">
+<div style="font-size:45px">💗</div>
+<h2 data-t="discover">Découvrir les profils</h2>
+<p data-t="fiction">Tous les personnages sont fictifs.</p>
+<button class="primary full" onclick="startDemo()" data-t="start">Commencer</button>
+</div>
+<button class="secondary full" onclick="showPage('notifications')" data-t="notifications">🔔 Notifications</button>
+<p class="note" data-t="noReal">Aucun compte ni contact réel.</p>
 </section>
-
-<!-- PARAMÈTRES -->
-
-<section id="settings" class="hidden">
-  <h2 data-i18n="settings">⚙️ Paramètres</h2>
-
-  <div class="card">
-    <h3 data-i18n="appearance">🌙 Apparence</h3>
-
-    <p id="themeStatus"></p>
-
-    <button class="primary full"
-      onclick="toggleDarkMode()"
-      data-i18n="changeTheme">
-      🌙 Changer le thème
-    </button>
-  </div>
-
-  <div class="card">
-    <h3 data-i18n="language">🌍 Langue</h3>
-
-    <button class="secondary full"
-      onclick="setLanguage('fr')">
-      🇫🇷 Français
-    </button>
-
-    <button class="secondary full"
-      onclick="setLanguage('en')">
-      🇬🇧 English
-    </button>
-  </div>
-
-  <div class="card">
-    <h3 data-i18n="notifications">🔔 Notifications</h3>
-
-    <p id="notificationStatus"></p>
-
-    <button class="primary full"
-      onclick="toggleNotifications()"
-      data-i18n="toggleNotifications">
-      🔔 Activer / désactiver
-    </button>
-  </div>
-
-  <button class="secondary full"
-    onclick="showPage('home')"
-    data-i18n="home">
-    🏠 Retour à l'accueil
-  </button>
-</section>
-
-<!-- NOTIFICATIONS -->
-
-<section id="notifications" class="hidden">
-  <h2 data-i18n="notifications">🔔 Notifications</h2>
-
-  <p class="demo" data-i18n="fakeAlerts">
-    ALERTES FICTIVES
-  </p>
-
-  <div id="notificationList"></div>
-
-  <button class="primary full"
-    onclick="addFakeNotification()"
-    data-i18n="testNotification">
-    🔔 Tester une notification
-  </button>
-
-  <button class="secondary full"
-    onclick="clearNotifications()"
-    data-i18n="clearNotifications">
-    Effacer les notifications
-  </button>
-
-  <button class="secondary full"
-    onclick="showPage('home')"
-    data-i18n="home">
-    🏠 Retour à l'accueil
-  </button>
-
-  <p class="note" data-i18n="noRealAlerts">
-    Aucune notification réelle n'est envoyée.
-  </p>
-</section>
-
-<!-- MON PROFIL -->
-
-<section id="myProfile" class="hidden">
-  <h2 data-i18n="myProfile">👤 Mon profil</h2>
-
-  <p class="demo" data-i18n="testProfile">
-    PROFIL DE TEST
-  </p>
-
-  <div class="card">
-    <div class="avatar" id="myAvatar">🌸</div>
-    <h2 id="myName"></h2>
-    <p id="myBio"></p>
-    <div class="tags" id="myTags"></div>
-  </div>
-
-  <button class="primary full"
-    onclick="showPage('editProfile')"
-    data-i18n="editProfile">
-    ✏️ Modifier mon profil
-  </button>
-
-  <button class="secondary full"
-    onclick="showPage('home')"
-    data-i18n="home">
-    🏠 Retour à l'accueil
-  </button>
-</section>
-
-<!-- MODIFIER MON PROFIL -->
-
-<section id="editProfile" class="hidden">
-  <h2 data-i18n="editProfile">
-    ✏️ Modifier mon profil
-  </h2>
-
-  <form id="profileForm">
-    <label for="editName" data-i18n="fakeName">
-      Prénom fictif
-    </label>
-
-    <input id="editName" maxlength="30" required>
-
-    <label for="editAvatar" data-i18n="avatarLabel">
-      Avatar
-    </label>
-
-    <select id="editAvatar">
-      <option value="🌸">🌸</option>
-      <option value="🦋">🦋</option>
-      <option value="🎨">🎨</option>
-      <option value="🌻">🌻</option>
-      <option value="🎵">🎵</option>
-    </select>
-
-    <label for="editBio" data-i18n="bioLabel">
-      Présentation fictive
-    </label>
-
-    <textarea id="editBio"
-      maxlength="200" required></textarea>
-
-    <label for="editInterests"
-      data-i18n="interestsLabel">
-      Centres d'intérêt
-    </label>
-
-    <input id="editInterests" maxlength="120">
-
-    <button class="primary full"
-      type="submit" data-i18n="saveProfile">
-      💗 Enregistrer mon profil
-    </button>
-  </form>
-
-  <button class="secondary full"
-    onclick="openMyProfile()"
-    data-i18n="cancel">
-    Annuler
-  </button>
-
-  <p class="note" data-i18n="fictionNote">
-    Tous les personnages et échanges sont inventés.
-    Aucun contact réel.
-  </p>
-</section>
-
-<!-- DÉCOUVRIR LES PROFILS -->
 
 <section id="profiles" class="hidden">
-  <h2 data-i18n="discover">
-    🌸 Découvrir les profils
-  </h2>
-
-  <p id="counter"></p>
-
-  <div class="card">
-    <p class="demo" data-i18n="fictionalProfile">
-      PROFIL FICTIF
-    </p>
-
-    <div class="avatar" id="avatar"></div>
-    <h2 id="name"></h2>
-    <p id="bio"></p>
-    <div class="tags" id="tags"></div>
-  </div>
-
-  <div class="actions">
-    <button class="secondary"
-      onclick="passProfile()"
-      data-i18n="pass">
-      ❌ Passer
-    </button>
-
-    <button class="primary"
-      onclick="likeProfile()"
-      data-i18n="like">
-      ❤️ J'aime
-    </button>
-  </div>
-
-  <button class="secondary full"
-    onclick="showPage('home')"
-    data-i18n="home">
-    🏠 Retour à l'accueil
-  </button>
+<h2 data-t="discover">Découvrir les profils</h2>
+<p id="counter"></p>
+<div id="profileCard" class="card">
+<p class="demo" data-t="fictional">PROFIL FICTIF</p>
+<div class="avatar" id="avatar"></div>
+<h2 id="profileName"></h2>
+<p id="profileBio"></p>
+<div class="tags" id="profileTags"></div>
+</div>
+<div class="actions">
+<button class="secondary" onclick="chooseProfile(false)" data-t="pass">❌ Passer</button>
+<button class="primary" onclick="chooseProfile(true)" data-t="like">❤️ J'aime</button>
+</div>
 </section>
 
-<!-- MATCH FICTIF -->
-
-<section id="matchScreen" class="hidden">
-  <div style="font-size:75px">💞</div>
-
-  <h1>Match !</h1>
-
-  <p data-i18n="fakeMatch">
-    Correspondance fictive pour tester le design.
-  </p>
-
-  <h2 id="matchName"></h2>
-
-  <button class="primary full"
-    onclick="openMessages()"
-    data-i18n="seeChat">
-    💬 Voir la conversation
-  </button>
-
-  <button class="secondary full"
-    onclick="continueProfiles()"
-    data-i18n="continue">
-    Continuer
-  </button>
+<section id="match" class="hidden">
+<div style="font-size:80px">💞</div>
+<h1>Match !</h1>
+<p data-t="fakeMatch">C'est un match fictif !</p>
+<h2 id="matchName"></h2>
+<button class="primary full" onclick="openMessages()" data-t="chat">💬 Voir la conversation</button>
+<button class="secondary full" onclick="continueProfiles()" data-t="continue">Continuer</button>
 </section>
-
-<!-- MESSAGERIE -->
 
 <section id="messages" class="hidden">
-  <h2 data-i18n="messages">
-    💬 Conversations fictives
-  </h2>
+<h2 data-t="messages">💬 Messages</h2>
+<p class="demo" data-t="simulated">CONVERSATION SIMULÉE</p>
+<p id="chatTitle"></p>
+<div class="chat" id="chatBox"></div>
+<textarea id="messageInput" maxlength="200"></textarea>
+<button class="primary full" onclick="sendMessage()" data-t="send">Envoyer</button>
+<p class="note" data-t="noMessages">Aucun message n'est envoyé à une personne réelle.</p>
+</section>
 
-  <p class="demo" data-i18n="simulatedChat">
-    CONVERSATION SIMULÉE
-  </p>
+<section id="myProfile" class="hidden">
+<h2 data-t="myProfile">👤 Mon profil</h2>
+<p class="demo" data-t="testProfile">PROFIL DE TEST</p>
+<div class="card">
+<div class="avatar" id="myAvatar"></div>
+<h2 id="myName"></h2>
+<p id="myBio"></p>
+<div class="tags" id="myTags"></div>
+</div>
+<button class="primary full" onclick="editMyProfile()" data-t="edit">✏️ Modifier</button>
+</section>
 
-  <p id="chatTitle"></p>
+<section id="editProfile" class="hidden">
+<h2 data-t="edit">✏️ Modifier</h2>
+<form id="profileForm">
+<label for="editName" data-t="nameLabel">Prénom fictif</label>
+<input id="editName" maxlength="30" required>
+<label for="editAvatar" data-t="avatarLabel">Avatar</label>
+<select id="editAvatar">
+<option>🌸</option>
+<option>🦋</option>
+<option>🎨</option>
+<option>🌻</option>
+<option>🎵</option>
+</select>
+<label for="editBio" data-t="bioLabel">Présentation fictive</label>
+<textarea id="editBio" maxlength="200" required></textarea>
+<label for="editInterests" data-t="interestsLabel">Centres d'intérêt</label>
+<input id="editInterests" maxlength="120">
+<button type="submit" class="primary full" data-t="save">💗 Enregistrer</button>
+</form>
+<button class="secondary full" onclick="openMyProfile()" data-t="cancel">Annuler</button>
+<p class="note" data-t="noReal">Aucun compte ni contact réel.</p>
+</section>
 
-  <div class="chat" id="chat"></div>
+<section id="notifications" class="hidden">
+<h2 data-t="notifications">🔔 Notifications</h2>
+<p class="demo" data-t="fakeAlerts">ALERTES FICTIVES</p>
+<div id="notificationList"></div>
+<button class="primary full" onclick="addNotification()" data-t="testAlert">Tester une notification</button>
+<button class="secondary full" onclick="clearNotifications()" data-t="clear">Tout effacer</button>
+<p class="note" data-t="noAlerts">Aucune notification réelle n'est envoyée.</p>
+</section>
 
-  <textarea id="draft" maxlength="200"></textarea>
-
-  <button class="primary full"
-    onclick="sendDemoMessage()"
-    data-i18n="send">
-    Envoyer dans la démonstration
-  </button>
-
-  <button class="secondary full"
-    onclick="showPage('home')"
-    data-i18n="home">
-    🏠 Retour à l'accueil
-  </button>
-
-  <p class="note" data-i18n="noRealMessages">
-    Aucun message n'est envoyé en ligne.
-  </p>
+<section id="settings" class="hidden">
+<h2 data-t="settings">⚙️ Paramètres</h2>
+<div class="card">
+<h3 data-t="appearance">🌙 Apparence</h3>
+<p id="themeStatus"></p>
+<button class="primary full" onclick="toggleDarkMode()" data-t="changeTheme">Changer le thème</button>
+</div>
+<div class="card">
+<h3 data-t="language">🌍 Langue</h3>
+<button class="secondary full" onclick="setLanguage('fr')">🇫🇷 Français</button>
+<button class="secondary full" onclick="setLanguage('en')">🇬🇧 English</button>
+</div>
+<div class="card">
+<h3 data-t="notifications">🔔 Notifications</h3>
+<p id="notificationStatus"></p>
+<button class="primary full" onclick="toggleNotifications()" data-t="toggleAlerts">Activer / désactiver</button>
+</div>
+<p class="note" data-t="saved">Le thème et la langue sont sauvegardés sur cet appareil.</p>
 </section>
 
 </main>
 
+<nav class="nav" aria-label="Navigation principale">
+<button data-page="home" onclick="showPage('home')"><span class="symbol">🏠</span><span data-t="navHome">Accueil</span></button>
+<button data-page="profiles" onclick="openProfiles()"><span class="symbol">💗</span><span data-t="navDiscover">Profils</span></button>
+<button data-page="messages" onclick="openMessages()"><span class="symbol">💬</span><span data-t="navMessages">Messages</span></button>
+<button data-page="myProfile" onclick="openMyProfile()"><span class="symbol">👤</span><span data-t="navProfile">Profil</span></button>
+<button data-page="settings" onclick="showPage('settings')"><span class="symbol">⚙️</span><span data-t="navSettings">Réglages</span></button>
+</nav>
+
 <script>
-
-// TRADUCTIONS
-
 const translations = {
   fr: {
-    welcome: "Un univers rose et romantique.",
-    demo: "MODE DÉMONSTRATION",
-    discover: "🌸 Découvrir les profils",
-    myProfile: "👤 Mon profil",
-    messages: "💬 Conversations fictives",
-    notifications: "🔔 Notifications",
-    settings: "⚙️ Paramètres",
-    fictionNote: "Tous les personnages et échanges sont inventés. Aucun contact réel.",
-    appearance: "🌙 Apparence",
-    changeTheme: "🌙 Changer le thème",
-    language: "🌍 Langue",
-    toggleNotifications: "🔔 Activer / désactiver",
-    home: "🏠 Retour à l'accueil",
-    fakeAlerts: "ALERTES FICTIVES",
-    testNotification: "🔔 Tester une notification",
-    clearNotifications: "Effacer les notifications",
-    noRealAlerts: "Aucune notification réelle n'est envoyée.",
-    testProfile: "PROFIL DE TEST",
-    editProfile: "✏️ Modifier mon profil",
-    fakeName: "Prénom fictif",
-    avatarLabel: "Avatar",
-    bioLabel: "Présentation fictive",
-    interestsLabel: "Centres d'intérêt",
-    saveProfile: "💗 Enregistrer mon profil",
-    cancel: "Annuler",
-    fictionalProfile: "PROFIL FICTIF",
-    pass: "❌ Passer",
-    like: "❤️ J'aime",
-    fakeMatch: "Correspondance fictive pour tester le design.",
-    seeChat: "💬 Voir la conversation",
-    continue: "Continuer",
-    simulatedChat: "CONVERSATION SIMULÉE",
-    send: "Envoyer dans la démonstration",
-    noRealMessages: "Aucun message n'est envoyé en ligne.",
-    light: "Mode clair activé ☀️",
-    dark: "Mode sombre activé 🌙",
-    alertsOn: "Notifications fictives activées",
-    alertsOff: "Notifications fictives désactivées",
-    empty: "Aucune notification pour le moment.",
-    alert1: "🌸 Bienvenue dans Destinya !",
-    alert2: "❤️ Un match fictif a été créé !",
-    alert3: "💬 Nouvelle conversation de démonstration.",
-    chatIntro: "Bonjour ! Bienvenue dans cette conversation de démonstration 🌸",
-    chatWith: "Conversation fictive avec ",
-    profileCount: "Profil",
-    of: "sur",
-    messagePlaceholder: "Écris un message fictif..."
+    demo:"DÉMO",
+    welcome:"Bienvenue sur Destinya",
+    intro:"Une application de démonstration.",
+    discover:"Découvrir les profils",
+    fiction:"Tous les personnages sont fictifs.",
+    start:"Commencer",
+    noReal:"Aucun compte ni contact réel.",
+    fictional:"PROFIL FICTIF",
+    pass:"❌ Passer",
+    like:"❤️ J'aime",
+    fakeMatch:"C'est un match fictif !",
+    chat:"💬 Voir la conversation",
+    continue:"Continuer",
+    messages:"💬 Messages",
+    simulated:"CONVERSATION SIMULÉE",
+    send:"Envoyer",
+    noMessages:"Aucun message n'est envoyé à une personne réelle.",
+    myProfile:"👤 Mon profil",
+    testProfile:"PROFIL DE TEST",
+    edit:"✏️ Modifier",
+    nameLabel:"Prénom fictif",
+    avatarLabel:"Avatar",
+    bioLabel:"Présentation fictive",
+    interestsLabel:"Centres d'intérêt",
+    save:"💗 Enregistrer",
+    cancel:"Annuler",
+    notifications:"🔔 Notifications",
+    fakeAlerts:"ALERTES FICTIVES",
+    testAlert:"Tester une notification",
+    clear:"Tout effacer",
+    noAlerts:"Aucune notification réelle n'est envoyée.",
+    settings:"⚙️ Paramètres",
+    appearance:"🌙 Apparence",
+    changeTheme:"Changer le thème",
+    language:"🌍 Langue",
+    toggleAlerts:"Activer / désactiver",
+    saved:"Le thème et la langue sont sauvegardés sur cet appareil.",
+    navHome:"Accueil",
+    navDiscover:"Profils",
+    navMessages:"Messages",
+    navProfile:"Profil",
+    navSettings:"Réglages",
+    dark:"Mode sombre activé 🌙",
+    light:"Mode clair activé ☀️",
+    alertsOn:"Notifications fictives activées",
+    alertsOff:"Notifications fictives désactivées",
+    empty:"Aucune notification.",
+    alertWelcome:"🌸 Bienvenue dans Destinya !",
+    alertMatch:"❤️ Nouveau match fictif !",
+    alertMessage:"💬 Conversation de démonstration.",
+    chatIntro:"Bonjour ! Bienvenue dans cette conversation fictive 🌸",
+    chatWith:"Conversation fictive avec ",
+    count:"Profil",
+    of:"sur",
+    placeholder:"Écris un message fictif..."
   },
 
   en: {
-    welcome: "A pink and romantic universe.",
-    demo: "DEMO MODE",
-    discover: "🌸 Discover profiles",
-    myProfile: "👤 My profile",
-    messages: "💬 Fictional conversations",
-    notifications: "🔔 Notifications",
-    settings: "⚙️ Settings",
-    fictionNote: "All characters and conversations are fictional. No real contact.",
-    appearance: "🌙 Appearance",
-    changeTheme: "🌙 Change theme",
-    language: "🌍 Language",
-    toggleNotifications: "🔔 Enable / disable",
-    home: "🏠 Back to home",
-    fakeAlerts: "FICTIONAL ALERTS",
-    testNotification: "🔔 Test a notification",
-    clearNotifications: "Clear notifications",
-    noRealAlerts: "No real notifications are sent.",
-    testProfile: "TEST PROFILE",
-    editProfile: "✏️ Edit my profile",
-    fakeName: "Fictional first name",
-    avatarLabel: "Avatar",
-    bioLabel: "Fictional bio",
-    interestsLabel: "Interests",
-    saveProfile: "💗 Save my profile",
-    cancel: "Cancel",
-    fictionalProfile: "FICTIONAL PROFILE",
-    pass: "❌ Pass",
-    like: "❤️ Like",
-    fakeMatch: "Fictional match to test the design.",
-    seeChat: "💬 View conversation",
-    continue: "Continue",
-    simulatedChat: "SIMULATED CONVERSATION",
-    send: "Send in demo",
-    noRealMessages: "No messages are sent online.",
-    light: "Light mode enabled ☀️",
-    dark: "Dark mode enabled 🌙",
-    alertsOn: "Fictional notifications enabled",
-    alertsOff: "Fictional notifications disabled",
-    empty: "No notifications yet.",
-    alert1: "🌸 Welcome to Destinya!",
-    alert2: "❤️ A fictional match was created!",
-    alert3: "💬 New demo conversation.",
-    chatIntro: "Hello! Welcome to this demo conversation 🌸",
-    chatWith: "Fictional conversation with ",
-    profileCount: "Profile",
-    of: "of",
-    messagePlaceholder: "Write a fictional message..."
+    demo:"DEMO",
+    welcome:"Welcome to Destinya",
+    intro:"A demonstration application.",
+    discover:"Discover profiles",
+    fiction:"All characters are fictional.",
+    start:"Start",
+    noReal:"No real accounts or contact.",
+    fictional:"FICTIONAL PROFILE",
+    pass:"❌ Pass",
+    like:"❤️ Like",
+    fakeMatch:"This is a fictional match!",
+    chat:"💬 View conversation",
+    continue:"Continue",
+    messages:"💬 Messages",
+    simulated:"SIMULATED CONVERSATION",
+    send:"Send",
+    noMessages:"No messages are sent to real people.",
+    myProfile:"👤 My profile",
+    testProfile:"TEST PROFILE",
+    edit:"✏️ Edit",
+    nameLabel:"Fictional first name",
+    avatarLabel:"Avatar",
+    bioLabel:"Fictional bio",
+    interestsLabel:"Interests",
+    save:"💗 Save",
+    cancel:"Cancel",
+    notifications:"🔔 Notifications",
+    fakeAlerts:"FICTIONAL ALERTS",
+    testAlert:"Test a notification",
+    clear:"Clear all",
+    noAlerts:"No real notifications are sent.",
+    settings:"⚙️ Settings",
+    appearance:"🌙 Appearance",
+    changeTheme:"Change theme",
+    language:"🌍 Language",
+    toggleAlerts:"Enable / disable",
+    saved:"Theme and language are saved on this device.",
+    navHome:"Home",
+    navDiscover:"Profiles",
+    navMessages:"Messages",
+    navProfile:"Profile",
+    navSettings:"Settings",
+    dark:"Dark mode enabled 🌙",
+    light:"Light mode enabled ☀️",
+    alertsOn:"Fictional notifications enabled",
+    alertsOff:"Fictional notifications disabled",
+    empty:"No notifications.",
+    alertWelcome:"🌸 Welcome to Destinya!",
+    alertMatch:"❤️ New fictional match!",
+    alertMessage:"💬 Demo conversation.",
+    chatIntro:"Hello! Welcome to this fictional conversation 🌸",
+    chatWith:"Fictional conversation with ",
+    count:"Profile",
+    of:"of",
+    placeholder:"Write a fictional message..."
   }
 };
 
-let language = "fr";
-let darkMode = false;
+// SAUVEGARDE
+
+function loadPreference(key, fallback) {
+  try {
+    return localStorage.getItem(key) ?? fallback;
+  } catch (error) {
+    return fallback;
+  }
+}
+
+function savePreference(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch (error) {
+    // La démo fonctionne même sans sauvegarde.
+  }
+}
+
+let language = loadPreference("destinya-language", "fr");
+
+if (!translations[language]) {
+  language = "fr";
+}
+
+let darkMode =
+  loadPreference("destinya-dark", "false") === "true";
+
 let notificationsEnabled = true;
 let notificationItems = [];
 
@@ -659,154 +344,138 @@ let notificationItems = [];
 
 const profiles = [
   {
-    name: "Camille, 26",
-    avatar: "🌸",
-    bio: {
-      fr: "J'aime les promenades et les cafés chaleureux.",
-      en: "I enjoy walks and cozy cafés."
+    name:"Camille",
+    age:26,
+    avatar:"🌸",
+    bio:{
+      fr:"J'aime les promenades et les cafés chaleureux.",
+      en:"I enjoy walks and cozy cafés."
     },
-    tags: ["📚", "☕", "🌿"]
+    tags:["📚","☕","🌿"]
   },
   {
-    name: "Alex, 29",
-    avatar: "🎨",
-    bio: {
-      fr: "Passionné de musique et de photographie.",
-      en: "Passionate about music and photography."
+    name:"Alex",
+    age:29,
+    avatar:"🎨",
+    bio:{
+      fr:"Passionné de musique et de photographie.",
+      en:"Passionate about music and photography."
     },
-    tags: ["🎵", "📷", "✈️"]
+    tags:["🎵","📷","✈️"]
   },
   {
-    name: "Léa, 31",
-    avatar: "🦋",
-    bio: {
-      fr: "J'adore cuisiner et découvrir de nouveaux endroits.",
-      en: "I love cooking and exploring new places."
+    name:"Léa",
+    age:31,
+    avatar:"🦋",
+    bio:{
+      fr:"J'adore cuisiner et découvrir de nouveaux endroits.",
+      en:"I love cooking and exploring new places."
     },
-    tags: ["🍰", "🎬", "🐾"]
+    tags:["🍰","🎬","🐾"]
   }
 ];
 
 let myProfile = {
-  name: "Personnage de test",
-  avatar: "🌸",
-  bio: "J'aime découvrir de nouvelles activités.",
-  interests: ["Musique", "Nature", "Cinéma"]
+  name:"Personnage de test",
+  avatar:"🌸",
+  bio:"J'aime découvrir de nouvelles activités.",
+  interests:["Musique","Nature","Cinéma"]
 };
 
 let current = 0;
 let matchedProfile = null;
 let messages = [];
+let animating = false;
+
+function t(key) {
+  return translations[language][key] || key;
+}
 
 // NAVIGATION
 
 function showPage(id) {
   document.querySelectorAll("main section")
-    .forEach(section => section.classList.add("hidden"));
+    .forEach(section => {
+      section.classList.add("hidden");
+    });
 
-  document.getElementById(id).classList.remove("hidden");
+  document.getElementById(id)
+    .classList.remove("hidden");
+
+  const navPage =
+    id === "editProfile" ? "myProfile" :
+    id === "match" ? "profiles" : id;
+
+  document.querySelectorAll(".nav button")
+    .forEach(button => {
+      button.classList.toggle(
+        "active",
+        button.dataset.page === navPage
+      );
+    });
+
+  if (id === "settings") {
+    updateSettings();
+  }
 
   if (id === "notifications") {
     renderNotifications();
   }
 
-  if (id === "settings") {
-    updateSettings();
-  }
+  window.scrollTo(0, 0);
 }
 
-// TRADUCTION
-
-function t(key) {
-  return translations[language][key];
-}
+// LANGUE
 
 function setLanguage(value) {
+  if (!translations[value]) return;
+
   language = value;
+  savePreference("destinya-language", value);
   document.documentElement.lang = value;
 
-  document.querySelectorAll("[data-i18n]")
+  document.querySelectorAll("[data-t]")
     .forEach(element => {
-      element.textContent = t(element.dataset.i18n);
+      element.textContent = t(element.dataset.t);
     });
 
-  document.getElementById("draft").placeholder =
-    t("messagePlaceholder");
+  document.getElementById("messageInput")
+    .placeholder = t("placeholder");
 
-  updateSettings();
+  renderProfile();
   renderNotifications();
+  updateSettings();
 
   if (matchedProfile) {
     updateChatTitle();
     renderChat();
   }
-
-  renderProfile();
 }
 
 // MODE SOMBRE
 
-function toggleDarkMode() {
-  darkMode = !darkMode;
+function applyDarkMode() {
   document.body.classList.toggle("dark", darkMode);
   updateSettings();
 }
 
+function toggleDarkMode() {
+  darkMode = !darkMode;
+  savePreference("destinya-dark", String(darkMode));
+  applyDarkMode();
+}
+
 function updateSettings() {
-  document.getElementById("themeStatus").textContent =
-    darkMode ? t("dark") : t("light");
+  document.getElementById("themeStatus")
+    .textContent = darkMode ? t("dark") : t("light");
 
-  document.getElementById("notificationStatus").textContent =
-    notificationsEnabled ? t("alertsOn") : t("alertsOff");
+  document.getElementById("notificationStatus")
+    .textContent = notificationsEnabled
+      ? t("alertsOn")
+      : t("alertsOff");
 }
 
-// NOTIFICATIONS FICTIVES
-
-function toggleNotifications() {
-  notificationsEnabled = !notificationsEnabled;
-  updateSettings();
-  renderNotifications();
-}
-
-function addFakeNotification() {
-  if (!notificationsEnabled) {
-    return;
-  }
-
-  const options = ["alert1", "alert2", "alert3"];
-  const key = options[notificationItems.length % options.length];
-
-  notificationItems.unshift(key);
-  renderNotifications();
-}
-
-function clearNotifications() {
-  notificationItems = [];
-  renderNotifications();
-}
-
-function renderNotifications() {
-  const list = document.getElementById("notificationList");
-  list.replaceChildren();
-
-  if (!notificationsEnabled || notificationItems.length === 0) {
-    const message = document.createElement("p");
-    message.textContent =
-      notificationsEnabled ? t("empty") : t("alertsOff");
-
-    list.appendChild(message);
-    return;
-  }
-
-  notificationItems.forEach(key => {
-    const item = document.createElement("div");
-    item.className = "notice";
-    item.textContent = t(key);
-    list.appendChild(item);
-  });
-}
-
-// CENTRES D'INTÉRÊT
+// ÉTIQUETTES
 
 function fillTags(id, values) {
   const container = document.getElementById(id);
@@ -820,33 +489,170 @@ function fillTags(id, values) {
   });
 }
 
-// MON PROFIL
+// PROFILS ET ANIMATIONS
+
+function startDemo() {
+  current = 0;
+  openProfiles();
+}
+
+function openProfiles() {
+  if (animating) return;
+
+  renderProfile();
+  showPage("profiles");
+}
+
+function renderProfile() {
+  const profile = profiles[current];
+
+  document.getElementById("counter")
+    .textContent =
+      t("count") + " " + (current + 1) +
+      " " + t("of") + " " + profiles.length;
+
+  document.getElementById("avatar")
+    .textContent = profile.avatar;
+
+  document.getElementById("profileName")
+    .textContent = profile.name + ", " + profile.age;
+
+  document.getElementById("profileBio")
+    .textContent = profile.bio[language];
+
+  fillTags("profileTags", profile.tags);
+}
+
+function nextProfile() {
+  current = (current + 1) % profiles.length;
+  renderProfile();
+}
+
+function chooseProfile(liked) {
+  if (animating) return;
+
+  animating = true;
+
+  const card = document.getElementById("profileCard");
+  const selectedProfile = profiles[current];
+
+  card.classList.remove("arrive");
+  card.classList.add(liked ? "like-away" : "pass-away");
+
+  setTimeout(() => {
+    card.classList.remove("like-away", "pass-away");
+
+    if (liked) {
+      matchedProfile = selectedProfile;
+      messages = [];
+
+      document.getElementById("matchName")
+        .textContent =
+          selectedProfile.name + ", " + selectedProfile.age;
+
+      if (notificationsEnabled) {
+        notificationItems.unshift("alertMatch");
+      }
+
+      showPage("match");
+    } else {
+      nextProfile();
+      card.classList.add("arrive");
+    }
+
+    animating = false;
+  }, 300);
+}
+
+function continueProfiles() {
+  nextProfile();
+  showPage("profiles");
+}
+
+// MESSAGES SIMULÉS
+
+function updateChatTitle() {
+  if (!matchedProfile) return;
+
+  document.getElementById("chatTitle")
+    .textContent = t("chatWith") + matchedProfile.name;
+}
+
+function openMessages() {
+  if (!matchedProfile) {
+    matchedProfile = profiles[0];
+    messages = [];
+  }
+
+  updateChatTitle();
+  renderChat();
+  showPage("messages");
+}
+
+function renderChat() {
+  const chat = document.getElementById("chatBox");
+  chat.replaceChildren();
+
+  const intro = document.createElement("div");
+  intro.className = "bubble theirs";
+  intro.textContent = t("chatIntro");
+  chat.appendChild(intro);
+
+  messages.forEach(message => {
+    const bubble = document.createElement("div");
+    bubble.className = "bubble mine";
+    bubble.textContent = message;
+    chat.appendChild(bubble);
+  });
+}
+
+function sendMessage() {
+  const field = document.getElementById("messageInput");
+  const message = field.value.trim();
+
+  if (!message) return;
+
+  messages.push(message);
+  field.value = "";
+
+  renderChat();
+
+  if (notificationsEnabled) {
+    notificationItems.unshift("alertMessage");
+  }
+}
+
+// MON PROFIL FICTIF
 
 function openMyProfile() {
-  document.getElementById("myAvatar").textContent =
-    myProfile.avatar;
+  document.getElementById("myAvatar")
+    .textContent = myProfile.avatar;
 
-  document.getElementById("myName").textContent =
-    myProfile.name;
+  document.getElementById("myName")
+    .textContent = myProfile.name;
 
-  document.getElementById("myBio").textContent =
-    myProfile.bio;
+  document.getElementById("myBio")
+    .textContent = myProfile.bio;
 
   fillTags("myTags", myProfile.interests);
 
-  document.getElementById("editName").value =
-    myProfile.name;
-
-  document.getElementById("editAvatar").value =
-    myProfile.avatar;
-
-  document.getElementById("editBio").value =
-    myProfile.bio;
-
-  document.getElementById("editInterests").value =
-    myProfile.interests.join(", ");
-
   showPage("myProfile");
+}
+
+function editMyProfile() {
+  document.getElementById("editName")
+    .value = myProfile.name;
+
+  document.getElementById("editAvatar")
+    .value = myProfile.avatar;
+
+  document.getElementById("editBio")
+    .value = myProfile.bio;
+
+  document.getElementById("editInterests")
+    .value = myProfile.interests.join(", ");
+
+  showPage("editProfile");
 }
 
 document.getElementById("profileForm")
@@ -862,133 +668,84 @@ document.getElementById("profileForm")
     const bio = document.getElementById("editBio")
       .value.trim();
 
-    const interests = document.getElementById("editInterests")
-      .value.split(",")
+    const interests =
+      document.getElementById("editInterests")
+      .value
+      .split(",")
       .map(value => value.trim())
       .filter(Boolean)
       .slice(0, 6);
 
     if (!name || !bio) return;
 
-    myProfile = { name, avatar, bio, interests };
+    myProfile = {
+      name,
+      avatar,
+      bio,
+      interests
+    };
+
     openMyProfile();
   });
 
-// PROFILS
+// NOTIFICATIONS FICTIVES
 
-function startDemo() {
-  current = 0;
-  renderProfile();
-  showPage("profiles");
+function toggleNotifications() {
+  notificationsEnabled = !notificationsEnabled;
+  updateSettings();
+  renderNotifications();
 }
 
-function renderProfile() {
-  const profile = profiles[current];
+function addNotification() {
+  if (!notificationsEnabled) return;
 
-  document.getElementById("counter").textContent =
-    t("profileCount") + " " + (current + 1) +
-    " " + t("of") + " " + profiles.length;
+  const options = [
+    "alertWelcome",
+    "alertMatch",
+    "alertMessage"
+  ];
 
-  document.getElementById("avatar").textContent =
-    profile.avatar;
+  const key =
+    options[notificationItems.length % options.length];
 
-  document.getElementById("name").textContent =
-    profile.name;
-
-  document.getElementById("bio").textContent =
-    profile.bio[language];
-
-  fillTags("tags", profile.tags);
+  notificationItems.unshift(key);
+  renderNotifications();
 }
 
-function nextProfile() {
-  current = (current + 1) % profiles.length;
-  renderProfile();
+function clearNotifications() {
+  notificationItems = [];
+  renderNotifications();
 }
 
-function passProfile() {
-  nextProfile();
-}
+function renderNotifications() {
+  const list = document.getElementById("notificationList");
+  list.replaceChildren();
 
-// MATCH
+  if (!notificationsEnabled || notificationItems.length === 0) {
+    const empty = document.createElement("p");
 
-function likeProfile() {
-  matchedProfile = profiles[current];
-  messages = [];
+    empty.textContent = notificationsEnabled
+      ? t("empty")
+      : t("alertsOff");
 
-  document.getElementById("matchName").textContent =
-    matchedProfile.name;
-
-  if (notificationsEnabled) {
-    notificationItems.unshift("alert2");
+    list.appendChild(empty);
+    return;
   }
 
-  showPage("matchScreen");
-}
-
-function continueProfiles() {
-  nextProfile();
-  showPage("profiles");
-}
-
-// MESSAGERIE SIMULÉE
-
-function updateChatTitle() {
-  if (!matchedProfile) return;
-
-  document.getElementById("chatTitle").textContent =
-    t("chatWith") + matchedProfile.name;
-}
-
-function openMessages() {
-  if (!matchedProfile) {
-    matchedProfile = profiles[0];
-    messages = [];
-  }
-
-  updateChatTitle();
-  renderChat();
-  showPage("messages");
-}
-
-function renderChat() {
-  const chat = document.getElementById("chat");
-  chat.replaceChildren();
-
-  const intro = document.createElement("div");
-  intro.className = "bubble theirs";
-  intro.textContent = t("chatIntro");
-  chat.appendChild(intro);
-
-  messages.forEach(text => {
-    const bubble = document.createElement("div");
-    bubble.className = "bubble mine";
-    bubble.textContent = text;
-    chat.appendChild(bubble);
+  notificationItems.forEach(key => {
+    const item = document.createElement("div");
+    item.className = "notice";
+    item.textContent = t(key);
+    list.appendChild(item);
   });
 }
 
-function sendDemoMessage() {
-  const field = document.getElementById("draft");
-  const text = field.value.trim();
+// DÉMARRAGE DE DESTINYA
 
-  if (!text) return;
-
-  messages.push(text);
-  field.value = "";
-  renderChat();
-
-  if (notificationsEnabled) {
-    notificationItems.unshift("alert3");
-  }
-}
-
-// INITIALISATION
-
-setLanguage("fr");
-updateSettings();
+setLanguage(language);
+applyDarkMode();
+showPage("home");
 
 </script>
-
 </body>
 </html>
