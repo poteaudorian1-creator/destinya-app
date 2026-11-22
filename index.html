@@ -8,94 +8,73 @@
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;
- min-height:100vh;
- padding:18px;
- font-family:Arial,sans-serif;
- color:#593b49;
+ margin:0;min-height:100vh;padding:18px;
+ font-family:Arial,sans-serif;color:#593b49;
  background:linear-gradient(145deg,#fff0ed,#ffd6df,#ffe8d6)
 }
 main{
- width:100%;
- max-width:470px;
- margin:20px auto;
- padding:25px 20px;
- background:#fff;
- border-radius:28px;
- text-align:center;
+ max-width:470px;margin:20px auto;padding:25px 20px;
+ background:white;border-radius:28px;text-align:center;
  box-shadow:0 12px 35px #b76b7b30
 }
 h1{font-size:43px;color:#d65c82}
 h2{font-size:29px;color:#bd5275}
 .heart{font-size:58px}
 .hidden{display:none!important}
-label{
- display:block;
- text-align:left;
- margin-top:12px
-}
+label{display:block;text-align:left;margin-top:12px}
 input,select,textarea{
- width:100%;
- padding:13px;
- margin:7px 0;
- border:1px solid #f2c2d0;
- border-radius:13px;
- font:inherit;
- background:#fff
+ width:100%;padding:13px;margin:7px 0;
+ border:1px solid #f2c2d0;border-radius:13px;
+ font:inherit;background:white
 }
 button{
- width:100%;
- padding:15px;
- margin:8px 0;
- border:0;
- border-radius:28px;
- font-size:16px;
- font-weight:bold;
- cursor:pointer
+ width:100%;padding:15px;margin:8px 0;border:0;
+ border-radius:28px;font-size:16px;
+ font-weight:bold;cursor:pointer
 }
 button:disabled{opacity:.55;cursor:wait}
 .primary{background:#d65c82;color:white}
 .secondary{background:#ffe1e8;color:#a94368}
-small{
- display:block;
- margin:12px 0;
- line-height:1.5
-}
-#message{
- color:#a94368;
- min-height:25px;
- line-height:1.5
-}
+small{display:block;margin:12px 0;line-height:1.5}
+#message{color:#a94368;min-height:25px;line-height:1.5}
 .card{
- padding:25px 16px;
- border-radius:26px;
- margin:18px 0;
+ padding:25px 16px;border-radius:26px;margin:18px 0;
  background:linear-gradient(160deg,#fff0f4,#ffe5dc);
  touch-action:pan-y
 }
 .avatar{font-size:78px}
-.name{
- font-size:29px;
- color:#bd5275;
- font-weight:bold
-}
+.name{font-size:29px;color:#bd5275;font-weight:bold}
 .tag{
- display:inline-block;
- background:white;
- padding:9px 13px;
- border-radius:20px;
- margin:5px;
- font-size:13px
+ display:inline-block;background:white;padding:9px 13px;
+ border-radius:20px;margin:5px;font-size:13px
 }
 .actions{display:flex;gap:10px}
 .actions button{flex:1}
 .match{
- padding:17px;
- margin:12px 0;
- border-radius:16px;
- background:#fff0f4;
+ padding:17px;margin:12px 0;border-radius:16px;
+ background:#fff0f4;text-align:left
+}
+.chat-list{
+ height:380px;overflow-y:auto;padding:12px;
+ background:#fff5f7;border-radius:18px;
+ display:flex;flex-direction:column;gap:9px;
  text-align:left
 }
+.bubble{
+ max-width:85%;padding:11px 14px;
+ border-radius:18px;overflow-wrap:anywhere;
+ white-space:pre-wrap
+}
+.mine{
+ align-self:flex-end;background:#d65c82;color:white
+}
+.theirs{
+ align-self:flex-start;background:#fff;color:#593b49
+}
+.bubble small{margin:5px 0 0;font-size:11px;opacity:.8}
+.chat-form{display:flex;gap:7px;align-items:center}
+.chat-form input{flex:1;min-width:0}
+.chat-form button{width:auto;padding:13px 16px}
 </style>
 </head>
 <body>
@@ -114,7 +93,7 @@ Se connecter
 <button class="secondary" onclick="openDemo()">
 🌸 Découvrir Destinya
 </button>
-<small>Application réservée aux adultes de 18 ans et plus.</small>
+<small>Réservé aux adultes de 18 ans et plus.</small>
 </section>
 
 <section id="register" class="hidden">
@@ -136,13 +115,9 @@ Se connecter
 <input id="email" type="email" required>
 <label>Mot de passe</label>
 <input id="password" type="password" minlength="8" required>
-<button class="primary" type="submit">
-Créer mon compte
-</button>
+<button class="primary" type="submit">Créer mon compte</button>
 </form>
-<button class="secondary" onclick="showPage('home')">
-Retour
-</button>
+<button class="secondary" onclick="showPage('home')">Retour</button>
 </section>
 
 <section id="login" class="hidden">
@@ -152,16 +127,12 @@ Retour
  placeholder="Adresse e-mail" required>
 <input id="loginPassword" type="password"
  placeholder="Mot de passe" required>
-<button class="primary" type="submit">
-Se connecter
-</button>
+<button class="primary" type="submit">Se connecter</button>
 </form>
 <button id="googleLogin" class="secondary">
 Continuer avec Google
 </button>
-<button class="secondary" onclick="showPage('home')">
-Retour
-</button>
+<button class="secondary" onclick="showPage('home')">Retour</button>
 </section>
 
 <section id="account" class="hidden">
@@ -184,14 +155,15 @@ Actualiser la vérification
 <button id="hideProfile" class="secondary">
 🔒 Masquer mon profil
 </button>
-<small id="visibilityInfo">
-Ton profil est privé par défaut.
-</small>
+<small id="visibilityInfo">Ton profil est privé.</small>
 <button id="discoverReal" class="primary">
 💕 Découvrir les membres
 </button>
 <button id="viewMatches" class="primary">
 ❤️ Mes matchs
+</button>
+<button id="openMessages" class="primary">
+💬 Messages
 </button>
 <button class="secondary" onclick="openDemo()">
 Voir les profils fictifs
@@ -217,15 +189,12 @@ Se déconnecter
 <option value="sans_engagement">Sans engagement</option>
 </select>
 <label>Ma description</label>
-<textarea id="editBio" maxlength="500" rows="4"
- placeholder="Parle un peu de toi..."></textarea>
+<textarea id="editBio" maxlength="500" rows="4"></textarea>
 <button class="primary" type="submit">
 💾 Enregistrer mon profil
 </button>
 </form>
-<button class="secondary" onclick="showPage('account')">
-Retour
-</button>
+<button class="secondary" onclick="showPage('account')">Retour</button>
 </section>
 
 <section id="profiles" class="hidden">
@@ -242,8 +211,7 @@ Retour
 <button class="secondary" onclick="nextProfile()">
 ❌ Passer
 </button>
-<button id="likeButton" class="primary"
- onclick="likeProfile()">
+<button id="likeButton" class="primary" onclick="likeProfile()">
 ❤️ J'aime
 </button>
 </div>
@@ -264,6 +232,31 @@ Retour à mon compte
 </button>
 </section>
 
+<section id="messages" class="hidden">
+<h2>💬 Messages</h2>
+<p>Choisis une personne avec qui tu as un match.</p>
+<div id="conversationsList"></div>
+<button class="secondary" onclick="showPage('account')">
+Retour à mon compte
+</button>
+</section>
+
+<section id="chat" class="hidden">
+<h2 id="chatTitle">💬 Conversation</h2>
+<div id="chatList" class="chat-list" aria-live="polite"></div>
+<form id="chatForm" class="chat-form">
+<input id="chatInput" maxlength="2000"
+ placeholder="Écris ton message..." autocomplete="off" required>
+<button id="sendMessage" class="primary" type="submit">
+➤
+</button>
+</form>
+<small>Seuls les membres du match peuvent lire cette conversation.</small>
+<button id="backToMessages" class="secondary">
+Retour aux messages
+</button>
+</section>
+
 <p id="message" role="status" aria-live="polite"></p>
 </main>
 
@@ -281,30 +274,12 @@ let actionBusy=false;
 const PAGE_SIZE=20;
 
 const demoProfiles=[
- {
-  name:"Camille",
-  age:26,
-  ville:"Paris",
-  avatar:"🌸",
-  objectif:"amitie",
-  bio:"J'aime les promenades et les livres."
- },
- {
-  name:"Alex",
-  age:29,
-  ville:"Lyon",
-  avatar:"🎨",
-  objectif:"serieux",
-  bio:"Passionné de musique et de voyages."
- },
- {
-  name:"Léa",
-  age:31,
-  ville:"Lille",
-  avatar:"🦋",
-  objectif:"sans_engagement",
-  bio:"J'adore cuisiner et le cinéma."
- }
+ {name:"Camille",age:26,ville:"Paris",avatar:"🌸",
+  objectif:"amitie",bio:"J'aime les promenades et les livres."},
+ {name:"Alex",age:29,ville:"Lyon",avatar:"🎨",
+  objectif:"serieux",bio:"Passionné de musique et de voyages."},
+ {name:"Léa",age:31,ville:"Lille",avatar:"🦋",
+  objectif:"sans_engagement",bio:"J'adore le cinéma."}
 ];
 
 const objectives={
@@ -314,6 +289,9 @@ const objectives={
 };
 
 function showPage(page){
+ if(currentPage==="chat"&&page!=="chat"&&window.stopChat){
+  window.stopChat();
+ }
  document.querySelectorAll("main section").forEach(s=>{
   s.classList.add("hidden");
  });
@@ -345,7 +323,6 @@ function renderProfile(){
  }
 
  const p=activeProfiles[profileIndex];
-
  card.classList.remove("hidden");
  actions.classList.remove("hidden");
 
@@ -361,20 +338,17 @@ function renderProfile(){
  document.getElementById("profileName").textContent=
   `${p.name}, ${p.age} ans`;
 
- document.getElementById("profileBio").textContent=
-  p.bio||"";
+ document.getElementById("profileBio").textContent=p.bio||"";
 
  const interests=document.getElementById("profileInterests");
  interests.replaceChildren();
 
- [p.ville,objectives[p.objectif]]
-  .filter(Boolean)
-  .forEach(item=>{
-   const span=document.createElement("span");
-   span.className="tag";
-   span.textContent=item;
-   interests.appendChild(span);
-  });
+ [p.ville,objectives[p.objectif]].filter(Boolean).forEach(item=>{
+  const span=document.createElement("span");
+  span.className="tag";
+  span.textContent=item;
+  interests.appendChild(span);
+ });
 
  document.getElementById("demoNotice").textContent=
   profileMode==="demo"
@@ -463,32 +437,18 @@ import {initializeApp} from
 "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 
 import {
- getAuth,
- createUserWithEmailAndPassword,
- signInWithEmailAndPassword,
- signInWithPopup,
- GoogleAuthProvider,
- signOut,
- onAuthStateChanged,
- updateProfile,
- sendEmailVerification,
- reload
+ getAuth,createUserWithEmailAndPassword,
+ signInWithEmailAndPassword,signInWithPopup,
+ GoogleAuthProvider,signOut,onAuthStateChanged,
+ updateProfile,sendEmailVerification,reload
 } from
 "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 import {
- getFirestore,
- doc,
- setDoc,
- getDoc,
- deleteDoc,
- collection,
- getDocs,
- serverTimestamp,
- query,
- limit,
- startAfter,
- where
+ getFirestore,doc,setDoc,getDoc,deleteDoc,
+ collection,getDocs,addDoc,onSnapshot,
+ serverTimestamp,query,limit,startAfter,
+ where,orderBy
 } from
 "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
@@ -506,63 +466,29 @@ const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
 
-function calculateAge(value){
- if(!value)return -1;
-
- const birth=new Date(value+"T12:00:00");
- const today=new Date();
-
- if(Number.isNaN(birth.getTime())||birth>today){
-  return -1;
- }
-
- let age=today.getFullYear()-birth.getFullYear();
-
- if(
-  today.getMonth()<birth.getMonth()||
-  (
-   today.getMonth()===birth.getMonth()&&
-   today.getDate()<birth.getDate()
-  )
- ){
-  age--;
- }
-
- return age;
-}
+let unsubscribeChat=null;
+let activeMatchId=null;
+let sending=false;
 
 function errorText(error){
- console.error("Destinya Firebase:",error);
-
+ console.error("Destinya:",error);
  const code=error?.code||"";
 
- if(
-  code==="permission-denied"||
-  code==="firestore/permission-denied"
- ){
-  return "Accès refusé par Firestore. Vérifie que les nouvelles règles sont publiées.";
+ if(code.includes("permission-denied")){
+  return "Accès refusé par Firestore. Vérifie les règles publiées.";
  }
-
  if(code==="auth/email-already-in-use"){
-  return "Cette adresse e-mail possède déjà un compte.";
+  return "Cette adresse e-mail est déjà utilisée.";
  }
-
- if(code==="auth/invalid-email"){
-  return "Adresse e-mail invalide.";
- }
-
- if(code==="auth/weak-password"){
-  return "Mot de passe trop faible.";
- }
-
  if(code==="auth/invalid-credential"){
   return "E-mail ou mot de passe incorrect.";
  }
-
- if(code==="auth/unauthorized-domain"){
-  return "Autorise le domaine GitHub Pages dans Firebase Authentication.";
+ if(code==="auth/weak-password"){
+  return "Le mot de passe est trop faible.";
  }
-
+ if(code==="auth/unauthorized-domain"){
+  return "Autorise ton domaine GitHub Pages dans Firebase.";
+ }
  return error?.message||"Une erreur est survenue.";
 }
 
@@ -570,39 +496,47 @@ function verified(user){
  return !!user?.emailVerified;
 }
 
-function profileFromForm(prefix){
- const editing=prefix==="edit";
+function calculateAge(value){
+ if(!value)return -1;
+ const birth=new Date(value+"T12:00:00");
+ const today=new Date();
 
+ if(Number.isNaN(birth.getTime())||birth>today)return -1;
+
+ let age=today.getFullYear()-birth.getFullYear();
+ if(
+  today.getMonth()<birth.getMonth()||
+  (today.getMonth()===birth.getMonth()&&
+   today.getDate()<birth.getDate())
+ )age--;
+
+ return age;
+}
+
+function profileFromForm(editing){
+ const id=editing?"edit":"";
  const pseudo=document.getElementById(
   editing?"editPseudo":"name"
  ).value.trim();
-
  const birthdate=document.getElementById(
   editing?"editBirthdate":"birthdate"
  ).value;
-
  const ville=document.getElementById(
   editing?"editVille":"ville"
  ).value.trim();
-
  const objectif=document.getElementById(
   editing?"editObjectif":"objectif"
  ).value;
-
  const bio=editing
   ?document.getElementById("editBio").value.trim()
   :"";
-
  const age=calculateAge(birthdate);
 
  if(age<18||age>120){
-  throw new Error(
-   "Destinya est réservé aux personnes de 18 ans et plus."
-  );
+  throw new Error("Destinya est réservé aux adultes de 18 ans et plus.");
  }
-
  if(!pseudo||!ville){
-  throw new Error("Complète le pseudo et la ville.");
+  throw new Error("Complète ton pseudo et ta ville.");
  }
 
  return {pseudo,birthdate,age,ville,objectif,bio};
@@ -611,7 +545,6 @@ function profileFromForm(prefix){
 async function savePrivateProfile(user,data){
  const ref=doc(db,"Users",user.uid);
  const existing=await getDoc(ref);
-
  const payload={
   ...data,
   profilTest:false,
@@ -619,10 +552,8 @@ async function savePrivateProfile(user,data){
  };
 
  if(existing.exists()){
-  const previous=existing.data();
-
-  if(previous.createdAt){
-   payload.createdAt=previous.createdAt;
+  if(existing.data().createdAt){
+   payload.createdAt=existing.data().createdAt;
   }
  }else{
   payload.createdAt=serverTimestamp();
@@ -636,21 +567,15 @@ async function savePrivateProfile(user,data){
 document.getElementById("registerForm")
 .addEventListener("submit",async e=>{
  e.preventDefault();
-
  try{
-  const data=profileFromForm("register");
-
+  const data=profileFromForm(false);
   const email=document.getElementById("email").value.trim();
   const password=document.getElementById("password").value;
 
   const result=await createUserWithEmailAndPassword(
    auth,email,password
   );
-
-  await updateProfile(result.user,{
-   displayName:data.pseudo
-  });
-
+  await updateProfile(result.user,{displayName:data.pseudo});
   await savePrivateProfile(result.user,data);
   await sendEmailVerification(result.user);
 
@@ -666,17 +591,12 @@ document.getElementById("registerForm")
 document.getElementById("loginForm")
 .addEventListener("submit",async e=>{
  e.preventDefault();
-
  try{
-  const email=document.getElementById(
-   "loginEmail"
-  ).value.trim();
-
-  const password=document.getElementById(
-   "loginPassword"
-  ).value;
-
-  await signInWithEmailAndPassword(auth,email,password);
+  await signInWithEmailAndPassword(
+   auth,
+   document.getElementById("loginEmail").value.trim(),
+   document.getElementById("loginPassword").value
+  );
  }catch(error){
   notice(errorText(error));
  }
@@ -685,15 +605,13 @@ document.getElementById("loginForm")
 document.getElementById("googleLogin")
 .addEventListener("click",async()=>{
  try{
-  await signInWithPopup(
-   auth,new GoogleAuthProvider()
-  );
+  await signInWithPopup(auth,new GoogleAuthProvider());
  }catch(error){
   notice(errorText(error));
  }
 });
 
-/* MODIFICATION DU PROFIL */
+/* PROFIL PRIVÉ */
 
 document.getElementById("editProfile")
 .addEventListener("click",async()=>{
@@ -702,32 +620,18 @@ document.getElementById("editProfile")
 
  try{
   const snap=await getDoc(doc(db,"Users",user.uid));
+  const p=snap.exists()?snap.data():{};
 
-  if(snap.exists()){
-   const p=snap.data();
-
-   document.getElementById("editPseudo").value=
-    p.pseudo||"";
-
-   document.getElementById("editBirthdate").value=
-    p.birthdate||"";
-
-   document.getElementById("editVille").value=
-    p.ville||"";
-
-   document.getElementById("editObjectif").value=
-    p.objectif||"serieux";
-
-   document.getElementById("editBio").value=
-    p.bio||"";
-  }else{
-   document.getElementById("editPseudo").value=
-    user.displayName||"";
-
-   document.getElementById("editBirthdate").value="";
-   document.getElementById("editVille").value="";
-   document.getElementById("editBio").value="";
-  }
+  document.getElementById("editPseudo").value=
+   p.pseudo||user.displayName||"";
+  document.getElementById("editBirthdate").value=
+   p.birthdate||"";
+  document.getElementById("editVille").value=
+   p.ville||"";
+  document.getElementById("editObjectif").value=
+   p.objectif||"serieux";
+  document.getElementById("editBio").value=
+   p.bio||"";
 
   showPage("editProfilePage");
  }catch(error){
@@ -738,19 +642,13 @@ document.getElementById("editProfile")
 document.getElementById("editProfileForm")
 .addEventListener("submit",async e=>{
  e.preventDefault();
-
  const user=auth.currentUser;
  if(!user)return;
 
  try{
-  const data=profileFromForm("edit");
-
+  const data=profileFromForm(true);
   await savePrivateProfile(user,data);
-
-  await updateProfile(user,{
-   displayName:data.pseudo
-  });
-
+  await updateProfile(user,{displayName:data.pseudo});
   showPage("account");
   notice("💗 Profil enregistré !");
  }catch(error){
@@ -768,7 +666,6 @@ async function refreshVisibility(){
   const snap=await getDoc(
    doc(db,"publicProfiles",user.uid)
   );
-
   document.getElementById("visibilityInfo").textContent=
    snap.exists()
    ?"🌸 Ton profil est public."
@@ -786,39 +683,33 @@ document.getElementById("publishProfile")
 
  try{
   await reload(user);
+  await user.getIdToken(true);
 
   if(!verified(user)){
-   throw new Error(
-    "Vérifie d'abord ton adresse e-mail."
-   );
+   throw new Error("Vérifie d'abord ton adresse e-mail.");
   }
 
-  const privateSnap=await getDoc(
-   doc(db,"Users",user.uid)
-  );
-
-  if(!privateSnap.exists()){
+  const snap=await getDoc(doc(db,"Users",user.uid));
+  if(!snap.exists()){
    throw new Error("Complète d'abord ton profil.");
   }
 
-  const p=privateSnap.data();
+  const p=snap.data();
+  const age=calculateAge(p.birthdate);
 
-  if(calculateAge(p.birthdate)<18){
+  if(age<18||age>120){
    throw new Error("Profil réservé aux adultes.");
   }
 
-  await setDoc(
-   doc(db,"publicProfiles",user.uid),
-   {
-    pseudo:p.pseudo,
-    age:calculateAge(p.birthdate),
-    ville:p.ville,
-    objectif:p.objectif,
-    bio:p.bio||"",
-    visible:true,
-    updatedAt:serverTimestamp()
-   }
-  );
+  await setDoc(doc(db,"publicProfiles",user.uid),{
+   pseudo:p.pseudo,
+   age,
+   ville:p.ville,
+   objectif:p.objectif,
+   bio:p.bio||"",
+   visible:true,
+   updatedAt:serverTimestamp()
+  });
 
   await refreshVisibility();
   notice("🌸 Ton profil est maintenant visible !");
@@ -833,10 +724,7 @@ document.getElementById("hideProfile")
  if(!user)return;
 
  try{
-  await deleteDoc(
-   doc(db,"publicProfiles",user.uid)
-  );
-
+  await deleteDoc(doc(db,"publicProfiles",user.uid));
   await refreshVisibility();
   notice("🔒 Ton profil est masqué.");
  }catch(error){
@@ -844,16 +732,14 @@ document.getElementById("hideProfile")
  }
 });
 
-/* DÉCOUVERTE */
+/* DÉCOUVERTE DES PROFILS */
 
 async function loadRealProfiles(){
  if(loadingProfiles||!moreProfilesAvailable)return;
-
  const user=auth.currentUser;
  if(!user)return;
 
  loadingProfiles=true;
-
  try{
   let q=query(
    collection(db,"publicProfiles"),
@@ -879,8 +765,7 @@ async function loadRealProfiles(){
   for(const item of results.docs){
    const p=item.data();
 
-   if(item.id===user.uid)continue;
-   if(p.visible!==true)continue;
+   if(item.id===user.uid||p.visible!==true)continue;
    if(typeof p.age!=="number"||p.age<18)continue;
 
    activeProfiles.push({
@@ -910,10 +795,7 @@ document.getElementById("discoverReal")
  if(!user)return;
 
  try{
-  const snap=await getDoc(
-   doc(db,"Users",user.uid)
-  );
-
+  const snap=await getDoc(doc(db,"Users",user.uid));
   if(!snap.exists()){
    notice("Complète d'abord ton profil.");
    return;
@@ -928,7 +810,6 @@ document.getElementById("discoverReal")
 
   showPage("profiles");
   renderProfile();
-
   await loadRealProfiles();
  }catch(error){
   notice(errorText(error));
@@ -938,7 +819,6 @@ document.getElementById("discoverReal")
 document.getElementById("loadMore")
 .addEventListener("click",async()=>{
  const previous=activeProfiles.length;
-
  await loadRealProfiles();
 
  if(activeProfiles.length>previous){
@@ -947,121 +827,91 @@ document.getElementById("loadMore")
  }
 });
 
-/* ❤️ LIKES CORRIGÉS */
+/* LIKES ET MATCHS */
 
-function likeId(from,to){
- return from+"_"+to;
-}
-
-function matchId(a,b){
+function makeMatchId(a,b){
  return [a,b].sort().join("_");
 }
 
 async function saveRealLike(profile){
  const user=auth.currentUser;
-
  if(!user||!profile||actionBusy)return;
 
- if(user.uid===profile.id){
-  notice("Tu ne peux pas liker ton propre profil.");
-  return;
- }
-
  actionBusy=true;
-
  const button=document.getElementById("likeButton");
  button.disabled=true;
-
- let likeSaved=false;
+ let saved=false;
 
  try{
   await reload(user);
   await user.getIdToken(true);
 
   if(!verified(user)){
-   throw new Error(
-    "Vérifie ton adresse e-mail avant de liker."
-   );
+   throw new Error("Vérifie ton e-mail avant de liker.");
+  }
+  if(profile.id===user.uid){
+   throw new Error("Tu ne peux pas liker ton propre profil.");
   }
 
   const target=await getDoc(
    doc(db,"publicProfiles",profile.id)
   );
-
   if(!target.exists()){
-   throw new Error(
-    "Ce profil n'est plus disponible."
-   );
+   throw new Error("Ce profil n'est plus disponible.");
   }
 
-  const myLikeRef=doc(
-   db,"likes",likeId(user.uid,profile.id)
-  );
+  const mine=doc(db,"likes",user.uid+"_"+profile.id);
+  const previous=await getDoc(mine);
 
-  const existingLike=await getDoc(myLikeRef);
-
-  if(!existingLike.exists()){
-   await setDoc(myLikeRef,{
+  if(!previous.exists()){
+   await setDoc(mine,{
     from:user.uid,
     to:profile.id,
     createdAt:serverTimestamp()
    });
   }
 
-  likeSaved=true;
+  saved=true;
 
-  /*
-   Les nouvelles règles permettent de consulter
-   un like réciproque même s'il n'existe pas.
-  */
-
-  const reciprocalRef=doc(
-   db,"likes",likeId(profile.id,user.uid)
+  const reciprocal=await getDoc(
+   doc(db,"likes",profile.id+"_"+user.uid)
   );
-
-  const reciprocal=await getDoc(reciprocalRef);
 
   let matched=false;
 
   if(reciprocal.exists()){
    const members=[user.uid,profile.id].sort();
-
    const matchRef=doc(
-    db,"matches",matchId(user.uid,profile.id)
+    db,"matches",makeMatchId(user.uid,profile.id)
    );
 
-   const existingMatch=await getDoc(matchRef);
+   const existing=await getDoc(matchRef);
 
-   if(!existingMatch.exists()){
+   if(!existing.exists()){
     await setDoc(matchRef,{
      members,
      createdAt:serverTimestamp()
     });
    }
-
    matched=true;
   }
 
   actionBusy=false;
   await nextProfile();
 
-  if(matched){
-   notice("💕 C'est un match !");
-  }else if(existingLike.exists()){
-   notice("❤️ Tu avais déjà liké ce profil.");
-  }else{
-   notice("❤️ Like enregistré dans Firebase !");
-  }
+  notice(
+   matched
+   ?"💕 C'est un match ! Ouvre Messages pour discuter."
+   :previous.exists()
+    ?"❤️ Tu avais déjà liké ce profil."
+    :"❤️ Like enregistré !"
+  );
 
  }catch(error){
-  if(likeSaved){
-   notice(
-    "❤️ Like enregistré, mais la vérification du match a échoué : "
-    +errorText(error)
-   );
-  }else{
-   notice(errorText(error));
-  }
+  notice(
+   (saved?"❤️ Like enregistré, mais : ":"")
+   +errorText(error)
+  );
  }finally{
   actionBusy=false;
   button.disabled=false;
@@ -1070,68 +920,244 @@ async function saveRealLike(profile){
 
 window.saveRealLike=saveRealLike;
 
-/* 💕 MES MATCHS */
+/* RÉCUPÉRATION DES MATCHS */
 
-document.getElementById("viewMatches")
-.addEventListener("click",async()=>{
+async function getMyMatches(){
  const user=auth.currentUser;
- if(!user)return;
+ if(!user)throw new Error("Connecte-toi d'abord.");
 
- showPage("matches");
+ const q=query(
+  collection(db,"matches"),
+  where("members","array-contains",user.uid),
+  limit(50)
+ );
 
- const list=document.getElementById("matchesList");
- list.textContent="Chargement de tes matchs...";
+ const results=await getDocs(q);
+ const matches=[];
 
- try{
-  const q=query(
-   collection(db,"matches"),
-   where("members","array-contains",user.uid),
-   limit(50)
+ for(const item of results.docs){
+  const members=item.data().members||[];
+  const otherId=members.find(id=>id!==user.uid);
+  if(!otherId)continue;
+
+  const profile=await getDoc(
+   doc(db,"publicProfiles",otherId)
   );
 
-  const results=await getDocs(q);
-  list.replaceChildren();
+  matches.push({
+   id:item.id,
+   otherId,
+   name:profile.exists()
+    ?profile.data().pseudo||"Membre"
+    :"Membre indisponible"
+  });
+ }
 
-  if(results.empty){
-   list.textContent="Tu n'as pas encore de match 💗";
+ return matches;
+}
+
+function makeMatchCard(match,container){
+ const div=document.createElement("div");
+ div.className="match";
+
+ const title=document.createElement("strong");
+ title.textContent="💕 "+match.name;
+
+ const description=document.createElement("p");
+ description.textContent="Vous avez un match !";
+
+ const button=document.createElement("button");
+ button.className="primary";
+ button.textContent="💬 Discuter";
+ button.addEventListener("click",()=>{
+  openChat(match.id,match.name);
+ });
+
+ div.append(title,description,button);
+ container.appendChild(div);
+}
+
+async function displayMatches(page){
+ showPage(page);
+
+ const container=document.getElementById(
+  page==="matches"?"matchesList":"conversationsList"
+ );
+ container.textContent="Chargement...";
+
+ try{
+  const matches=await getMyMatches();
+  container.replaceChildren();
+
+  if(!matches.length){
+   container.textContent="Aucun match pour le moment 💗";
    return;
   }
 
-  for(const item of results.docs){
-   const members=item.data().members||[];
-   const otherId=members.find(id=>id!==user.uid);
+  for(const match of matches){
+   makeMatchCard(match,container);
+  }
+ }catch(error){
+  container.textContent=errorText(error);
+ }
+}
 
-   if(!otherId)continue;
+document.getElementById("viewMatches")
+.addEventListener("click",()=>displayMatches("matches"));
 
-   const profile=await getDoc(
-    doc(db,"publicProfiles",otherId)
-   );
+document.getElementById("openMessages")
+.addEventListener("click",()=>displayMatches("messages"));
 
-   const div=document.createElement("div");
-   div.className="match";
+/* 💬 MESSAGERIE PRIVÉE EN TEMPS RÉEL */
 
-   const name=document.createElement("strong");
-   name.textContent=profile.exists()
-    ?profile.data().pseudo
-    :"Membre indisponible";
+function stopChat(){
+ if(unsubscribeChat){
+  unsubscribeChat();
+  unsubscribeChat=null;
+ }
+ activeMatchId=null;
+}
 
-   const info=document.createElement("p");
-   info.textContent="💕 Vous avez un match !";
+window.stopChat=stopChat;
 
-   div.append(name,info);
-   list.appendChild(div);
+async function openChat(matchId,name){
+ const user=auth.currentUser;
+ if(!user)return;
+
+ stopChat();
+
+ try{
+  // Vérifier que le match existe et inclut ce compte.
+  const matchSnap=await getDoc(doc(db,"matches",matchId));
+
+  if(
+   !matchSnap.exists()||
+   !Array.isArray(matchSnap.data().members)||
+   !matchSnap.data().members.includes(user.uid)
+  ){
+   throw new Error("Cette conversation n'est pas accessible.");
   }
 
+  activeMatchId=matchId;
+  showPage("chat");
+
+  document.getElementById("chatTitle").textContent=
+   "💬 "+name;
+
+  const list=document.getElementById("chatList");
+  list.textContent="Chargement des messages...";
+
+  const messagesQuery=query(
+   collection(db,"matches",matchId,"messages"),
+   orderBy("createdAt","desc"),
+   limit(50)
+  );
+
+  unsubscribeChat=onSnapshot(
+   messagesQuery,
+   snapshot=>{
+    list.replaceChildren();
+
+    if(snapshot.empty){
+     const empty=document.createElement("p");
+     empty.textContent="Dis bonjour pour commencer 💗";
+     list.appendChild(empty);
+    }
+
+    for(const item of [...snapshot.docs].reverse()){
+     const data=item.data();
+
+     const bubble=document.createElement("div");
+     bubble.className="bubble "+(
+      data.senderId===user.uid?"mine":"theirs"
+     );
+
+     const content=document.createElement("span");
+     content.textContent=data.text||"";
+
+     const time=document.createElement("small");
+
+     if(data.createdAt?.toDate){
+      time.textContent=data.createdAt.toDate()
+       .toLocaleTimeString("fr-FR",{
+        hour:"2-digit",minute:"2-digit"
+       });
+     }else{
+      time.textContent="Envoi...";
+     }
+
+     bubble.append(content,time);
+     list.appendChild(bubble);
+    }
+
+    list.scrollTop=list.scrollHeight;
+   },
+   error=>{
+    notice("Impossible de charger les messages : "+errorText(error));
+   }
+  );
  }catch(error){
-  list.textContent=errorText(error);
+  stopChat();
+  notice(errorText(error));
+ }
+}
+
+document.getElementById("chatForm")
+.addEventListener("submit",async e=>{
+ e.preventDefault();
+
+ const user=auth.currentUser;
+ const textInput=document.getElementById("chatInput");
+ const sendButton=document.getElementById("sendMessage");
+ const content=textInput.value.trim();
+
+ if(!user||!activeMatchId||!content||sending)return;
+
+ if(content.length>2000){
+  notice("Le message est trop long.");
+  return;
+ }
+
+ sending=true;
+ sendButton.disabled=true;
+
+ try{
+  await reload(user);
+  await user.getIdToken(true);
+
+  if(!verified(user)){
+   throw new Error("Ton adresse e-mail doit être vérifiée.");
+  }
+
+  await addDoc(
+   collection(db,"matches",activeMatchId,"messages"),
+   {
+    senderId:user.uid,
+    text:content,
+    createdAt:serverTimestamp()
+   }
+  );
+
+  textInput.value="";
+ }catch(error){
+  notice(errorText(error));
+ }finally{
+  sending=false;
+  sendButton.disabled=false;
  }
 });
 
-/* COMPTE */
+document.getElementById("backToMessages")
+.addEventListener("click",()=>{
+ displayMatches("messages");
+});
+
+/* COMPTE ET VÉRIFICATION */
 
 document.getElementById("logout")
 .addEventListener("click",async()=>{
  try{
+  stopChat();
   await signOut(auth);
  }catch(error){
   notice(errorText(error));
@@ -1165,6 +1191,7 @@ document.getElementById("refreshVerification")
 
 function renderAccount(user){
  if(!user){
+  stopChat();
   activeProfiles=[];
   lastProfileDoc=null;
   moreProfilesAvailable=false;
@@ -1195,3 +1222,4 @@ onAuthStateChanged(auth,renderAccount);
 </script>
 </body>
 </html>
+
