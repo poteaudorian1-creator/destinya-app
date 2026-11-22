@@ -1923,23 +1923,16 @@ async function saveRealLike(profile) {
   );
 
   
-try {
-  await setDoc(likeRef, {
-    from: user.uid,
-    to: profile.id,
-    createdAt: serverTimestamp()
-  });
-} catch (error) {
-  if (error.code !== "permission-denied") {
-    throw error;
-  }
-
   const existingLike = await getDoc(likeRef);
 
   if (!existingLike.exists()) {
-    throw error;
+    await setDoc(likeRef, {
+      from: user.uid,
+      to: profile.id,
+      createdAt: serverTimestamp()
+    });
   }
-}
+
 
 
   const reciprocal = await getDoc(
