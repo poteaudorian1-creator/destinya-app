@@ -740,9 +740,10 @@ async function savePrivate(user,data){
  const old=await getDoc(r);
 
  await setDoc(r,{
-  ...data,
+ ...data,
+profilTest:false, 
   createdAt:old.exists()
-   ?old.data().createdAt
+   createdAt:old.exists()
    :serverTimestamp(),
   updatedAt:serverTimestamp()
  });
