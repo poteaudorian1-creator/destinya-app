@@ -10,19 +10,18 @@
 *{box-sizing:border-box}
 body{
  margin:0;min-height:100vh;padding:16px;
+ display:grid;place-items:center;
  font-family:Arial,sans-serif;color:#593b49;
- background:linear-gradient(145deg,#fff0ed,#ffd6df,#ffe8d6);
- display:grid;place-items:center
+ background:linear-gradient(145deg,#fff0ed,#ffd6df,#ffe8d6)
 }
 main{
- width:100%;max-width:460px;background:white;
- border-radius:26px;padding:24px 20px;
- box-shadow:0 12px 35px #b76b7b30;
- text-align:center
+ width:100%;max-width:460px;padding:24px 20px;
+ background:white;border-radius:26px;text-align:center;
+ box-shadow:0 12px 35px #b76b7b30
 }
-h1{color:#d65c82;font-size:42px}
+h1{font-size:42px;color:#d65c82}
 h2{color:#bd5275}
-.heart{font-size:52px}
+.heart{font-size:54px}
 .hidden{display:none!important}
 label{display:block;text-align:left;margin-top:12px}
 input,select,textarea{
@@ -35,25 +34,31 @@ button{
  border:0;border-radius:25px;
  font-size:16px;font-weight:bold;cursor:pointer
 }
-button:disabled{opacity:.5;cursor:wait}
+button:disabled{opacity:.5}
 .primary{background:#d65c82;color:white}
 .secondary{background:#ffe1e8;color:#a94368}
+.hidden{display:none!important}
 small{display:block;margin:12px 0;line-height:1.5}
 #message{color:#a94368;min-height:24px}
 .card{
- background:linear-gradient(160deg,#fff0f4,#ffe5dc);
  padding:24px;border-radius:24px;margin:18px 0;
+ background:linear-gradient(160deg,#fff0f4,#ffe5dc);
  touch-action:pan-y
 }
 .avatar{font-size:75px}
 .name{font-size:26px;color:#bd5275;font-weight:bold}
 .tag{
  display:inline-block;background:white;
- padding:8px 12px;border-radius:20px;margin:4px;
- font-size:13px
+ padding:8px 12px;border-radius:20px;
+ margin:4px;font-size:13px
 }
 .actions{display:flex;gap:10px}
 .actions button{flex:1}
+.match{
+ padding:16px;margin:10px 0;
+ border-radius:16px;background:#fff0f4;
+ text-align:left
+}
 </style>
 </head>
 <body>
@@ -72,7 +77,7 @@ Se connecter
 <button class="secondary" onclick="openDemo()">
 🌸 Découvrir Destinya
 </button>
-<small>Application réservée aux 18 ans et plus.</small>
+<small>Réservé aux adultes de 18 ans et plus.</small>
 </section>
 
 <section id="register" class="hidden">
@@ -80,26 +85,20 @@ Se connecter
 <form id="registerForm">
 <label>Pseudo</label>
 <input id="name" maxlength="40" required>
-
 <label>Date de naissance</label>
 <input id="birthdate" type="date" required>
-
 <label>Ville</label>
 <input id="ville" maxlength="80" required>
-
 <label>Je recherche</label>
 <select id="objectif">
 <option value="serieux">Relation sérieuse</option>
 <option value="amitie">Amitié</option>
 <option value="sans_engagement">Sans engagement</option>
 </select>
-
 <label>Adresse e-mail</label>
 <input id="email" type="email" required>
-
 <label>Mot de passe</label>
 <input id="password" type="password" minlength="8" required>
-
 <button class="primary" type="submit">
 Créer mon compte
 </button>
@@ -133,14 +132,12 @@ Retour
 <h2>Bienvenue sur Destinya !</h2>
 <p id="userEmail"></p>
 <p id="verificationInfo"></p>
-
 <button id="verifyEmail" class="secondary">
 Envoyer un e-mail de vérification
 </button>
 <button id="refreshVerification" class="secondary">
 Actualiser la vérification
 </button>
-
 <button id="editProfile" class="primary">
 ✏️ Compléter mon profil
 </button>
@@ -153,9 +150,11 @@ Actualiser la vérification
 <small id="visibilityInfo">
 Ton profil est privé par défaut.
 </small>
-
 <button id="discoverReal" class="primary">
 💕 Découvrir les membres
+</button>
+<button id="viewMatches" class="primary">
+❤️ Mes matchs
 </button>
 <button class="secondary" onclick="openDemo()">
 Voir les profils fictifs
@@ -170,24 +169,19 @@ Se déconnecter
 <form id="editProfileForm">
 <label>Pseudo</label>
 <input id="editPseudo" maxlength="40" required>
-
 <label>Date de naissance</label>
 <input id="editBirthdate" type="date" required>
-
 <label>Ville</label>
 <input id="editVille" maxlength="80" required>
-
 <label>Je recherche</label>
 <select id="editObjectif">
 <option value="serieux">Relation sérieuse</option>
 <option value="amitie">Amitié</option>
 <option value="sans_engagement">Sans engagement</option>
 </select>
-
 <label>Ma description</label>
 <textarea id="editBio" maxlength="500" rows="4"
  placeholder="Parle un peu de toi..."></textarea>
-
 <button class="primary" type="submit">
 💾 Enregistrer mon profil
 </button>
@@ -200,7 +194,6 @@ Retour
 <section id="profiles" class="hidden">
 <h2>💕 Découvrir</h2>
 <p id="profileCount"></p>
-
 <div id="swipeCard" class="card hidden">
 <small id="profileType"></small>
 <div id="profileAvatar" class="avatar">💗</div>
@@ -208,7 +201,6 @@ Retour
 <p id="profileBio"></p>
 <div id="profileInterests"></div>
 </div>
-
 <div id="profileActions" class="actions hidden">
 <button class="secondary" onclick="nextProfile()">
 ❌ Passer
@@ -217,16 +209,21 @@ Retour
 ❤️ J'aime
 </button>
 </div>
-
 <p id="likesCount"></p>
 <small id="demoNotice"></small>
-
 <button id="loadMore" class="secondary hidden">
 Charger d'autres profils
 </button>
-
 <button class="secondary" onclick="backFromProfiles()">
 Retour
+</button>
+</section>
+
+<section id="matches" class="hidden">
+<h2>💕 Mes matchs</h2>
+<div id="matchesList"></div>
+<button class="secondary" onclick="showPage('account')">
+Retour à mon compte
 </button>
 </section>
 
@@ -239,10 +236,10 @@ let returnPage="home";
 let profileMode="demo";
 let profileIndex=0;
 let activeProfiles=[];
-let realProfiles=[];
 let lastProfileDoc=null;
 let moreProfilesAvailable=false;
 let loadingProfiles=false;
+let actionBusy=false;
 
 const PAGE_SIZE=20;
 const likedDemoProfiles=new Set();
@@ -288,14 +285,14 @@ function notice(text){
 }
 
 function renderProfile(){
- const count=document.getElementById("profileCount");
  const card=document.getElementById("swipeCard");
  const actions=document.getElementById("profileActions");
  const more=document.getElementById("loadMore");
+ const count=document.getElementById("profileCount");
 
  more.classList.toggle(
   "hidden",
-  profileMode!=="real" || !moreProfilesAvailable
+  profileMode!=="real"||!moreProfilesAvailable
  );
 
  if(!activeProfiles.length){
@@ -311,21 +308,16 @@ function renderProfile(){
  actions.classList.remove("hidden");
 
  const p=activeProfiles[profileIndex];
-
  count.textContent=
   `Profil ${profileIndex+1} sur ${activeProfiles.length} chargés`;
 
  document.getElementById("profileType").textContent=
   profileMode==="demo"?"PROFIL FICTIF":"PROFIL PUBLIC";
-
  document.getElementById("profileAvatar").textContent=
   p.avatar||"💗";
-
  document.getElementById("profileName").textContent=
   `${p.name}, ${p.age} ans`;
-
- document.getElementById("profileBio").textContent=
-  p.bio||"";
+ document.getElementById("profileBio").textContent=p.bio||"";
 
  const interests=document.getElementById("profileInterests");
  interests.replaceChildren();
@@ -344,12 +336,12 @@ function renderProfile(){
  document.getElementById("likesCount").textContent=
   profileMode==="demo"
   ?`❤️ Likes fictifs : ${likedDemoProfiles.size}`
-  :"❤️ Likes réels bientôt disponibles.";
+  :"❤️ Les likes sont enregistrés dans Firebase.";
 
  document.getElementById("demoNotice").textContent=
   profileMode==="demo"
   ?"Démonstration avec des profils fictifs."
-  :"Les likes réels seront ajoutés prochainement.";
+  :"Un match apparaît si vous vous aimez tous les deux.";
 }
 
 function openDemo(){
@@ -362,7 +354,7 @@ function openDemo(){
 }
 
 async function nextProfile(){
- if(!activeProfiles.length)return;
+ if(!activeProfiles.length||actionBusy)return;
 
  if(profileMode==="demo"){
   profileIndex=(profileIndex+1)%activeProfiles.length;
@@ -376,7 +368,7 @@ async function nextProfile(){
   return;
  }
 
- if(moreProfilesAvailable && window.loadRealProfiles){
+ if(moreProfilesAvailable&&window.loadRealProfiles){
   const previous=activeProfiles.length;
   await window.loadRealProfiles();
 
@@ -384,7 +376,7 @@ async function nextProfile(){
    profileIndex=previous;
    renderProfile();
   }else{
-   notice("Aucun autre profil disponible pour le moment.");
+   notice("Aucun autre profil disponible.");
   }
  }else{
   notice("Tu as parcouru tous les profils chargés.");
@@ -392,14 +384,17 @@ async function nextProfile(){
 }
 
 async function likeProfile(){
- if(!activeProfiles.length)return;
+ if(!activeProfiles.length||actionBusy)return;
 
  if(profileMode==="demo"){
   likedDemoProfiles.add(profileIndex);
- }else{
-  notice("Les likes réels ne sont pas encore disponibles.");
+  await nextProfile();
+  return;
  }
- await nextProfile();
+
+ if(window.saveRealLike){
+  await window.saveRealLike(activeProfiles[profileIndex]);
+ }
 }
 
 function backFromProfiles(){
@@ -440,7 +435,7 @@ import {
 import {
  getFirestore,doc,setDoc,getDoc,deleteDoc,
  collection,getDocs,serverTimestamp,
- query,limit,startAfter
+ query,limit,startAfter,where
 } from
 "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
@@ -460,7 +455,6 @@ const db=getFirestore(app);
 
 function calculateAge(value){
  if(!value)return -1;
-
  const birth=new Date(value+"T12:00:00");
  const today=new Date();
 
@@ -471,14 +465,12 @@ function calculateAge(value){
  let age=today.getFullYear()-birth.getFullYear();
 
  if(
-  today.getMonth()<birth.getMonth() ||
+  today.getMonth()<birth.getMonth()||
   (
-   today.getMonth()===birth.getMonth() &&
+   today.getMonth()===birth.getMonth()&&
    today.getDate()<birth.getDate()
   )
- ){
-  age--;
- }
+ )age--;
 
  return age;
 }
@@ -491,19 +483,16 @@ function errorText(error){
   "auth/invalid-credential":"Identifiants incorrects.",
   "auth/unauthorized-domain":"Domaine non autorisé.",
   "permission-denied":"Accès refusé. Vérifie les règles Firestore.",
+  "failed-precondition":"Un index Firebase est nécessaire.",
   "AGE_INVALIDE":"Application réservée aux adultes."
  };
-
  return messages[error.code||error.message]||
   "Une erreur est survenue. Réessaie.";
 }
 
 async function createUserProfile(user,details){
  const age=calculateAge(details.birthdate);
-
- if(age<18||age>120){
-  throw new Error("AGE_INVALIDE");
- }
+ if(age<18||age>120)throw new Error("AGE_INVALIDE");
 
  await setDoc(doc(db,"Users",user.uid),{
   pseudo:details.pseudo,
@@ -530,7 +519,6 @@ document.getElementById("registerForm")
  };
 
  const age=calculateAge(details.birthdate);
-
  if(!details.pseudo||!details.ville||age<18||age>120){
   notice("Vérifie tes informations. Réservé aux 18 ans et plus.");
   return;
@@ -543,10 +531,7 @@ document.getElementById("registerForm")
    document.getElementById("password").value
   );
 
-  await updateProfile(result.user,{
-   displayName:details.pseudo
-  });
-
+  await updateProfile(result.user,{displayName:details.pseudo});
   await createUserProfile(result.user,details);
 
   try{
@@ -563,7 +548,6 @@ document.getElementById("registerForm")
 document.getElementById("loginForm")
 .addEventListener("submit",async event=>{
  event.preventDefault();
-
  try{
   await signInWithEmailAndPassword(
    auth,
@@ -581,11 +565,7 @@ document.getElementById("googleLogin")
   const result=await signInWithPopup(
    auth,new GoogleAuthProvider()
   );
-
-  const snap=await getDoc(
-   doc(db,"Users",result.user.uid)
-  );
-
+  const snap=await getDoc(doc(db,"Users",result.user.uid));
   if(!snap.exists()){
    notice("Connexion réussie. Complète ton profil.");
   }
@@ -598,7 +578,6 @@ document.getElementById("editProfile")
 .addEventListener("click",async()=>{
  const user=auth.currentUser;
  if(!user)return;
-
  showPage("editProfilePage");
 
  try{
@@ -607,19 +586,12 @@ document.getElementById("editProfile")
 
   document.getElementById("editPseudo").value=
    p.pseudo||user.displayName||"";
-
   document.getElementById("editBirthdate").value=
    p.birthdate||"";
-
-  document.getElementById("editVille").value=
-   p.ville||"";
-
+  document.getElementById("editVille").value=p.ville||"";
   document.getElementById("editObjectif").value=
    p.objectif||"serieux";
-
-  document.getElementById("editBio").value=
-   p.bio||"";
-
+  document.getElementById("editBio").value=p.bio||"";
  }catch(error){
   notice(errorText(error));
  }
@@ -628,7 +600,6 @@ document.getElementById("editProfile")
 document.getElementById("editProfileForm")
 .addEventListener("submit",async event=>{
  event.preventDefault();
-
  const user=auth.currentUser;
  if(!user)return;
 
@@ -652,10 +623,8 @@ document.getElementById("editProfileForm")
   },{merge:true});
 
   await updateProfile(user,{displayName:pseudo});
-
   showPage("account");
   notice("Profil enregistré avec succès !");
-
  }catch(error){
   notice(errorText(error));
  }
@@ -669,12 +638,10 @@ async function refreshVisibility(){
   const snap=await getDoc(
    doc(db,"publicProfiles",user.uid)
   );
-
   document.getElementById("visibilityInfo").textContent=
    snap.exists()
    ?"Ton profil est visible par les membres."
    :"Ton profil est privé.";
-
  }catch(error){
   document.getElementById("visibilityInfo").textContent=
    errorText(error);
@@ -688,26 +655,21 @@ document.getElementById("publishProfile")
 
  try{
   await reload(user);
-
   if(!user.emailVerified){
    notice("Vérifie d'abord ton adresse e-mail.");
    return;
   }
 
   const snap=await getDoc(doc(db,"Users",user.uid));
-
   if(!snap.exists()){
    notice("Complète d'abord ton profil.");
    return;
   }
 
   const p=snap.data();
-
   if(
-   !Number.isInteger(p.age) ||
-   p.age<18 ||
-   !p.pseudo ||
-   !p.ville ||
+   !Number.isInteger(p.age)||p.age<18||
+   !p.pseudo||!p.ville||
    !["amitie","serieux","sans_engagement"]
     .includes(p.objectif)
   ){
@@ -727,7 +689,6 @@ document.getElementById("publishProfile")
 
   notice("Ton profil est maintenant visible !");
   await refreshVisibility();
-
  }catch(error){
   notice(errorText(error));
  }
@@ -747,81 +708,60 @@ document.getElementById("hideProfile")
  }
 });
 
-/*
- PAGINATION FIRESTORE
- Charge 20 documents à chaque demande.
- Le dernier document sert de curseur.
-*/
+/* Découverte : 20 profils par page */
 
 async function loadRealProfiles(){
- if(loadingProfiles || !moreProfilesAvailable)return;
+ if(loadingProfiles||!moreProfilesAvailable)return;
 
  const user=auth.currentUser;
  if(!user)return;
 
  loadingProfiles=true;
-
- const moreButton=document.getElementById("loadMore");
- moreButton.disabled=true;
+ const button=document.getElementById("loadMore");
+ button.disabled=true;
 
  try{
-  const profilesCollection=collection(db,"publicProfiles");
+  const ref=collection(db,"publicProfiles");
+  const q=lastProfileDoc
+   ?query(ref,startAfter(lastProfileDoc),limit(PAGE_SIZE))
+   :query(ref,limit(PAGE_SIZE));
 
-  const pageQuery=lastProfileDoc
-   ?query(
-     profilesCollection,
-     startAfter(lastProfileDoc),
-     limit(PAGE_SIZE)
-    )
-   :query(
-     profilesCollection,
-     limit(PAGE_SIZE)
-    );
+  const results=await getDocs(q);
 
-  const results=await getDocs(pageQuery);
-
-  if(!auth.currentUser || auth.currentUser.uid!==user.uid){
-   return;
-  }
+  if(auth.currentUser?.uid!==user.uid)return;
 
   if(!results.empty){
    lastProfileDoc=results.docs[results.docs.length-1];
   }
-
   moreProfilesAvailable=results.size===PAGE_SIZE;
 
-  const newProfiles=results.docs
-   .filter(item=>item.id!==user.uid)
-   .filter(item=>item.data().visible===true)
-   .map(item=>({
+  const ids=new Set(activeProfiles.map(p=>p.id));
+
+  for(const item of results.docs){
+   const p=item.data();
+   if(
+    item.id===user.uid||ids.has(item.id)||
+    p.visible!==true||p.age<18||!p.pseudo
+   )continue;
+
+   activeProfiles.push({
     id:item.id,
-    name:item.data().pseudo,
-    age:item.data().age,
-    ville:item.data().ville,
-    objectif:item.data().objectif,
-    bio:item.data().bio||"",
+    name:p.pseudo,
+    age:p.age,
+    ville:p.ville,
+    objectif:p.objectif,
+    bio:p.bio||"",
     avatar:"💗"
-   }))
-   .filter(p=>p.name && p.age>=18);
-
-  const existingIds=new Set(
-   activeProfiles.map(p=>p.id)
-  );
-
-  for(const profile of newProfiles){
-   if(!existingIds.has(profile.id)){
-    activeProfiles.push(profile);
-    existingIds.add(profile.id);
-   }
+   });
+   ids.add(item.id);
   }
 
   renderProfile();
-
  }catch(error){
   notice(errorText(error));
  }finally{
   loadingProfiles=false;
-  moreButton.disabled=false;
+  button.disabled=false;
  }
 }
 
@@ -831,27 +771,19 @@ document.getElementById("loadMore")
 .addEventListener("click",async()=>{
  const previous=activeProfiles.length;
  await loadRealProfiles();
-
  if(activeProfiles.length>previous){
   profileIndex=previous;
   renderProfile();
- }else if(!moreProfilesAvailable){
-  notice("Aucun autre profil disponible.");
  }
 });
 
 document.getElementById("discoverReal")
 .addEventListener("click",async()=>{
  const user=auth.currentUser;
-
- if(!user){
-  notice("Connecte-toi pour découvrir les profils.");
-  return;
- }
+ if(!user)return;
 
  try{
   const snap=await getDoc(doc(db,"Users",user.uid));
-
   if(!snap.exists()){
    notice("Complète d'abord ton profil.");
    return;
@@ -860,7 +792,6 @@ document.getElementById("discoverReal")
   profileMode="real";
   profileIndex=0;
   activeProfiles=[];
-  realProfiles=[];
   lastProfileDoc=null;
   moreProfilesAvailable=true;
   returnPage="account";
@@ -868,9 +799,138 @@ document.getElementById("discoverReal")
   showPage("profiles");
   renderProfile();
   await loadRealProfiles();
-
  }catch(error){
   notice(errorText(error));
+ }
+});
+
+/* Likes réels et matchs */
+
+function likeId(from,to){
+ return `${from}_${to}`;
+}
+
+function matchId(a,b){
+ return [a,b].sort().join("_");
+}
+
+async function saveRealLike(profile){
+ const user=auth.currentUser;
+ if(!user||!profile||actionBusy)return;
+
+ if(user.uid===profile.id){
+  notice("Tu ne peux pas liker ton propre profil.");
+  return;
+ }
+
+ actionBusy=true;
+
+ try{
+  const target=await getDoc(
+   doc(db,"publicProfiles",profile.id)
+  );
+
+  if(!target.exists()){
+   notice("Ce profil n'est plus disponible.");
+   return;
+  }
+
+  await setDoc(
+   doc(db,"likes",likeId(user.uid,profile.id)),
+   {
+    from:user.uid,
+    to:profile.id,
+    createdAt:serverTimestamp()
+   }
+  );
+
+  const reciprocal=await getDoc(
+   doc(db,"likes",likeId(profile.id,user.uid))
+  );
+
+  let matched=false;
+
+  if(reciprocal.exists()){
+   const members=[user.uid,profile.id].sort();
+
+   await setDoc(
+    doc(db,"matches",matchId(user.uid,profile.id)),
+    {
+     members,
+     createdAt:serverTimestamp()
+    }
+   );
+
+   matched=true;
+  }
+
+  actionBusy=false;
+  await nextProfile();
+
+  notice(
+   matched
+   ?"💕 C'est un match ! Vous vous aimez tous les deux !"
+   :"❤️ Like enregistré !"
+  );
+ }catch(error){
+  notice(errorText(error));
+ }finally{
+  actionBusy=false;
+ }
+}
+
+window.saveRealLike=saveRealLike;
+
+document.getElementById("viewMatches")
+.addEventListener("click",async()=>{
+ const user=auth.currentUser;
+ if(!user)return;
+
+ showPage("matches");
+
+ const list=document.getElementById("matchesList");
+ list.textContent="Chargement de tes matchs...";
+
+ try{
+  const q=query(
+   collection(db,"matches"),
+   where("members","array-contains",user.uid),
+   limit(50)
+  );
+
+  const results=await getDocs(q);
+  list.replaceChildren();
+
+  if(results.empty){
+   list.textContent="Tu n'as pas encore de match 💗";
+   return;
+  }
+
+  for(const item of results.docs){
+   const members=item.data().members||[];
+   const otherId=members.find(id=>id!==user.uid);
+   if(!otherId)continue;
+
+   const profile=await getDoc(
+    doc(db,"publicProfiles",otherId)
+   );
+
+   const div=document.createElement("div");
+   div.className="match";
+
+   const name=document.createElement("strong");
+   name.textContent=profile.exists()
+    ?profile.data().pseudo
+    :"Membre indisponible";
+
+   const info=document.createElement("p");
+   info.textContent="💕 Vous avez un match !";
+
+   div.append(name,info);
+   list.appendChild(div);
+  }
+ }catch(error){
+  list.textContent=errorText(error);
  }
 });
 
@@ -938,5 +998,4 @@ function renderAccount(user){
 onAuthStateChanged(auth,renderAccount);
 </script>
 </body>
- </html>
- 
+</html>
