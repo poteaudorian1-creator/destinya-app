@@ -2730,4 +2730,23 @@ $("startRecording").addEventListener("click", async () => {
 ========================================= */
 
 $("stopRecording").addEventListener("click", () => {
- if (mediaRecorder?.state === "re
+
+ if (mediaRecorder?.state === "recording") {
+  mediaRecorder.stop();
+
+  $("stopRecording").classList.add("hidden");
+
+  $("recordingStatus").textContent =
+   "Préparation du message vocal...";
+ }
+});
+
+$("backToMessages").addEventListener("click", () => {
+ stopChat();
+ displayMatches("messages");
+});
+
+</script>
+</body>
+</html>
+
