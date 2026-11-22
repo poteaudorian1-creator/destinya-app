@@ -1969,8 +1969,16 @@ async function saveRealLike(profile) {
     : "❤️ Like enregistré !"
   );
 
- } catch (error) {
-  notice(errorText(error));
+ 
+} catch (error) {
+  console.error("Erreur LIKE Destinya :", error);
+  notice(
+    "Erreur LIKE : " +
+    (error.code || "inconnue") +
+    " — " +
+    (error.message || "aucun détail")
+  );
+  
  } finally {
   actionBusy = false;
   $("likeButton").disabled = false;
