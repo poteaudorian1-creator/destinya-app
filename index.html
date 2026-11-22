@@ -1622,4 +1622,166 @@ async function openChat(matchId,name){
    }
    list.scrollTop=list.scrollHeight;
   },e=>notice(errorText(e)));
- }catc
+ 
+
+ }catch(e){
+  stopChat();
+  notice(errorText(e));
+ }
+}
+
+/* MESSAGES TEXTE */
+
+$("chatForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+
+ const u=auth.currentUser;
+ const input=$("chatInput");
+ const content=input.value.trim();
+
+ if(!u||!activeMatchId||!content||sending)return;
+
+ sending=true;
+ $("sendMessage").disabled=true;
+
+ try{
+  await refreshAuth(u);
+
+  if(!verified(u)){
+   throw Error("Vérifie ton compte.");
+  }
+
+  await addDoc(
+   collection(
+    db,"matches",activeMatchId,"messages"
+   ),
+   {
+    senderId:u.uid,
+    text:content,
+    createdAt:serverTimestamp()
+   }
+  );
+
+  input.value="";
+
+ }catch(e){
+  notice(errorText(e));
+ }finally{
+  sending=false;
+  $("sendMessage").disabled=false;
+ }
+});
+
+/* PHOTOS DANS LES CONVERSATIONS */
+
+let uploadingPhoto=false;
+
+$("choosePhoto").addEventListener("click",()=>{
+ if(!activeMatchId){
+  notice("Ouvre une conversation.");
+  return;
+ }
+
+ $("photoInput").click();
+});
+
+$("photoInput").addEventListener("change",async()=>{
+ const file=$("photoInput").files[0];
+ const u=auth.currentUser;
+ const matchId=activeMatchId;
+
+ if(!file||!u||!matchId||uploadingPhoto)return;
+
+ const types={
+  "image/jpeg":"jpg",
+  "image/png":"png",
+  "image/webp":"webp"
+ };
+
+ if(
+  !types[file.type]||
+  file.size===0||
+  file.size>5*1024*1024
+ ){
+  notice(
+   "Photo JPG, PNG ou WebP de 5 Mo maximum."
+  );
+  $("photoInput").value="";
+  return;
+ }
+
+ uploadingPhoto=true;
+ $("choosePhoto").disabled=true;
+ $("photoStatus").textContent="Envoi...";
+
+ try{
+  await refreshAuth(u);
+
+  if(!verified(u)){
+   throw Error("Vérifie ton compte.");
+  }
+
+  const match=await getDoc(
+   doc(db,"matches",matchId)
+  );
+
+  if(
+   !match.exists()||
+   !Array.isArray(match.data().members)||
+   !match.data().members.includes(u.uid)
+  ){
+   throw Error("Conversation inaccessible.");
+  }
+
+  const imageRef=ref(
+   storage,
+   "matchPhotos/"+
+   matchId+"/"+
+   crypto.randomUUID()+
+   "."+types[file.type]
+  );
+
+  await uploadBytes(
+   imageRef,
+   file,
+   {contentType:file.type}
+  );
+
+  const url=await getDownloadURL(imageRef);
+
+  await addDoc(
+   collection(
+    db,"matches",matchId,"messages"
+   ),
+   {
+    senderId:u.uid,
+    text:"",
+    type:"image",
+    imageUrl:url,
+    createdAt:serverTimestamp()
+   }
+  );
+
+  $("photoStatus").textContent=
+   "💕 Photo envoyée !";
+
+ }catch(e){
+  $("photoStatus").textContent=errorText(e);
+ }finally{
+  uploadingPhoto=false;
+  $("choosePhoto").disabled=false;
+  $("photoInput").value="";
+ }
+});
+
+/* RETOUR AUX MESSAGES */
+
+$("backToMessages").addEventListener("click",()=>{
+ displayMatches("messages");
+});
+
+/* FIN DU PROGRAMME DESTINYA */
+
+</script>
+</body>
+</html>
