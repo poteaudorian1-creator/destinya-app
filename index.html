@@ -1922,16 +1922,24 @@ async function saveRealLike(profile) {
    db, "likes", user.uid + "_" + profile.id
   );
 
-  
-  const existingLike = await getDoc(likeRef);
+ 
+  try {
+    const existingLike = await getDoc(likeRef);
 
-  if (!existingLike.exists()) {
-    await setDoc(likeRef, {
-      from: user.uid,
-      to: profile.id,
-      createdAt: serverTimestamp()
-    });
+    if (!existingLike.exists()) {
+      await setDoc(likeRef, {
+        from: user.uid,
+        to: profile.id,
+        createdAt: serverTimestamp()
+      });
+    }
+  } catch (error) {
+    throw Error(
+      "Étape lecture ou écriture du like : " +
+      error.message
+    );
   }
+
 
 
 const reciprocal = {
