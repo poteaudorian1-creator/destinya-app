@@ -1922,15 +1922,25 @@ async function saveRealLike(profile) {
    db, "likes", user.uid + "_" + profile.id
   );
 
-  const previous = await getDoc(likeRef);
-
-  if (!previous.exists()) {
-   await setDoc(likeRef, {
+  
+try {
+  await setDoc(likeRef, {
     from: user.uid,
     to: profile.id,
     createdAt: serverTimestamp()
-   });
+  });
+} catch (error) {
+  if (error.code !== "permission-denied") {
+    throw error;
   }
+
+  const existingLike = await getDoc(likeRef);
+
+  if (!existingLike.exists()) {
+    throw error;
+  }
+}
+
 
   const reciprocal = await getDoc(
    doc(db, "likes", profile.id + "_" + user.uid)
