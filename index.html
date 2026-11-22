@@ -2085,17 +2085,20 @@ async function sendChatMedia(file,expectedMatchId=null){
 
   const url=await getDownloadURL(mediaRef);
 
-  const message={
-   senderId:u.uid,
-   text:"",
-   type:info.type,
-   mediaUrl:url,
-   createdAt:serverTimestamp()
-  };
+  
 
-  if(info.type==="image"){
-   message.imageUrl=url;
-  }
+const message={
+  senderId:u.uid,
+  text:"",
+  type:info.type,
+  createdAt:serverTimestamp()
+};
+
+if(info.type==="image"){
+  message.imageUrl=url;
+}else{
+  message.mediaUrl=url;
+}
 
   await addDoc(
    collection(
