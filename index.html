@@ -781,9 +781,6 @@ async function saveProfile(data){
   await setDoc(doc(db,"Users",user.uid),payload);
   myProfile={...payload,age};
 
-  if(publicProfile){
-    await publishProfile();
-  }
 }
 
 $("profileForm").addEventListener("submit",async e=>{
