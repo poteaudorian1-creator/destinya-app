@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Destinya 💗</title>
 <style>
 *{box-sizing:border-box}
@@ -19,6 +19,7 @@ main{
 }
 h1{font-size:43px;color:#d65c82}
 h2{font-size:28px;color:#bd5275}
+h3{color:#bd5275}
 .hidden{display:none!important}
 label{display:block;text-align:left;margin-top:12px}
 input,select,textarea{
@@ -26,16 +27,20 @@ input,select,textarea{
  border:1px solid #f2c2d0;border-radius:13px;
  font:inherit;background:white;
 }
+input[type="checkbox"]{width:auto}
 button{
  width:100%;padding:15px;margin:8px 0;
  border:0;border-radius:28px;font-size:16px;
  font-weight:bold;cursor:pointer;
 }
-button:disabled{opacity:.55}
+button:disabled{opacity:.55;cursor:wait}
 .primary{background:#d65c82;color:white}
 .secondary{background:#ffe1e8;color:#a94368}
 small{display:block;margin:12px 0;line-height:1.5}
-#message{color:#a94368;min-height:25px;line-height:1.5}
+#message{
+ color:#a94368;min-height:25px;
+ line-height:1.5;overflow-wrap:anywhere;
+}
 .card{
  padding:25px 16px;border-radius:26px;margin:18px 0;
  background:linear-gradient(160deg,#fff0f4,#ffe5dc);
@@ -55,7 +60,9 @@ small{display:block;margin:12px 0;line-height:1.5}
  width:130px;height:130px;border-radius:50%;
  object-fit:cover;margin:12px auto;
 }
-.name{font-size:29px;color:#bd5275;font-weight:bold}
+.name{
+ font-size:29px;color:#bd5275;font-weight:bold;
+}
 .tag{
  display:inline-block;background:white;
  padding:9px 13px;border-radius:20px;
@@ -70,28 +77,74 @@ small{display:block;margin:12px 0;line-height:1.5}
 .chat-list{
  height:380px;overflow-y:auto;padding:12px;
  background:#fff5f7;border-radius:18px;
- display:flex;flex-direction:column;gap:9px;text-align:left;
+ display:flex;flex-direction:column;gap:9px;
+ text-align:left;
 }
 .bubble{
  max-width:85%;padding:11px 14px;border-radius:18px;
  overflow-wrap:anywhere;white-space:pre-wrap;
 }
-.mine{align-self:flex-end;background:#d65c82;color:white}
-.theirs{align-self:flex-start;background:white;color:#593b49}
-.bubble small{margin:5px 0 0;font-size:11px;opacity:.8}
-.chat-form{display:flex;gap:7px;align-items:center}
+.mine{
+ align-self:flex-end;
+ background:#d65c82;color:white;
+}
+.theirs{
+ align-self:flex-start;
+ background:white;color:#593b49;
+}
+.bubble small{
+ margin:5px 0 0;font-size:11px;opacity:.8;
+}
+.chat-form{
+ display:flex;gap:7px;align-items:center;
+}
 .chat-form input{flex:1;min-width:0}
 .chat-form button{width:auto;padding:13px 16px}
-.chat-photo{
+.chat-photo,.chat-video{
  display:block;max-width:100%;max-height:300px;
- border-radius:15px;object-fit:contain;margin-bottom:8px;
+ border-radius:15px;object-fit:contain;
+ margin-bottom:8px;
 }
-#photoStatus,#profilePhotoStatus{color:#bd5275}
+.chat-audio{
+ display:block;width:100%;max-width:270px;
+ margin:8px 0;
+}
+#photoStatus,#profilePhotoStatus{
+ color:#bd5275;overflow-wrap:anywhere;
+}
 .phone-info{font-size:13px;color:#946275}
 #recaptcha-container{
- margin:15px auto;display:flex;justify-content:center;
+ margin:15px auto;display:flex;
+ justify-content:center;
 }
 .separator{margin:18px 0;color:#a77c8d}
+.media-actions{
+ display:grid;grid-template-columns:1fr 1fr;
+ gap:8px;margin:12px 0;
+}
+.media-actions button{
+ font-size:13px;padding:12px 6px;margin:0;
+}
+.recording{
+ background:#a82251!important;color:white;
+}
+.progress{
+ color:#a94368;font-size:13px;
+ min-height:18px;overflow-wrap:anywhere;
+}
+.notice-box{
+ background:#fff1f5;border-radius:15px;
+ padding:12px;margin:12px 0;
+}
+.photo-preview{
+ max-width:100%;max-height:240px;
+ object-fit:contain;border-radius:14px;
+}
+@media(max-width:380px){
+ main{padding:18px 12px}
+ h1{font-size:36px}
+ .media-actions button{font-size:12px}
+}
 </style>
 </head>
 <body>
@@ -117,23 +170,26 @@ Application réservée aux adultes de 18 ans et plus.
 <section id="register" class="hidden">
 <h2>Créer mon compte 💗</h2>
 <form id="registerForm">
-<label>Pseudo</label>
+<label for="name">Pseudo</label>
 <input id="name" maxlength="40" required>
-<label>Date de naissance</label>
+<label for="birthdate">Date de naissance</label>
 <input id="birthdate" type="date" required>
-<label>Ville</label>
+<label for="ville">Ville</label>
 <input id="ville" maxlength="80" required>
-<label>Je recherche</label>
+<label for="objectif">Je recherche</label>
 <select id="objectif">
 <option value="serieux">Relation sérieuse</option>
 <option value="amitie">Amitié</option>
 <option value="sans_engagement">Sans engagement</option>
 </select>
-<label>Adresse e-mail</label>
+<label for="email">Adresse e-mail</label>
 <input id="email" type="email" required>
-<label>Mot de passe</label>
-<input id="password" type="password" minlength="8" required>
-<button class="primary" type="submit">Créer mon compte</button>
+<label for="password">Mot de passe</label>
+<input id="password" type="password"
+ minlength="8" required>
+<button class="primary" type="submit">
+Créer mon compte
+</button>
 </form>
 <p class="separator">Ou</p>
 <button id="googleRegister" class="secondary">
@@ -155,7 +211,9 @@ Retour
  placeholder="Adresse e-mail" required>
 <input id="loginPassword" type="password"
  placeholder="Mot de passe" required>
-<button class="primary" type="submit">Se connecter</button>
+<button class="primary" type="submit">
+Se connecter
+</button>
 </form>
 <p class="separator">Ou</p>
 <button id="googleLogin" class="secondary">
@@ -172,19 +230,20 @@ Retour
 <!-- CONNEXION TELEPHONE -->
 <section id="phone" class="hidden">
 <h2>📱 Mon numéro</h2>
-<p>Inscris-toi ou connecte-toi avec ton numéro de téléphone.</p>
-<label>Numéro de téléphone</label>
+<p>Inscris-toi ou connecte-toi avec ton numéro.</p>
+<label for="phoneNumber">Numéro de téléphone</label>
 <input id="phoneNumber" type="tel"
  placeholder="+33612345678" autocomplete="tel">
 <small class="phone-info">
-Pour la France, utilise +33 suivi du numéro sans le premier zéro.
+Pour la France, utilise +33 suivi du numéro
+sans le premier zéro.
 </small>
 <div id="recaptcha-container"></div>
 <button id="sendPhoneCode" class="primary">
 📩 Recevoir mon code SMS
 </button>
 <div id="phoneCodeSection" class="hidden">
-<label>Code reçu par SMS</label>
+<label for="phoneCode">Code reçu par SMS</label>
 <input id="phoneCode" type="text"
  inputmode="numeric" autocomplete="one-time-code"
  maxlength="6" placeholder="123456">
@@ -248,20 +307,21 @@ Se déconnecter
 </button>
 <small id="profilePhotoStatus"></small>
 <form id="editProfileForm">
-<label>Pseudo</label>
+<label for="editPseudo">Pseudo</label>
 <input id="editPseudo" maxlength="40" required>
-<label>Date de naissance</label>
+<label for="editBirthdate">Date de naissance</label>
 <input id="editBirthdate" type="date" required>
-<label>Ville</label>
+<label for="editVille">Ville</label>
 <input id="editVille" maxlength="80" required>
-<label>Je recherche</label>
+<label for="editObjectif">Je recherche</label>
 <select id="editObjectif">
 <option value="serieux">Relation sérieuse</option>
 <option value="amitie">Amitié</option>
 <option value="sans_engagement">Sans engagement</option>
 </select>
-<label>Ma description</label>
-<textarea id="editBio" maxlength="500" rows="4"></textarea>
+<label for="editBio">Ma description</label>
+<textarea id="editBio" maxlength="500"
+ rows="4"></textarea>
 <button class="primary" type="submit">
 💾 Enregistrer mon profil
 </button>
@@ -271,7 +331,7 @@ Retour
 </button>
 </section>
 
-<!-- DECOUVERTE : VRAIS PROFILS UNIQUEMENT -->
+<!-- DECOUVERTE -->
 <section id="profiles" class="hidden">
 <h2>💕 Découvrir</h2>
 <p id="profileCount"></p>
@@ -322,19 +382,44 @@ Retour à mon compte
 <!-- CONVERSATION -->
 <section id="chat" class="hidden">
 <h2 id="chatTitle">💬 Conversation</h2>
-<div id="chatList" class="chat-list" aria-live="polite"></div>
+<div id="chatList" class="chat-list"
+ aria-live="polite"></div>
+
+<div class="notice-box">
+<strong>📎 Envoyer un média</strong>
+<div class="media-actions">
+<button type="button" id="choosePhoto"
+ class="secondary">📷 Photo</button>
+<button type="button" id="chooseGif"
+ class="secondary">🎞️ GIF</button>
+<button type="button" id="chooseVideo"
+ class="secondary">🎬 Vidéo</button>
+<button type="button" id="startRecording"
+ class="secondary">🎙️ Vocal</button>
+</div>
+<button type="button" id="stopRecording"
+ class="recording hidden">
+⏹️ Arrêter et envoyer le vocal
+</button>
+<small id="recordingStatus"></small>
+<small id="photoStatus" role="status"></small>
+</div>
+
 <input type="file" id="photoInput"
  accept="image/jpeg,image/png,image/webp"
  class="hidden">
-<button type="button" id="choosePhoto" class="secondary">
-📷 Envoyer une photo
-</button>
-<small id="photoStatus" role="status"></small>
+<input type="file" id="gifInput"
+ accept="image/gif" class="hidden">
+<input type="file" id="videoInput"
+ accept="video/mp4,video/webm"
+ class="hidden">
+
 <form id="chatForm" class="chat-form">
 <input id="chatInput" maxlength="2000"
  placeholder="Écris ton message..."
  autocomplete="off" required>
-<button id="sendMessage" class="primary" type="submit">➤</button>
+<button id="sendMessage" class="primary"
+ type="submit">➤</button>
 </form>
 <button id="backToMessages" class="secondary">
 Retour aux messages
@@ -368,7 +453,9 @@ function showPage(page){
  document.querySelectorAll("main section").forEach(section=>{
   section.classList.add("hidden");
  });
- document.getElementById(page).classList.remove("hidden");
+ const target=document.getElementById(page);
+ if(!target)return;
+ target.classList.remove("hidden");
  document.getElementById("message").textContent="";
  currentPage=page;
  if(page==="phone"&&window.preparePhoneAuth){
@@ -510,6 +597,7 @@ import {
  onAuthStateChanged,
  updateProfile,
  sendEmailVerification,
+ sendPasswordResetEmail,
  reload
 } from
 "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
@@ -550,6 +638,12 @@ let sending=false;
 let confirmationResult=null;
 let recaptchaVerifier=null;
 let phoneBusy=false;
+let uploadingProfilePhoto=false;
+let uploadingMedia=false;
+let mediaRecorder=null;
+let microphoneStream=null;
+let audioChunks=[];
+let recordingMatchId=null;
 
 const $=id=>document.getElementById(id);
 
@@ -570,7 +664,8 @@ function errorText(e){
    "Ajoute le domaine GitHub Pages aux domaines autorisés Firebase.",
   "auth/popup-blocked":"Fenêtre Google bloquée.",
   "permission-denied":"Accès refusé par les règles Firestore.",
-  "storage/unauthorized":"Accès refusé par Firebase Storage."
+  "storage/unauthorized":"Accès refusé par Firebase Storage.",
+  "storage/quota-exceeded":"Quota de stockage atteint."
  };
  return errors[c]||e?.message||"Une erreur est survenue.";
 }
@@ -633,6 +728,10 @@ function formProfile(editing){
   throw Error("Vérifie ton pseudo et ta ville.");
  }
 
+ if(!["serieux","amitie","sans_engagement"].includes(objectif)){
+  throw Error("Objectif incorrect.");
+ }
+
  return {pseudo,birthdate,age,ville,objectif,bio};
 }
 
@@ -642,7 +741,6 @@ async function savePrivate(user,data){
 
  await setDoc(r,{
   ...data,
-  profilTest:false,
   createdAt:old.exists()
    ?old.data().createdAt
    :serverTimestamp(),
@@ -973,6 +1071,21 @@ $("editProfileForm").addEventListener("submit",async e=>{
   await savePrivate(u,p);
   await updateProfile(u,{displayName:p.pseudo});
 
+  const pubRef=doc(db,"publicProfiles",u.uid);
+  const pub=await getDoc(pubRef);
+
+  if(pub.exists()){
+   await setDoc(pubRef,{
+    ...pub.data(),
+    pseudo:p.pseudo,
+    age:p.age,
+    ville:p.ville,
+    objectif:p.objectif,
+    bio:p.bio,
+    updatedAt:serverTimestamp()
+   });
+  }
+
   showPage("account");
   notice("💗 Profil enregistré !");
  }catch(e){
@@ -1076,8 +1189,6 @@ $("hideProfile").addEventListener("click",async()=>{
 
 /* PHOTO DE PROFIL */
 
-let uploadingProfilePhoto=false;
-
 $("chooseProfilePhoto").addEventListener("click",()=>{
  $("profilePhotoInput").click();
 });
@@ -1099,6 +1210,7 @@ $("profilePhotoInput").addEventListener("change",async()=>{
     file.size>5*1024*1024){
   $("profilePhotoStatus").textContent=
    "Photo JPG, PNG ou WebP de 5 Mo maximum.";
+  $("profilePhotoInput").value="";
   return;
  }
 
@@ -1154,7 +1266,46 @@ $("profilePhotoInput").addEventListener("change",async()=>{
  }
 });
 
-/* DECOUVRIR UNIQUEMENT LES VRAIS PROFILS */
+
+/* ==========================================
+   DESTINYA - PARTIE 2 SUR 2
+   DECOUVERTE, MATCHS ET MESSAGERIE
+========================================== */
+
+/* VERIFICATION DU COMPTE ET DU PROFIL */
+
+async function requireAdultProfile(){
+ const u=auth.currentUser;
+
+ if(!u){
+  throw Error("Connecte-toi pour continuer.");
+ }
+
+ await refreshAuth(u);
+
+ if(!verified(u)){
+  throw Error("Vérifie ton compte avant de continuer.");
+ }
+
+ const s=await getDoc(doc(db,"Users",u.uid));
+
+ if(!s.exists()){
+  throw Error("Complète ton profil.");
+ }
+
+ const p=s.data();
+ const age=calculateAge(p.birthdate);
+
+ if(age<18||age>120){
+  throw Error("Destinya est réservé aux adultes.");
+ }
+
+ return u;
+}
+
+/* ==========================================
+   DECOUVRIR LES VRAIS PROFILS
+========================================== */
 
 async function loadRealProfiles(){
  if(loadingProfiles||!moreProfilesAvailable)return;
@@ -1163,6 +1314,7 @@ async function loadRealProfiles(){
  if(!u)return;
 
  loadingProfiles=true;
+ $("loadMore").disabled=true;
 
  try{
   let q=query(
@@ -1178,20 +1330,25 @@ async function loadRealProfiles(){
    );
   }
 
-  const s=await getDocs(q);
+  const snapshot=await getDocs(q);
 
-  if(s.docs.length){
-   lastProfileDoc=s.docs[s.docs.length-1];
+  if(snapshot.docs.length){
+   lastProfileDoc=snapshot.docs[
+    snapshot.docs.length-1
+   ];
   }
 
-  moreProfilesAvailable=s.docs.length===PAGE_SIZE;
+  moreProfilesAvailable=
+   snapshot.docs.length===PAGE_SIZE;
 
-  for(const item of s.docs){
+  for(const item of snapshot.docs){
    const p=item.data();
 
-   if(item.id===u.uid||
-      p.visible!==true||
-      p.age<18){
+   if(item.id===u.uid)continue;
+   if(p.visible!==true)continue;
+   if(typeof p.age!=="number"||p.age<18)continue;
+
+   if(activeProfiles.some(x=>x.id===item.id)){
     continue;
    }
 
@@ -1207,33 +1364,26 @@ async function loadRealProfiles(){
   }
 
   renderProfile();
+
+  if(!activeProfiles.length&&moreProfilesAvailable){
+   notice("Aucun profil sur cette page. Charge la suite.");
+  }
+
  }catch(e){
   notice(errorText(e));
  }finally{
   loadingProfiles=false;
+  $("loadMore").disabled=false;
  }
 }
 
 window.loadRealProfiles=loadRealProfiles;
 
-/* BOUTON DECOUVRIR LES MEMBRES */
+/* OUVRIR LA DECOUVERTE */
 
 $("discoverReal").addEventListener("click",async()=>{
- const u=auth.currentUser;
- if(!u)return;
-
  try{
-  await refreshAuth(u);
-
-  if(!verified(u)){
-   throw Error("Vérifie ton compte.");
-  }
-
-  const s=await getDoc(doc(db,"Users",u.uid));
-
-  if(!s.exists()){
-   throw Error("Complète ton profil.");
-  }
+  await requireAdultProfile();
 
   profileIndex=0;
   activeProfiles=[];
@@ -1245,23 +1395,28 @@ $("discoverReal").addEventListener("click",async()=>{
   renderProfile();
 
   await loadRealProfiles();
+
  }catch(e){
   notice(errorText(e));
  }
 });
 
+/* CHARGER DAVANTAGE DE PROFILS */
+
 $("loadMore").addEventListener("click",async()=>{
- const n=activeProfiles.length;
+ const previous=activeProfiles.length;
 
  await loadRealProfiles();
 
- if(activeProfiles.length>n){
-  profileIndex=n;
+ if(activeProfiles.length>previous){
+  profileIndex=previous;
   renderProfile();
  }
 });
 
-/* LIKES ET MATCHS */
+/* ==========================================
+   LIKES ET MATCHS
+========================================== */
 
 function makeMatchId(a,b){
  return [a,b].sort().join("_");
@@ -1276,31 +1431,30 @@ async function saveRealLike(profile){
  $("likeButton").disabled=true;
 
  try{
-  await refreshAuth(u);
-
-  if(!verified(u)){
-   throw Error("Vérifie ton compte.");
-  }
+  await requireAdultProfile();
 
   if(profile.id===u.uid){
-   throw Error("Profil incorrect.");
+   throw Error("Tu ne peux pas liker ton profil.");
   }
 
   const target=await getDoc(
    doc(db,"publicProfiles",profile.id)
   );
 
-  if(!target.exists()){
-   throw Error("Profil indisponible.");
+  if(!target.exists()||
+     target.data().visible!==true){
+   throw Error("Ce profil n'est plus disponible.");
   }
 
   const likeRef=doc(
-   db,"likes",u.uid+"_"+profile.id
+   db,
+   "likes",
+   u.uid+"_"+profile.id
   );
 
-  const previous=await getDoc(likeRef);
+  const oldLike=await getDoc(likeRef);
 
-  if(!previous.exists()){
+  if(!oldLike.exists()){
    await setDoc(likeRef,{
     from:u.uid,
     to:profile.id,
@@ -1317,15 +1471,16 @@ async function saveRealLike(profile){
   if(reciprocal.exists()){
    const members=[u.uid,profile.id].sort();
 
-   const r=doc(
-    db,"matches",
+   const matchRef=doc(
+    db,
+    "matches",
     makeMatchId(u.uid,profile.id)
    );
 
-   const old=await getDoc(r);
+   const existing=await getDoc(matchRef);
 
-   if(!old.exists()){
-    await setDoc(r,{
+   if(!existing.exists()){
+    await setDoc(matchRef,{
      members,
      createdAt:serverTimestamp()
     });
@@ -1335,11 +1490,13 @@ async function saveRealLike(profile){
   }
 
   actionBusy=false;
+
   await nextProfile();
 
   notice(matched
-   ?"💕 C'est un match ! Ouvre Messages."
+   ?"💕 C'est un match ! Ouvre tes messages."
    :"❤️ Like enregistré !");
+
  }catch(e){
   notice(errorText(e));
  }finally{
@@ -1350,14 +1507,12 @@ async function saveRealLike(profile){
 
 window.saveRealLike=saveRealLike;
 
-/* RECUPERER MES MATCHS */
+/* ==========================================
+   RECUPERER LES MATCHS
+========================================== */
 
 async function getMyMatches(){
- const u=auth.currentUser;
-
- if(!u){
-  throw Error("Connecte-toi.");
- }
+ const u=await requireAdultProfile();
 
  const q=query(
   collection(db,"matches"),
@@ -1365,32 +1520,46 @@ async function getMyMatches(){
   limit(50)
  );
 
- const s=await getDocs(q);
+ const snapshot=await getDocs(q);
  const matches=[];
 
- for(const item of s.docs){
-  const otherId=(item.data().members||[])
-   .find(id=>id!==u.uid);
+ for(const item of snapshot.docs){
+  const members=item.data().members||[];
+
+  if(!Array.isArray(members))continue;
+
+  const otherId=members.find(id=>id!==u.uid);
 
   if(!otherId)continue;
 
-  const p=await getDoc(
-   doc(db,"publicProfiles",otherId)
-  );
+  let name="Membre indisponible";
+  let photoURL="";
+
+  try{
+   const p=await getDoc(
+    doc(db,"publicProfiles",otherId)
+   );
+
+   if(p.exists()){
+    name=p.data().pseudo||"Membre";
+    photoURL=p.data().photoURL||"";
+   }
+  }catch(e){
+   console.warn("Profil du match :",e);
+  }
 
   matches.push({
    id:item.id,
    otherId,
-   name:p.exists()
-    ?p.data().pseudo||"Membre"
-    :"Membre indisponible"
+   name,
+   photoURL
   });
  }
 
  return matches;
 }
 
-/* AFFICHER LES MATCHS ET MESSAGES */
+/* AFFICHER LES MATCHS ET CONVERSATIONS */
 
 async function displayMatches(page){
  showPage(page);
@@ -1403,6 +1572,7 @@ async function displayMatches(page){
 
  try{
   const matches=await getMyMatches();
+
   container.replaceChildren();
 
   if(!matches.length){
@@ -1412,23 +1582,36 @@ async function displayMatches(page){
   }
 
   for(const m of matches){
-   const div=document.createElement("div");
-   div.className="match";
+   const card=document.createElement("div");
+   card.className="match";
 
-   const title=document.createElement("strong");
+   if(
+    typeof m.photoURL==="string"&&
+    m.photoURL.startsWith("https://")
+   ){
+    const img=document.createElement("img");
+    img.src=m.photoURL;
+    img.alt="Photo de "+m.name;
+    img.className="profile-photo";
+    img.loading="lazy";
+    card.appendChild(img);
+   }
+
+   const title=document.createElement("h3");
    title.textContent="💕 "+m.name;
 
    const button=document.createElement("button");
    button.className="primary";
-   button.textContent="💬 Discuter";
+   button.textContent="💬 Ouvrir la conversation";
 
    button.addEventListener("click",()=>{
     openChat(m.id,m.name);
    });
 
-   div.append(title,button);
-   container.appendChild(div);
+   card.append(title,button);
+   container.appendChild(card);
   }
+
  }catch(e){
   container.textContent=errorText(e);
  }
@@ -1442,7 +1625,9 @@ $("openMessages").addEventListener("click",()=>{
  displayMatches("messages");
 });
 
-/* CHAT */
+/* ==========================================
+   FERMER LA CONVERSATION
+========================================== */
 
 function stopChat(){
  if(unsubscribeChat){
@@ -1451,9 +1636,99 @@ function stopChat(){
  }
 
  activeMatchId=null;
+
+ if(mediaRecorder?.state==="recording"){
+  try{
+   mediaRecorder.stop();
+  }catch(e){
+   console.warn(e);
+  }
+ }
+
+ microphoneStream?.getTracks().forEach(
+  track=>track.stop()
+ );
 }
 
 window.stopChat=stopChat;
+
+/* ==========================================
+   AFFICHER UN MESSAGE
+========================================== */
+
+function renderChatMessage(data,u){
+ const bubble=document.createElement("div");
+
+ bubble.className="bubble "+(
+  data.senderId===u.uid?"mine":"theirs"
+ );
+
+ const type=data.type||"text";
+
+ const url=
+  typeof data.mediaUrl==="string"
+   ?data.mediaUrl
+   :typeof data.imageUrl==="string"
+    ?data.imageUrl
+    :"";
+
+ if(url.startsWith("https://")){
+  if(type==="image"||type==="gif"){
+   const img=document.createElement("img");
+
+   img.src=url;
+   img.className="chat-photo";
+   img.alt=type==="gif"?"GIF envoyé":"Photo envoyée";
+   img.loading="lazy";
+
+   bubble.appendChild(img);
+
+  }else if(type==="video"){
+   const video=document.createElement("video");
+
+   video.src=url;
+   video.controls=true;
+   video.preload="metadata";
+   video.playsInline=true;
+   video.className="chat-video";
+
+   bubble.appendChild(video);
+
+  }else if(type==="audio"){
+   const audio=document.createElement("audio");
+
+   audio.src=url;
+   audio.controls=true;
+   audio.preload="metadata";
+   audio.className="chat-audio";
+
+   bubble.appendChild(audio);
+  }
+ }
+
+ if(typeof data.text==="string"&&data.text){
+  const content=document.createElement("span");
+  content.textContent=data.text;
+  bubble.appendChild(content);
+ }
+
+ const time=document.createElement("small");
+
+ time.textContent=data.createdAt?.toDate
+  ?data.createdAt.toDate().toLocaleTimeString(
+   "fr-FR",
+   {hour:"2-digit",minute:"2-digit"}
+  )
+  :"Envoi...";
+
+ bubble.appendChild(time);
+
+ return bubble;
+}
+
+/* ==========================================
+   OUVRIR UNE CONVERSATION
+========================================== */
 
 async function openChat(matchId,name){
  const u=auth.currentUser;
@@ -1462,175 +1737,7 @@ async function openChat(matchId,name){
  stopChat();
 
  try{
-  const s=await getDoc(
-   doc(db,"matches",matchId)
-  );
-
-  if(!s.exists()||
-     !Array.isArray(s.data().members)||
-     !s.data().members.includes(u.uid)){
-   throw Error("Conversation inaccessible.");
-  }
-
-  activeMatchId=matchId;
-  showPage("chat");
-
-  $("chatTitle").textContent="💬 "+name;
-  $("chatList").textContent="Chargement...";
-
-  const q=query(
-   collection(db,"matches",matchId,"messages"),
-   orderBy("createdAt","desc"),
-   limit(50)
-  );
-
-  unsubscribeChat=onSnapshot(q,snapshot=>{
-   const list=$("chatList");
-   list.replaceChildren();
-
-   if(snapshot.empty){
-    const p=document.createElement("p");
-    p.textContent="Dis bonjour pour commencer 💗";
-    list.appendChild(p);
-   }
-
-   for(const item of [...snapshot.docs].reverse()){
-    const data=item.data();
-
-    const bubble=document.createElement("div");
-
-    bubble.className="bubble "+(
-     data.senderId===u.uid
-      ?"mine"
-      :"theirs"
-    );
-
-    const time=document.createElement("small");
-
-    time.textContent=data.createdAt?.toDate
-     ?data.createdAt.toDate().toLocaleTimeString(
-       "fr-FR",
-       {hour:"2-digit",minute:"2-digit"}
-      )
-     :"Envoi...";
-
-    if(data.type==="image"&&
-       typeof data.imageUrl==="string"&&
-       data.imageUrl.startsWith("https://")){
-     const img=document.createElement("img");
-
-     img.src=data.imageUrl;
-     img.className="chat-photo";
-     img.alt="Photo envoyée";
-     img.loading="lazy";
-
-     bubble.append(img,time);
-    }else{
-     const content=document.createElement("span");
-     content.textContent=data.text||"";
-
-     bubble.append(content,time);
-    }
-
-    list.appendChild(bubble);
-   }
-
-   list.scrollTop=list.scrollHeight;
-  },e=>{
-   notice(errorText(e));
-  });
-
- }catch(e){
-  stopChat();
-  notice(errorText(e));
- }
-}
-
-/* ENVOYER UN MESSAGE TEXTE */
-
-$("chatForm").addEventListener("submit",async e=>{
- e.preventDefault();
-
- const u=auth.currentUser;
- const input=$("chatInput");
- const content=input.value.trim();
-
- if(!u||!activeMatchId||!content||sending)return;
-
- sending=true;
- $("sendMessage").disabled=true;
-
- try{
-  await refreshAuth(u);
-
-  if(!verified(u)){
-   throw Error("Vérifie ton compte.");
-  }
-
-  await addDoc(
-   collection(
-    db,"matches",activeMatchId,"messages"
-   ),
-   {
-    senderId:u.uid,
-    text:content,
-    createdAt:serverTimestamp()
-   }
-  );
-
-  input.value="";
- }catch(e){
-  notice(errorText(e));
- }finally{
-  sending=false;
-  $("sendMessage").disabled=false;
- }
-});
-
-/* ENVOYER DES PHOTOS */
-
-let uploadingPhoto=false;
-
-$("choosePhoto").addEventListener("click",()=>{
- if(!activeMatchId){
-  notice("Ouvre une conversation.");
-  return;
- }
-
- $("photoInput").click();
-});
-
-$("photoInput").addEventListener("change",async()=>{
- const file=$("photoInput").files[0];
- const u=auth.currentUser;
- const matchId=activeMatchId;
-
- if(!file||!u||!matchId||uploadingPhoto)return;
-
- const types={
-  "image/jpeg":"jpg",
-  "image/png":"png",
-  "image/webp":"webp"
- };
-
- if(!types[file.type]||
-    file.size===0||
-    file.size>5*1024*1024){
-  notice("Photo JPG, PNG ou WebP de 5 Mo maximum.");
-  $("photoInput").value="";
-  return;
- }
-
- uploadingPhoto=true;
- $("choosePhoto").disabled=true;
- $("photoStatus").textContent="Envoi...";
-
- try{
-  await refreshAuth(u);
-
-  if(!verified(u)){
-   throw Error("Vérifie ton compte.");
-  }
+  await requireAdultProfile();
 
   const match=await getDoc(
    doc(db,"matches",matchId)
@@ -1642,21 +1749,82 @@ $("photoInput").addEventListener("change",async()=>{
    throw Error("Conversation inaccessible.");
   }
 
-  const imageRef=ref(
-   storage,
-   "matchPhotos/"+
-   matchId+"/"+
-   crypto.randomUUID()+
-   "."+types[file.type]
+  activeMatchId=matchId;
+
+  showPage("chat");
+
+  $("chatTitle").textContent="💬 "+name;
+  $("chatList").textContent="Chargement...";
+  $("photoStatus").textContent="";
+  $("recordingStatus").textContent="";
+
+  const q=query(
+   collection(db,"matches",matchId,"messages"),
+   orderBy("createdAt","desc"),
+   limit(100)
   );
 
-  await uploadBytes(
-   imageRef,
-   file,
-   {contentType:file.type}
+  unsubscribeChat=onSnapshot(
+   q,
+   snapshot=>{
+    const list=$("chatList");
+    list.replaceChildren();
+
+    if(snapshot.empty){
+     const p=document.createElement("p");
+     p.textContent=
+      "Dis bonjour pour commencer 💗";
+     list.appendChild(p);
+    }
+
+    const docs=[...snapshot.docs].reverse();
+
+    for(const item of docs){
+     list.appendChild(
+      renderChatMessage(item.data(),u)
+     );
+    }
+
+    list.scrollTop=list.scrollHeight;
+   },
+   e=>{
+    notice(errorText(e));
+   }
   );
 
-  const url=await getDownloadURL(imageRef);
+ }catch(e){
+  stopChat();
+  notice(errorText(e));
+ }
+}
+
+/* ==========================================
+   ENVOYER UN MESSAGE TEXTE
+========================================== */
+
+$("chatForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+
+ const input=$("chatInput");
+ const content=input.value.trim();
+
+ if(!activeMatchId||!content||sending)return;
+
+ sending=true;
+ $("sendMessage").disabled=true;
+
+ try{
+  const u=await requireAdultProfile();
+  const matchId=activeMatchId;
+
+  const match=await getDoc(
+   doc(db,"matches",matchId)
+  );
+
+  if(!match.exists()||
+     !match.data().members?.includes(u.uid)){
+   throw Error("Conversation inaccessible.");
+  }
 
   await addDoc(
    collection(
@@ -1664,31 +1832,401 @@ $("photoInput").addEventListener("change",async()=>{
    ),
    {
     senderId:u.uid,
-    text:"",
-    type:"image",
-    imageUrl:url,
+    text:content,
     createdAt:serverTimestamp()
    }
   );
 
-  $("photoStatus").textContent=
-   "💕 Photo envoyée !";
+  input.value="";
+
  }catch(e){
-  $("photoStatus").textContent=errorText(e);
+  notice(errorText(e));
  }finally{
-  uploadingPhoto=false;
-  $("choosePhoto").disabled=false;
-  $("photoInput").value="";
+  sending=false;
+  $("sendMessage").disabled=false;
  }
 });
 
-/* RETOUR AUX MESSAGES */
+/* ==========================================
+   VALIDATION DES MEDIAS
+========================================== */
+
+const allowedMediaTypes={
+ "image/jpeg":{ext:"jpg",type:"image",max:5},
+ "image/png":{ext:"png",type:"image",max:5},
+ "image/webp":{ext:"webp",type:"image",max:5},
+ "image/gif":{ext:"gif",type:"gif",max:5},
+ "video/mp4":{ext:"mp4",type:"video",max:20},
+ "video/webm":{ext:"webm",type:"video",max:20},
+ "audio/webm":{ext:"webm",type:"audio",max:10},
+ "audio/mp4":{ext:"m4a",type:"audio",max:10},
+ "audio/ogg":{ext:"ogg",type:"audio",max:10},
+ "audio/mpeg":{ext:"mp3",type:"audio",max:10}
+};
+
+function validateMedia(file){
+ if(!file){
+  throw Error("Sélectionne un fichier.");
+ }
+
+ const info=allowedMediaTypes[file.type];
+
+ if(!info){
+  throw Error("Format de fichier non autorisé.");
+ }
+
+ if(file.size<=0){
+  throw Error("Le fichier est vide.");
+ }
+
+ if(file.size>info.max*1024*1024){
+  throw Error(
+   "Fichier trop volumineux. Maximum : "+
+   info.max+" Mo."
+  );
+ }
+
+ return info;
+}
+
+/* ==========================================
+   ENVOYER UN MEDIA DANS UN MATCH
+========================================== */
+
+async function sendChatMedia(file,expectedMatchId=null){
+ if(uploadingMedia){
+  throw Error("Un envoi est déjà en cours.");
+ }
+
+ uploadingMedia=true;
+
+ try{
+  const u=await requireAdultProfile();
+
+  const matchId=expectedMatchId||activeMatchId;
+
+  if(!matchId){
+   throw Error("Ouvre une conversation.");
+  }
+
+  if(expectedMatchId&&activeMatchId!==expectedMatchId){
+   throw Error("La conversation a changé.");
+  }
+
+  const info=validateMedia(file);
+
+  const match=await getDoc(
+   doc(db,"matches",matchId)
+  );
+
+  if(!match.exists()||
+     !Array.isArray(match.data().members)||
+     !match.data().members.includes(u.uid)){
+   throw Error("Conversation inaccessible.");
+  }
+
+  $("photoStatus").textContent=
+   "📤 Envoi du fichier en cours...";
+
+  const filename=
+   crypto.randomUUID()+"."+info.ext;
+
+  const path=
+   "matchMedia/"+
+   matchId+"/"+
+   u.uid+"/"+
+   filename;
+
+  const mediaRef=ref(storage,path);
+
+  await uploadBytes(
+   mediaRef,
+   file,
+   {contentType:file.type}
+  );
+
+  const url=await getDownloadURL(mediaRef);
+
+  const message={
+   senderId:u.uid,
+   text:"",
+   type:info.type,
+   mediaUrl:url,
+   createdAt:serverTimestamp()
+  };
+
+  if(info.type==="image"){
+   message.imageUrl=url;
+  }
+
+  await addDoc(
+   collection(
+    db,"matches",matchId,"messages"
+   ),
+   message
+  );
+
+  $("photoStatus").textContent=
+   "💕 Fichier envoyé !";
+
+ }finally{
+  uploadingMedia=false;
+ }
+}
+
+/* ==========================================
+   CHOISIR UNE PHOTO
+========================================== */
+
+$("choosePhoto").addEventListener("click",()=>{
+ if(!activeMatchId){
+  notice("Ouvre une conversation.");
+  return;
+ }
+
+ $("photoInput").click();
+});
+
+/* CHOISIR UN GIF */
+
+$("chooseGif").addEventListener("click",()=>{
+ if(!activeMatchId){
+  notice("Ouvre une conversation.");
+  return;
+ }
+
+ $("gifInput").click();
+});
+
+/* CHOISIR UNE VIDEO */
+
+$("chooseVideo").addEventListener("click",()=>{
+ if(!activeMatchId){
+  notice("Ouvre une conversation.");
+  return;
+ }
+
+ $("videoInput").click();
+});
+
+/* ==========================================
+   GERER LES FICHIERS SELECTIONNES
+========================================== */
+
+async function handleSelectedMedia(inputId){
+ const input=$(inputId);
+ const file=input.files?.[0];
+
+ if(!file)return;
+
+ const buttons=[
+  "choosePhoto",
+  "chooseGif",
+  "chooseVideo"
+ ];
+
+ buttons.forEach(id=>$(id).disabled=true);
+
+ try{
+  const info=validateMedia(file);
+
+  if(inputId==="photoInput"&&info.type!=="image"){
+   throw Error("Choisis une photo JPG, PNG ou WebP.");
+  }
+
+  if(inputId==="gifInput"&&info.type!=="gif"){
+   throw Error("Choisis un GIF animé.");
+  }
+
+  if(inputId==="videoInput"&&info.type!=="video"){
+   throw Error("Choisis une vidéo MP4 ou WebM.");
+  }
+
+  await sendChatMedia(file);
+
+ }catch(e){
+  $("photoStatus").textContent=errorText(e);
+ }finally{
+  buttons.forEach(id=>$(id).disabled=false);
+  input.value="";
+ }
+}
+
+$("photoInput").addEventListener("change",()=>{
+ handleSelectedMedia("photoInput");
+});
+
+$("gifInput").addEventListener("change",()=>{
+ handleSelectedMedia("gifInput");
+});
+
+$("videoInput").addEventListener("change",()=>{
+ handleSelectedMedia("videoInput");
+});
+
+/* ==========================================
+   ENREGISTRER UN MESSAGE VOCAL
+========================================== */
+
+$("startRecording").addEventListener("click",async()=>{
+ if(!activeMatchId){
+  notice("Ouvre une conversation.");
+  return;
+ }
+
+ if(mediaRecorder?.state==="recording"){
+  return;
+ }
+
+ try{
+  await requireAdultProfile();
+
+  if(!navigator.mediaDevices?.getUserMedia){
+   throw Error(
+    "Ton navigateur ne permet pas l'enregistrement."
+   );
+  }
+
+  if(typeof MediaRecorder==="undefined"){
+   throw Error(
+    "L'enregistrement vocal n'est pas disponible."
+   );
+  }
+
+  const supportedTypes=[
+   "audio/webm",
+   "audio/mp4",
+   "audio/ogg"
+  ];
+
+  const mimeType=supportedTypes.find(
+   type=>MediaRecorder.isTypeSupported(type)
+  );
+
+  if(!mimeType){
+   throw Error(
+    "Aucun format audio compatible trouvé."
+   );
+  }
+
+  microphoneStream=
+   await navigator.mediaDevices.getUserMedia({
+    audio:true
+   });
+
+  audioChunks=[];
+  recordingMatchId=activeMatchId;
+
+  mediaRecorder=new MediaRecorder(
+   microphoneStream,
+   {mimeType}
+  );
+
+  mediaRecorder.addEventListener(
+   "dataavailable",
+   e=>{
+    if(e.data.size>0){
+     audioChunks.push(e.data);
+    }
+   }
+  );
+
+  mediaRecorder.addEventListener("stop",async()=>{
+   $("stopRecording").classList.add("hidden");
+   $("startRecording").disabled=false;
+
+   microphoneStream?.getTracks().forEach(
+    track=>track.stop()
+   );
+
+   microphoneStream=null;
+
+   const targetMatch=recordingMatchId;
+   recordingMatchId=null;
+
+   try{
+    if(!targetMatch||activeMatchId!==targetMatch){
+     $("recordingStatus").textContent=
+      "Enregistrement annulé.";
+     return;
+    }
+
+    const blob=new Blob(
+     audioChunks,
+     {type:mimeType}
+    );
+
+    const ext=allowedMediaTypes[mimeType].ext;
+
+    const file=new File(
+     [blob],
+     "vocal."+ext,
+     {type:mimeType}
+    );
+
+    $("recordingStatus").textContent=
+     "📤 Envoi du message vocal...";
+
+    await sendChatMedia(file,targetMatch);
+
+    $("recordingStatus").textContent=
+     "🎙️ Message vocal envoyé !";
+
+   }catch(e){
+    $("recordingStatus").textContent=
+     errorText(e);
+   }finally{
+    audioChunks=[];
+    mediaRecorder=null;
+   }
+  });
+
+  mediaRecorder.start();
+
+  $("startRecording").disabled=true;
+  $("stopRecording").classList.remove("hidden");
+
+  $("recordingStatus").textContent=
+   "🔴 Enregistrement en cours...";
+
+ }catch(e){
+  microphoneStream?.getTracks().forEach(
+   track=>track.stop()
+  );
+
+  microphoneStream=null;
+
+  $("recordingStatus").textContent=
+   errorText(e);
+ }
+});
+
+/* ==========================================
+   ARRETER ET ENVOYER LE VOCAL
+========================================== */
+
+$("stopRecording").addEventListener("click",()=>{
+ if(mediaRecorder?.state==="recording"){
+  mediaRecorder.stop();
+
+  $("stopRecording").classList.add("hidden");
+
+  $("recordingStatus").textContent=
+   "Préparation du message vocal...";
+ }
+});
+
+/* ==========================================
+   RETOUR AUX MESSAGES
+========================================== */
 
 $("backToMessages").addEventListener("click",()=>{
  displayMatches("messages");
 });
 
-/* FIN DE DESTINYA */
+/* ==========================================
+   FIN DE DESTINYA
+========================================== */
 
 </script>
 </body>
