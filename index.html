@@ -3,66 +3,66 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#ffe0e5">
 <title>Destinya 💗</title>
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;min-height:100vh;padding:18px;
- display:grid;place-items:center;
+ margin:0;min-height:100vh;padding:16px;
  font-family:Arial,sans-serif;color:#593b49;
- background:linear-gradient(145deg,#fff0ed,#ffd6df,#ffe8d6)
+ background:linear-gradient(145deg,#fff0ed,#ffd6df,#ffe8d6);
+ display:grid;place-items:center
 }
-.container{
- width:100%;max-width:440px;padding:25px 20px;
- background:white;border-radius:28px;text-align:center;
- box-shadow:0 12px 35px #b76b7b30
+main{
+ width:100%;max-width:460px;background:white;
+ border-radius:26px;padding:24px 20px;
+ box-shadow:0 12px 35px #b76b7b30;
+ text-align:center
 }
-h1{color:#d65c82;font-size:40px}
+h1{color:#d65c82;font-size:42px}
 h2{color:#bd5275}
-.heart{font-size:55px}
+.heart{font-size:52px}
 .hidden{display:none!important}
 label{display:block;text-align:left;margin-top:12px}
 input,select,textarea{
- width:100%;padding:14px;margin:8px 0;
- border:1px solid #f2c2d0;border-radius:14px;
+ width:100%;padding:13px;margin:7px 0;
+ border:1px solid #f2c2d0;border-radius:13px;
  font:inherit;background:white
 }
 button{
- width:100%;padding:15px;margin:7px 0;
- border:0;border-radius:30px;
+ width:100%;padding:14px;margin:7px 0;
+ border:0;border-radius:25px;
  font-size:16px;font-weight:bold;cursor:pointer
 }
+button:disabled{opacity:.5;cursor:wait}
 .primary{background:#d65c82;color:white}
 .secondary{background:#ffe1e8;color:#a94368}
 small{display:block;margin:12px 0;line-height:1.5}
-#message{color:#a94368;min-height:1.5em}
-.profile-card{
- padding:20px;border-radius:25px;margin:18px 0;
+#message{color:#a94368;min-height:24px}
+.card{
  background:linear-gradient(160deg,#fff0f4,#ffe5dc);
- touch-action:pan-y;user-select:none
+ padding:24px;border-radius:24px;margin:18px 0;
+ touch-action:pan-y
 }
-.avatar{font-size:76px;margin:15px}
-.profile-name{
- color:#bd5275;font-size:26px;font-weight:bold
-}
+.avatar{font-size:75px}
+.name{font-size:26px;color:#bd5275;font-weight:bold}
 .tag{
- display:inline-block;padding:8px 12px;margin:4px;
- border-radius:30px;background:white;
- color:#a94368;font-size:13px
+ display:inline-block;background:white;
+ padding:8px 12px;border-radius:20px;margin:4px;
+ font-size:13px
 }
-.actions{display:flex;gap:12px}
+.actions{display:flex;gap:10px}
 .actions button{flex:1}
 </style>
 </head>
 <body>
-<main class="container">
+<main>
 
 <section id="home">
 <div class="heart">💕</div>
 <h1>Destinya</h1>
-<p>De belles rencontres et de nouvelles amitiés.</p>
+<p>Rencontres, amour et amitié.</p>
 <button class="primary" onclick="showPage('register')">
 Créer un compte
 </button>
@@ -70,37 +70,39 @@ Créer un compte
 Se connecter
 </button>
 <button class="secondary" onclick="openDemo()">
-🌸 Découvrir la démonstration
+🌸 Découvrir Destinya
 </button>
-<small>Application réservée aux adultes de 18 ans et plus.</small>
+<small>Application réservée aux 18 ans et plus.</small>
 </section>
 
 <section id="register" class="hidden">
 <h2>Créer mon compte 💗</h2>
 <form id="registerForm">
-<label for="name">Pseudo</label>
+<label>Pseudo</label>
 <input id="name" maxlength="40" required>
 
-<label for="birthdate">Date de naissance</label>
+<label>Date de naissance</label>
 <input id="birthdate" type="date" required>
 
-<label for="ville">Ville</label>
+<label>Ville</label>
 <input id="ville" maxlength="80" required>
 
-<label for="objectif">Objectif</label>
-<select id="objectif" required>
-<option value="amitie">Amitié</option>
+<label>Je recherche</label>
+<select id="objectif">
 <option value="serieux">Relation sérieuse</option>
+<option value="amitie">Amitié</option>
 <option value="sans_engagement">Sans engagement</option>
 </select>
 
-<label for="email">Adresse e-mail</label>
+<label>Adresse e-mail</label>
 <input id="email" type="email" required>
 
-<label for="password">Mot de passe</label>
+<label>Mot de passe</label>
 <input id="password" type="password" minlength="8" required>
 
-<button class="primary" type="submit">Créer mon compte</button>
+<button class="primary" type="submit">
+Créer mon compte
+</button>
 </form>
 <button class="secondary" onclick="showPage('home')">
 Retour
@@ -114,7 +116,9 @@ Retour
  placeholder="Adresse e-mail" required>
 <input id="loginPassword" type="password"
  placeholder="Mot de passe" required>
-<button class="primary" type="submit">Se connecter</button>
+<button class="primary" type="submit">
+Se connecter
+</button>
 </form>
 <button id="googleLogin" class="secondary">
 Continuer avec Google
@@ -146,13 +150,12 @@ Actualiser la vérification
 <button id="hideProfile" class="secondary">
 🔒 Masquer mon profil
 </button>
-
 <small id="visibilityInfo">
 Ton profil est privé par défaut.
 </small>
 
 <button id="discoverReal" class="primary">
-💕 Découvrir les vrais profils
+💕 Découvrir les membres
 </button>
 <button class="secondary" onclick="openDemo()">
 Voir les profils fictifs
@@ -163,26 +166,25 @@ Se déconnecter
 </section>
 
 <section id="editProfilePage" class="hidden">
-<h2>💗 Compléter mon profil</h2>
+<h2>💗 Mon profil</h2>
 <form id="editProfileForm">
-
-<label for="editPseudo">Pseudo</label>
+<label>Pseudo</label>
 <input id="editPseudo" maxlength="40" required>
 
-<label for="editBirthdate">Date de naissance</label>
+<label>Date de naissance</label>
 <input id="editBirthdate" type="date" required>
 
-<label for="editVille">Ville</label>
+<label>Ville</label>
 <input id="editVille" maxlength="80" required>
 
-<label for="editObjectif">Je recherche</label>
+<label>Je recherche</label>
 <select id="editObjectif">
 <option value="serieux">Relation sérieuse</option>
 <option value="amitie">Amitié</option>
 <option value="sans_engagement">Sans engagement</option>
 </select>
 
-<label for="editBio">Ma description</label>
+<label>Ma description</label>
 <textarea id="editBio" maxlength="500" rows="4"
  placeholder="Parle un peu de toi..."></textarea>
 
@@ -191,22 +193,23 @@ Se déconnecter
 </button>
 </form>
 <button class="secondary" onclick="showPage('account')">
-Retour à mon compte
+Retour
 </button>
 </section>
 
 <section id="profiles" class="hidden">
 <h2>💕 Découvrir</h2>
 <p id="profileCount"></p>
-<div class="profile-card" id="swipeCard">
+
+<div id="swipeCard" class="card hidden">
 <small id="profileType"></small>
-<div class="avatar" id="profileAvatar"></div>
-<div class="profile-name" id="profileName"></div>
+<div id="profileAvatar" class="avatar">💗</div>
+<div id="profileName" class="name"></div>
 <p id="profileBio"></p>
 <div id="profileInterests"></div>
 </div>
 
-<div class="actions">
+<div id="profileActions" class="actions hidden">
 <button class="secondary" onclick="nextProfile()">
 ❌ Passer
 </button>
@@ -217,6 +220,11 @@ Retour à mon compte
 
 <p id="likesCount"></p>
 <small id="demoNotice"></small>
+
+<button id="loadMore" class="secondary hidden">
+Charger d'autres profils
+</button>
+
 <button class="secondary" onclick="backFromProfiles()">
 Retour
 </button>
@@ -228,27 +236,33 @@ Retour
 <script>
 let currentPage="home";
 let returnPage="home";
-let profileIndex=0;
 let profileMode="demo";
+let profileIndex=0;
 let activeProfiles=[];
+let realProfiles=[];
+let lastProfileDoc=null;
+let moreProfilesAvailable=false;
+let loadingProfiles=false;
+
+const PAGE_SIZE=20;
 const likedDemoProfiles=new Set();
 
 const demoProfiles=[
  {
-  name:"Camille",age:26,ville:"Paris",avatar:"🌸",
-  objectif:"amitie",
+  name:"Camille",age:26,ville:"Paris",
+  avatar:"🌸",objectif:"amitie",
   bio:"J'aime les promenades et les livres.",
   interests:["Lecture","Nature"]
  },
  {
-  name:"Alex",age:29,ville:"Lyon",avatar:"🎨",
-  objectif:"serieux",
+  name:"Alex",age:29,ville:"Lyon",
+  avatar:"🎨",objectif:"serieux",
   bio:"Passionné de musique et de voyages.",
   interests:["Musique","Voyages"]
  },
  {
-  name:"Léa",age:31,ville:"Lille",avatar:"🦋",
-  objectif:"sans_engagement",
+  name:"Léa",age:31,ville:"Lille",
+  avatar:"🦋",objectif:"sans_engagement",
   bio:"J'adore cuisiner et le cinéma.",
   interests:["Cuisine","Cinéma"]
  }
@@ -276,10 +290,16 @@ function notice(text){
 function renderProfile(){
  const count=document.getElementById("profileCount");
  const card=document.getElementById("swipeCard");
- const actions=document.querySelector(".actions");
+ const actions=document.getElementById("profileActions");
+ const more=document.getElementById("loadMore");
+
+ more.classList.toggle(
+  "hidden",
+  profileMode!=="real" || !moreProfilesAvailable
+ );
 
  if(!activeProfiles.length){
-  count.textContent="Aucun profil disponible pour le moment.";
+  count.textContent="Aucun profil disponible.";
   card.classList.add("hidden");
   actions.classList.add("hidden");
   document.getElementById("likesCount").textContent="";
@@ -291,20 +311,28 @@ function renderProfile(){
  actions.classList.remove("hidden");
 
  const p=activeProfiles[profileIndex];
- count.textContent=`Profil ${profileIndex+1} sur ${activeProfiles.length}`;
+
+ count.textContent=
+  `Profil ${profileIndex+1} sur ${activeProfiles.length} chargés`;
+
  document.getElementById("profileType").textContent=
   profileMode==="demo"?"PROFIL FICTIF":"PROFIL PUBLIC";
- document.getElementById("profileAvatar").textContent=p.avatar||"💗";
+
+ document.getElementById("profileAvatar").textContent=
+  p.avatar||"💗";
+
  document.getElementById("profileName").textContent=
   `${p.name}, ${p.age} ans`;
- document.getElementById("profileBio").textContent=p.bio||p.ville||"";
+
+ document.getElementById("profileBio").textContent=
+  p.bio||"";
 
  const interests=document.getElementById("profileInterests");
  interests.replaceChildren();
 
  const tags=profileMode==="demo"
   ?p.interests
-  :[p.ville,objectiveLabels[p.objectif]||""];
+  :[p.ville,objectiveLabels[p.objectif]];
 
  tags.filter(Boolean).forEach(item=>{
   const span=document.createElement("span");
@@ -315,40 +343,63 @@ function renderProfile(){
 
  document.getElementById("likesCount").textContent=
   profileMode==="demo"
-   ?`❤️ Likes fictifs : ${likedDemoProfiles.size}`
-   :"❤️ Likes réels bientôt disponibles.";
+  ?`❤️ Likes fictifs : ${likedDemoProfiles.size}`
+  :"❤️ Likes réels bientôt disponibles.";
 
  document.getElementById("demoNotice").textContent=
-  "Le swipe fonctionne. Aucun like réel n'est enregistré.";
-}
-
-function showProfiles(){
- profileIndex=0;
- renderProfile();
- showPage("profiles");
+  profileMode==="demo"
+  ?"Démonstration avec des profils fictifs."
+  :"Les likes réels seront ajoutés prochainement.";
 }
 
 function openDemo(){
  returnPage=currentPage;
  profileMode="demo";
+ profileIndex=0;
  activeProfiles=demoProfiles;
- showProfiles();
-}
-
-function nextProfile(){
- if(!activeProfiles.length)return;
- profileIndex=(profileIndex+1)%activeProfiles.length;
+ showPage("profiles");
  renderProfile();
 }
 
-function likeProfile(){
+async function nextProfile(){
  if(!activeProfiles.length)return;
+
+ if(profileMode==="demo"){
+  profileIndex=(profileIndex+1)%activeProfiles.length;
+  renderProfile();
+  return;
+ }
+
+ if(profileIndex+1<activeProfiles.length){
+  profileIndex++;
+  renderProfile();
+  return;
+ }
+
+ if(moreProfilesAvailable && window.loadRealProfiles){
+  const previous=activeProfiles.length;
+  await window.loadRealProfiles();
+
+  if(activeProfiles.length>previous){
+   profileIndex=previous;
+   renderProfile();
+  }else{
+   notice("Aucun autre profil disponible pour le moment.");
+  }
+ }else{
+  notice("Tu as parcouru tous les profils chargés.");
+ }
+}
+
+async function likeProfile(){
+ if(!activeProfiles.length)return;
+
  if(profileMode==="demo"){
   likedDemoProfiles.add(profileIndex);
  }else{
-  notice("Likes réels bientôt disponibles.");
+  notice("Les likes réels ne sont pas encore disponibles.");
  }
- nextProfile();
+ await nextProfile();
 }
 
 function backFromProfiles(){
@@ -363,9 +414,9 @@ swipeCard.addEventListener("touchstart",e=>{
 },{passive:true});
 
 swipeCard.addEventListener("touchend",e=>{
- const difference=e.changedTouches[0].screenX-touchStartX;
- if(difference>70)likeProfile();
- else if(difference< -70)nextProfile();
+ const diff=e.changedTouches[0].screenX-touchStartX;
+ if(diff>70)likeProfile();
+ else if(diff< -70)nextProfile();
 },{passive:true});
 
 window.showPage=showPage;
@@ -388,7 +439,8 @@ import {
 
 import {
  getFirestore,doc,setDoc,getDoc,deleteDoc,
- collection,getDocs,serverTimestamp,query,limit
+ collection,getDocs,serverTimestamp,
+ query,limit,startAfter
 } from
 "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
@@ -408,14 +460,26 @@ const db=getFirestore(app);
 
 function calculateAge(value){
  if(!value)return -1;
+
  const birth=new Date(value+"T12:00:00");
  const today=new Date();
- if(Number.isNaN(birth.getTime())||birth>today)return -1;
+
+ if(Number.isNaN(birth.getTime())||birth>today){
+  return -1;
+ }
 
  let age=today.getFullYear()-birth.getFullYear();
- if(today.getMonth()<birth.getMonth()||
-  (today.getMonth()===birth.getMonth()&&
-   today.getDate()<birth.getDate()))age--;
+
+ if(
+  today.getMonth()<birth.getMonth() ||
+  (
+   today.getMonth()===birth.getMonth() &&
+   today.getDate()<birth.getDate()
+  )
+ ){
+  age--;
+ }
+
  return age;
 }
 
@@ -427,20 +491,24 @@ function errorText(error){
   "auth/invalid-credential":"Identifiants incorrects.",
   "auth/unauthorized-domain":"Domaine non autorisé.",
   "permission-denied":"Accès refusé. Vérifie les règles Firestore.",
-  "AGE_INVALIDE":"Inscription réservée aux adultes."
+  "AGE_INVALIDE":"Application réservée aux adultes."
  };
+
  return messages[error.code||error.message]||
   "Une erreur est survenue. Réessaie.";
 }
 
 async function createUserProfile(user,details){
  const age=calculateAge(details.birthdate);
- if(age<18||age>120)throw new Error("AGE_INVALIDE");
+
+ if(age<18||age>120){
+  throw new Error("AGE_INVALIDE");
+ }
 
  await setDoc(doc(db,"Users",user.uid),{
   pseudo:details.pseudo,
   birthdate:details.birthdate,
-  age:age,
+  age,
   bio:"",
   ville:details.ville,
   objectif:details.objectif,
@@ -462,6 +530,7 @@ document.getElementById("registerForm")
  };
 
  const age=calculateAge(details.birthdate);
+
  if(!details.pseudo||!details.ville||age<18||age>120){
   notice("Vérifie tes informations. Réservé aux 18 ans et plus.");
   return;
@@ -474,7 +543,10 @@ document.getElementById("registerForm")
    document.getElementById("password").value
   );
 
-  await updateProfile(result.user,{displayName:details.pseudo});
+  await updateProfile(result.user,{
+   displayName:details.pseudo
+  });
+
   await createUserProfile(result.user,details);
 
   try{
@@ -491,6 +563,7 @@ document.getElementById("registerForm")
 document.getElementById("loginForm")
 .addEventListener("submit",async event=>{
  event.preventDefault();
+
  try{
   await signInWithEmailAndPassword(
    auth,
@@ -508,9 +581,13 @@ document.getElementById("googleLogin")
   const result=await signInWithPopup(
    auth,new GoogleAuthProvider()
   );
-  const snapshot=await getDoc(doc(db,"Users",result.user.uid));
-  if(!snapshot.exists()){
-   notice("Connexion réussie. Complète ton profil avant publication.");
+
+  const snap=await getDoc(
+   doc(db,"Users",result.user.uid)
+  );
+
+  if(!snap.exists()){
+   notice("Connexion réussie. Complète ton profil.");
   }
  }catch(error){
   notice(errorText(error));
@@ -523,18 +600,26 @@ document.getElementById("editProfile")
  if(!user)return;
 
  showPage("editProfilePage");
+
  try{
   const snap=await getDoc(doc(db,"Users",user.uid));
   const p=snap.exists()?snap.data():{};
 
   document.getElementById("editPseudo").value=
    p.pseudo||user.displayName||"";
+
   document.getElementById("editBirthdate").value=
    p.birthdate||"";
-  document.getElementById("editVille").value=p.ville||"";
+
+  document.getElementById("editVille").value=
+   p.ville||"";
+
   document.getElementById("editObjectif").value=
    p.objectif||"serieux";
-  document.getElementById("editBio").value=p.bio||"";
+
+  document.getElementById("editBio").value=
+   p.bio||"";
+
  }catch(error){
   notice(errorText(error));
  }
@@ -543,6 +628,7 @@ document.getElementById("editProfile")
 document.getElementById("editProfileForm")
 .addEventListener("submit",async event=>{
  event.preventDefault();
+
  const user=auth.currentUser;
  if(!user)return;
 
@@ -566,8 +652,10 @@ document.getElementById("editProfileForm")
   },{merge:true});
 
   await updateProfile(user,{displayName:pseudo});
+
   showPage("account");
-  notice("Profil enregistré ! Tu peux maintenant le rendre visible.");
+  notice("Profil enregistré avec succès !");
+
  }catch(error){
   notice(errorText(error));
  }
@@ -578,11 +666,15 @@ async function refreshVisibility(){
  if(!user)return;
 
  try{
-  const snapshot=await getDoc(doc(db,"publicProfiles",user.uid));
+  const snap=await getDoc(
+   doc(db,"publicProfiles",user.uid)
+  );
+
   document.getElementById("visibilityInfo").textContent=
-   snapshot.exists()
-    ?"Ton profil est visible par les membres connectés."
-    :"Ton profil est privé.";
+   snap.exists()
+   ?"Ton profil est visible par les membres."
+   :"Ton profil est privé.";
+
  }catch(error){
   document.getElementById("visibilityInfo").textContent=
    errorText(error);
@@ -596,22 +688,30 @@ document.getElementById("publishProfile")
 
  try{
   await reload(user);
+
   if(!user.emailVerified){
    notice("Vérifie d'abord ton adresse e-mail.");
    return;
   }
 
-  const snapshot=await getDoc(doc(db,"Users",user.uid));
-  if(!snapshot.exists()){
+  const snap=await getDoc(doc(db,"Users",user.uid));
+
+  if(!snap.exists()){
    notice("Complète d'abord ton profil.");
    return;
   }
 
-  const p=snapshot.data();
-  if(!Number.isInteger(p.age)||p.age<18||
-     !p.pseudo||!p.ville||
-     !["amitie","serieux","sans_engagement"].includes(p.objectif)){
-   notice("Vérifie ton profil avant de le publier.");
+  const p=snap.data();
+
+  if(
+   !Number.isInteger(p.age) ||
+   p.age<18 ||
+   !p.pseudo ||
+   !p.ville ||
+   !["amitie","serieux","sans_engagement"]
+    .includes(p.objectif)
+  ){
+   notice("Vérifie ton profil avant publication.");
    return;
   }
 
@@ -625,8 +725,9 @@ document.getElementById("publishProfile")
    updatedAt:serverTimestamp()
   });
 
-  notice("Ton profil est maintenant visible.");
+  notice("Ton profil est maintenant visible !");
   await refreshVisibility();
+
  }catch(error){
   notice(errorText(error));
  }
@@ -639,33 +740,57 @@ document.getElementById("hideProfile")
 
  try{
   await deleteDoc(doc(db,"publicProfiles",user.uid));
-  notice("Ton profil public a été masqué.");
+  notice("Ton profil a été masqué.");
   await refreshVisibility();
  }catch(error){
   notice(errorText(error));
  }
 });
 
-document.getElementById("discoverReal")
-.addEventListener("click",async()=>{
+/*
+ PAGINATION FIRESTORE
+ Charge 20 documents à chaque demande.
+ Le dernier document sert de curseur.
+*/
+
+async function loadRealProfiles(){
+ if(loadingProfiles || !moreProfilesAvailable)return;
+
  const user=auth.currentUser;
- if(!user){
-  notice("Connecte-toi pour découvrir les profils.");
-  return;
- }
+ if(!user)return;
+
+ loadingProfiles=true;
+
+ const moreButton=document.getElementById("loadMore");
+ moreButton.disabled=true;
 
  try{
-  const snapshot=await getDoc(doc(db,"Users",user.uid));
-  if(!snapshot.exists()){
-   notice("Complète d'abord ton profil.");
+  const profilesCollection=collection(db,"publicProfiles");
+
+  const pageQuery=lastProfileDoc
+   ?query(
+     profilesCollection,
+     startAfter(lastProfileDoc),
+     limit(PAGE_SIZE)
+    )
+   :query(
+     profilesCollection,
+     limit(PAGE_SIZE)
+    );
+
+  const results=await getDocs(pageQuery);
+
+  if(!auth.currentUser || auth.currentUser.uid!==user.uid){
    return;
   }
 
-  const results=await getDocs(
-   query(collection(db,"publicProfiles"),limit(50))
-  );
+  if(!results.empty){
+   lastProfileDoc=results.docs[results.docs.length-1];
+  }
 
-  activeProfiles=results.docs
+  moreProfilesAvailable=results.size===PAGE_SIZE;
+
+  const newProfiles=results.docs
    .filter(item=>item.id!==user.uid)
    .filter(item=>item.data().visible===true)
    .map(item=>({
@@ -677,11 +802,73 @@ document.getElementById("discoverReal")
     bio:item.data().bio||"",
     avatar:"💗"
    }))
-   .filter(p=>p.name&&p.age>=18);
+   .filter(p=>p.name && p.age>=18);
 
-  returnPage="account";
+  const existingIds=new Set(
+   activeProfiles.map(p=>p.id)
+  );
+
+  for(const profile of newProfiles){
+   if(!existingIds.has(profile.id)){
+    activeProfiles.push(profile);
+    existingIds.add(profile.id);
+   }
+  }
+
+  renderProfile();
+
+ }catch(error){
+  notice(errorText(error));
+ }finally{
+  loadingProfiles=false;
+  moreButton.disabled=false;
+ }
+}
+
+window.loadRealProfiles=loadRealProfiles;
+
+document.getElementById("loadMore")
+.addEventListener("click",async()=>{
+ const previous=activeProfiles.length;
+ await loadRealProfiles();
+
+ if(activeProfiles.length>previous){
+  profileIndex=previous;
+  renderProfile();
+ }else if(!moreProfilesAvailable){
+  notice("Aucun autre profil disponible.");
+ }
+});
+
+document.getElementById("discoverReal")
+.addEventListener("click",async()=>{
+ const user=auth.currentUser;
+
+ if(!user){
+  notice("Connecte-toi pour découvrir les profils.");
+  return;
+ }
+
+ try{
+  const snap=await getDoc(doc(db,"Users",user.uid));
+
+  if(!snap.exists()){
+   notice("Complète d'abord ton profil.");
+   return;
+  }
+
   profileMode="real";
-  showProfiles();
+  profileIndex=0;
+  activeProfiles=[];
+  realProfiles=[];
+  lastProfileDoc=null;
+  moreProfilesAvailable=true;
+  returnPage="account";
+
+  showPage("profiles");
+  renderProfile();
+  await loadRealProfiles();
+
  }catch(error){
   notice(errorText(error));
  }
@@ -722,19 +909,26 @@ document.getElementById("refreshVerification")
 
 function renderAccount(user){
  if(!user){
+  activeProfiles=[];
+  lastProfileDoc=null;
+  moreProfilesAvailable=false;
   showPage("home");
   return;
  }
 
  showPage("account");
- document.getElementById("userEmail").textContent=user.email||"";
+
+ document.getElementById("userEmail").textContent=
+  user.email||"";
+
  document.getElementById("verificationInfo").textContent=
   user.emailVerified
-   ?"Adresse e-mail vérifiée."
-   :"Adresse e-mail non vérifiée.";
+  ?"Adresse e-mail vérifiée."
+  :"Adresse e-mail non vérifiée.";
 
  document.getElementById("verifyEmail")
   .classList.toggle("hidden",user.emailVerified);
+
  document.getElementById("refreshVerification")
   .classList.toggle("hidden",user.emailVerified);
 
@@ -744,4 +938,5 @@ function renderAccount(user){
 onAuthStateChanged(auth,renderAccount);
 </script>
 </body>
-</html>
+ </html>
+ 
