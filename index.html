@@ -8,23 +8,50 @@
 <title>Destinya 💗</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;padding:18px;display:grid;place-items:center;font-family:Arial,sans-serif;color:#593b49;background:linear-gradient(145deg,#fff0ed,#ffd6df,#ffe8d6)}
-.container{width:100%;max-width:440px;padding:25px 20px;background:white;border-radius:28px;text-align:center;box-shadow:0 12px 35px #b76b7b30}
+body{
+ margin:0;min-height:100vh;padding:18px;
+ display:grid;place-items:center;
+ font-family:Arial,sans-serif;color:#593b49;
+ background:linear-gradient(145deg,#fff0ed,#ffd6df,#ffe8d6)
+}
+.container{
+ width:100%;max-width:440px;padding:25px 20px;
+ background:white;border-radius:28px;text-align:center;
+ box-shadow:0 12px 35px #b76b7b30
+}
 h1{color:#d65c82;font-size:40px}
 h2{color:#bd5275}
 .heart{font-size:55px}
 .hidden{display:none!important}
 label{display:block;text-align:left;margin-top:12px}
-input,select,textarea{width:100%;padding:14px;margin:8px 0;border:1px solid #f2c2d0;border-radius:14px;font:inherit;background:white}
-button{width:100%;padding:15px;margin:7px 0;border:0;border-radius:30px;font-size:16px;font-weight:bold;cursor:pointer}
+input,select,textarea{
+ width:100%;padding:14px;margin:8px 0;
+ border:1px solid #f2c2d0;border-radius:14px;
+ font:inherit;background:white
+}
+button{
+ width:100%;padding:15px;margin:7px 0;
+ border:0;border-radius:30px;
+ font-size:16px;font-weight:bold;cursor:pointer
+}
 .primary{background:#d65c82;color:white}
 .secondary{background:#ffe1e8;color:#a94368}
 small{display:block;margin:12px 0;line-height:1.5}
 #message{color:#a94368;min-height:1.5em}
-.profile-card{padding:20px;border-radius:25px;margin:18px 0;background:linear-gradient(160deg,#fff0f4,#ffe5dc);touch-action:pan-y;user-select:none}
+.profile-card{
+ padding:20px;border-radius:25px;margin:18px 0;
+ background:linear-gradient(160deg,#fff0f4,#ffe5dc);
+ touch-action:pan-y;user-select:none
+}
 .avatar{font-size:76px;margin:15px}
-.profile-name{color:#bd5275;font-size:26px;font-weight:bold}
-.tag{display:inline-block;padding:8px 12px;margin:4px;border-radius:30px;background:white;color:#a94368;font-size:13px}
+.profile-name{
+ color:#bd5275;font-size:26px;font-weight:bold
+}
+.tag{
+ display:inline-block;padding:8px 12px;margin:4px;
+ border-radius:30px;background:white;
+ color:#a94368;font-size:13px
+}
 .actions{display:flex;gap:12px}
 .actions button{flex:1}
 </style>
@@ -36,9 +63,15 @@ small{display:block;margin:12px 0;line-height:1.5}
 <div class="heart">💕</div>
 <h1>Destinya</h1>
 <p>De belles rencontres et de nouvelles amitiés.</p>
-<button class="primary" onclick="showPage('register')">Créer un compte</button>
-<button class="secondary" onclick="showPage('login')">Se connecter</button>
-<button class="secondary" onclick="openDemo()">🌸 Découvrir la démonstration</button>
+<button class="primary" onclick="showPage('register')">
+Créer un compte
+</button>
+<button class="secondary" onclick="showPage('login')">
+Se connecter
+</button>
+<button class="secondary" onclick="openDemo()">
+🌸 Découvrir la démonstration
+</button>
 <small>Application réservée aux adultes de 18 ans et plus.</small>
 </section>
 
@@ -47,34 +80,48 @@ small{display:block;margin:12px 0;line-height:1.5}
 <form id="registerForm">
 <label for="name">Pseudo</label>
 <input id="name" maxlength="40" required>
+
 <label for="birthdate">Date de naissance</label>
 <input id="birthdate" type="date" required>
+
 <label for="ville">Ville</label>
 <input id="ville" maxlength="80" required>
+
 <label for="objectif">Objectif</label>
 <select id="objectif" required>
 <option value="amitie">Amitié</option>
 <option value="serieux">Relation sérieuse</option>
 <option value="sans_engagement">Sans engagement</option>
 </select>
+
 <label for="email">Adresse e-mail</label>
 <input id="email" type="email" required>
+
 <label for="password">Mot de passe</label>
 <input id="password" type="password" minlength="8" required>
+
 <button class="primary" type="submit">Créer mon compte</button>
 </form>
-<button class="secondary" onclick="showPage('home')">Retour</button>
+<button class="secondary" onclick="showPage('home')">
+Retour
+</button>
 </section>
 
 <section id="login" class="hidden">
 <h2>Connexion 💕</h2>
 <form id="loginForm">
-<input id="loginEmail" type="email" placeholder="Adresse e-mail" required>
-<input id="loginPassword" type="password" placeholder="Mot de passe" required>
+<input id="loginEmail" type="email"
+ placeholder="Adresse e-mail" required>
+<input id="loginPassword" type="password"
+ placeholder="Mot de passe" required>
 <button class="primary" type="submit">Se connecter</button>
 </form>
-<button id="googleLogin" class="secondary">Continuer avec Google</button>
-<button class="secondary" onclick="showPage('home')">Retour</button>
+<button id="googleLogin" class="secondary">
+Continuer avec Google
+</button>
+<button class="secondary" onclick="showPage('home')">
+Retour
+</button>
 </section>
 
 <section id="account" class="hidden">
@@ -82,37 +129,70 @@ small{display:block;margin:12px 0;line-height:1.5}
 <h2>Bienvenue sur Destinya !</h2>
 <p id="userEmail"></p>
 <p id="verificationInfo"></p>
-<button id="verifyEmail" class="secondary">Envoyer un e-mail de vérification</button>
-<button id="refreshVerification" class="secondary">Actualiser la vérification</button>
-<button id="editProfile" class="primary">✏️ Compléter mon profil</button>
-<button id="publishProfile" class="primary">🌸 Rendre mon profil visible</button>
-<button id="hideProfile" class="secondary">🔒 Masquer mon profil</button>
-<small id="visibilityInfo">Ton profil est privé par défaut.</small>
-<button id="discoverReal" class="primary">💕 Découvrir les vrais profils</button>
-<button class="secondary" onclick="openDemo()">Voir les profils fictifs</button>
-<button id="logout" class="secondary">Se déconnecter</button>
+
+<button id="verifyEmail" class="secondary">
+Envoyer un e-mail de vérification
+</button>
+<button id="refreshVerification" class="secondary">
+Actualiser la vérification
+</button>
+
+<button id="editProfile" class="primary">
+✏️ Compléter mon profil
+</button>
+<button id="publishProfile" class="primary">
+🌸 Rendre mon profil visible
+</button>
+<button id="hideProfile" class="secondary">
+🔒 Masquer mon profil
+</button>
+
+<small id="visibilityInfo">
+Ton profil est privé par défaut.
+</small>
+
+<button id="discoverReal" class="primary">
+💕 Découvrir les vrais profils
+</button>
+<button class="secondary" onclick="openDemo()">
+Voir les profils fictifs
+</button>
+<button id="logout" class="secondary">
+Se déconnecter
+</button>
 </section>
 
 <section id="editProfilePage" class="hidden">
 <h2>💗 Compléter mon profil</h2>
 <form id="editProfileForm">
+
 <label for="editPseudo">Pseudo</label>
 <input id="editPseudo" maxlength="40" required>
+
 <label for="editBirthdate">Date de naissance</label>
 <input id="editBirthdate" type="date" required>
+
 <label for="editVille">Ville</label>
 <input id="editVille" maxlength="80" required>
+
 <label for="editObjectif">Je recherche</label>
 <select id="editObjectif">
 <option value="serieux">Relation sérieuse</option>
 <option value="amitie">Amitié</option>
 <option value="sans_engagement">Sans engagement</option>
 </select>
+
 <label for="editBio">Ma description</label>
-<textarea id="editBio" maxlength="500" rows="4" placeholder="Parle un peu de toi..."></textarea>
-<button class="primary" type="submit">💾 Enregistrer mon profil</button>
+<textarea id="editBio" maxlength="500" rows="4"
+ placeholder="Parle un peu de toi..."></textarea>
+
+<button class="primary" type="submit">
+💾 Enregistrer mon profil
+</button>
 </form>
-<button class="secondary" onclick="showPage('account')">Retour à mon compte</button>
+<button class="secondary" onclick="showPage('account')">
+Retour à mon compte
+</button>
 </section>
 
 <section id="profiles" class="hidden">
@@ -125,17 +205,26 @@ small{display:block;margin:12px 0;line-height:1.5}
 <p id="profileBio"></p>
 <div id="profileInterests"></div>
 </div>
+
 <div class="actions">
-<button class="secondary" onclick="nextProfile()">❌ Passer</button>
-<button class="primary" onclick="likeProfile()">❤️ J'aime</button>
+<button class="secondary" onclick="nextProfile()">
+❌ Passer
+</button>
+<button class="primary" onclick="likeProfile()">
+❤️ J'aime
+</button>
 </div>
+
 <p id="likesCount"></p>
 <small id="demoNotice"></small>
-<button class="secondary" onclick="backFromProfiles()">Retour</button>
+<button class="secondary" onclick="backFromProfiles()">
+Retour
+</button>
 </section>
 
 <p id="message" role="status" aria-live="polite"></p>
 </main>
+
 <script>
 let currentPage="home";
 let returnPage="home";
@@ -145,15 +234,24 @@ let activeProfiles=[];
 const likedDemoProfiles=new Set();
 
 const demoProfiles=[
- {name:"Camille",age:26,ville:"Paris",avatar:"🌸",
-  objectif:"amitie",bio:"J'aime les promenades et les livres.",
-  interests:["Lecture","Nature"]},
- {name:"Alex",age:29,ville:"Lyon",avatar:"🎨",
-  objectif:"serieux",bio:"Passionné de musique et de voyages.",
-  interests:["Musique","Voyages"]},
- {name:"Léa",age:31,ville:"Lille",avatar:"🦋",
-  objectif:"sans_engagement",bio:"J'adore cuisiner et le cinéma.",
-  interests:["Cuisine","Cinéma"]}
+ {
+  name:"Camille",age:26,ville:"Paris",avatar:"🌸",
+  objectif:"amitie",
+  bio:"J'aime les promenades et les livres.",
+  interests:["Lecture","Nature"]
+ },
+ {
+  name:"Alex",age:29,ville:"Lyon",avatar:"🎨",
+  objectif:"serieux",
+  bio:"Passionné de musique et de voyages.",
+  interests:["Musique","Voyages"]
+ },
+ {
+  name:"Léa",age:31,ville:"Lille",avatar:"🦋",
+  objectif:"sans_engagement",
+  bio:"J'adore cuisiner et le cinéma.",
+  interests:["Cuisine","Cinéma"]
+ }
 ];
 
 const objectiveLabels={
@@ -276,7 +374,6 @@ window.nextProfile=nextProfile;
 window.likeProfile=likeProfile;
 window.backFromProfiles=backFromProfiles;
 </script>
-
 <script type="module">
 import {initializeApp} from
 "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
@@ -291,7 +388,7 @@ import {
 
 import {
  getFirestore,doc,setDoc,getDoc,deleteDoc,
- collection,getDocs,serverTimestamp
+ collection,getDocs,serverTimestamp,query,limit
 } from
 "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
@@ -564,7 +661,9 @@ document.getElementById("discoverReal")
    return;
   }
 
-  const results=await getDocs(collection(db,"publicProfiles"));
+  const results=await getDocs(
+   query(collection(db,"publicProfiles"),limit(50))
+  );
 
   activeProfiles=results.docs
    .filter(item=>item.id!==user.uid)
