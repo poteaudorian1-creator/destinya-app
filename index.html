@@ -1298,6 +1298,91 @@ $("recordBtn").onclick=async()=>{
 
         const extension=blob.type.includes("mp4")?"mp4":"webm";
         const fileRef=ref(
-          store
+        
+          storage,
+          "matchPhotos/"+currentMatch+"/"+
+          crypto.randomUUID()+"."+extension
+        );
+
+        await uploadBytes(fileRef,blob,{
+          contentType:blob.type
+        });
+
+        const url=await getDownloadURL(fileRef);
+
+        await sendChatMessage({
+          text:"",
+          type:"audio",
+          audioUrl:url
+        });
+
+        notice("🎤 Vocal envoyé !");
+      }catch(err){
+        errorMessage(err);
+      }finally{
+        $("recordBtn").disabled=false;
+        $("stopRecordBtn").disabled=true;
+      }
+    };
+
+    recorder.start();
+
+    $("recordBtn").disabled=true;
+    $("stopRecordBtn").disabled=false;
+    notice("🎙️ Enregistrement en cours...");
+
+  }catch(err){
+    errorMessage(err);
+  }
+};
+
+$("stopRecordBtn").onclick=()=>{
+  if(recorder?.state==="recording"){
+    recorder.stop();
+  }
+};
+
+// CHANGEMENT DE PAGE
+
+window.pageOpened=async id=>{
+  clearInterval(chatTimer);
+  chatTimer=null;
+
+  if(!user)return;
+
+  if(id==="account"){
+    try{
+      await loadMyProfile();
+      await loadPublicProfile();
+      renderAccount();
+    }catch(err){
+      errorMessage(err);
+    }
+  }
+
+  if(id==="profile"){
+    try{
+      await loadMyProfile();
+      await loadPublicProfile();
+    }catch(err){
+      errorMessage(err);
+    }
+  }
+
+  if(id==="discover"){
+    await loadProfiles();
+  }
+
+  if(id==="matches"){
+    await loadMatches();
+  }
+
+  if(id==="chat"){
+    await loadChat();
+    chatTimer=setInterval(loadChat,5000);
+  }
+};
+
+</script>
 </body>
 </html>
