@@ -8,53 +8,92 @@
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;min-height:100vh;padding:16px;
- display:grid;place-items:center;
- font-family:Arial,sans-serif;color:#593b49;
+ margin:0;
+ min-height:100vh;
+ padding:18px;
+ font-family:Arial,sans-serif;
+ color:#593b49;
  background:linear-gradient(145deg,#fff0ed,#ffd6df,#ffe8d6)
 }
 main{
- width:100%;max-width:460px;padding:24px 20px;
- background:white;border-radius:26px;text-align:center;
+ width:100%;
+ max-width:470px;
+ margin:20px auto;
+ padding:25px 20px;
+ background:#fff;
+ border-radius:28px;
+ text-align:center;
  box-shadow:0 12px 35px #b76b7b30
 }
-h1{font-size:42px;color:#d65c82}
-h2{color:#bd5275}
-.heart{font-size:54px}
+h1{font-size:43px;color:#d65c82}
+h2{font-size:29px;color:#bd5275}
+.heart{font-size:58px}
 .hidden{display:none!important}
-label{display:block;text-align:left;margin-top:12px}
+label{
+ display:block;
+ text-align:left;
+ margin-top:12px
+}
 input,select,textarea{
- width:100%;padding:13px;margin:7px 0;
- border:1px solid #f2c2d0;border-radius:13px;
- font:inherit;background:white
+ width:100%;
+ padding:13px;
+ margin:7px 0;
+ border:1px solid #f2c2d0;
+ border-radius:13px;
+ font:inherit;
+ background:#fff
 }
 button{
- width:100%;padding:14px;margin:7px 0;
- border:0;border-radius:25px;
- font-size:16px;font-weight:bold;cursor:pointer
+ width:100%;
+ padding:15px;
+ margin:8px 0;
+ border:0;
+ border-radius:28px;
+ font-size:16px;
+ font-weight:bold;
+ cursor:pointer
 }
-button:disabled{opacity:.5;cursor:wait}
+button:disabled{opacity:.55;cursor:wait}
 .primary{background:#d65c82;color:white}
 .secondary{background:#ffe1e8;color:#a94368}
-small{display:block;margin:12px 0;line-height:1.5}
-#message{color:#a94368;min-height:24px}
+small{
+ display:block;
+ margin:12px 0;
+ line-height:1.5
+}
+#message{
+ color:#a94368;
+ min-height:25px;
+ line-height:1.5
+}
 .card{
- padding:24px;border-radius:24px;margin:18px 0;
+ padding:25px 16px;
+ border-radius:26px;
+ margin:18px 0;
  background:linear-gradient(160deg,#fff0f4,#ffe5dc);
  touch-action:pan-y
 }
-.avatar{font-size:75px}
-.name{font-size:26px;color:#bd5275;font-weight:bold}
+.avatar{font-size:78px}
+.name{
+ font-size:29px;
+ color:#bd5275;
+ font-weight:bold
+}
 .tag{
- display:inline-block;background:white;
- padding:8px 12px;border-radius:20px;
- margin:4px;font-size:13px
+ display:inline-block;
+ background:white;
+ padding:9px 13px;
+ border-radius:20px;
+ margin:5px;
+ font-size:13px
 }
 .actions{display:flex;gap:10px}
 .actions button{flex:1}
 .match{
- padding:16px;margin:10px 0;
- border-radius:16px;background:#fff0f4;
+ padding:17px;
+ margin:12px 0;
+ border-radius:16px;
+ background:#fff0f4;
  text-align:left
 }
 </style>
@@ -75,7 +114,7 @@ Se connecter
 <button class="secondary" onclick="openDemo()">
 🌸 Découvrir Destinya
 </button>
-<small>Réservé aux adultes de 18 ans et plus.</small>
+<small>Application réservée aux adultes de 18 ans et plus.</small>
 </section>
 
 <section id="register" class="hidden">
@@ -240,22 +279,30 @@ let loadingProfiles=false;
 let actionBusy=false;
 
 const PAGE_SIZE=20;
-const demoLikes=new Set();
 
 const demoProfiles=[
  {
-  name:"Camille",age:26,ville:"Paris",
-  avatar:"🌸",objectif:"amitie",
+  name:"Camille",
+  age:26,
+  ville:"Paris",
+  avatar:"🌸",
+  objectif:"amitie",
   bio:"J'aime les promenades et les livres."
  },
  {
-  name:"Alex",age:29,ville:"Lyon",
-  avatar:"🎨",objectif:"serieux",
+  name:"Alex",
+  age:29,
+  ville:"Lyon",
+  avatar:"🎨",
+  objectif:"serieux",
   bio:"Passionné de musique et de voyages."
  },
  {
-  name:"Léa",age:31,ville:"Lille",
-  avatar:"🦋",objectif:"sans_engagement",
+  name:"Léa",
+  age:31,
+  ville:"Lille",
+  avatar:"🦋",
+  objectif:"sans_engagement",
   bio:"J'adore cuisiner et le cinéma."
  }
 ];
@@ -320,16 +367,14 @@ function renderProfile(){
  const interests=document.getElementById("profileInterests");
  interests.replaceChildren();
 
- const tags=profileMode==="demo"
-  ?[p.ville,objectives[p.objectif]]
-  :[p.ville,objectives[p.objectif]];
-
- tags.filter(Boolean).forEach(item=>{
-  const span=document.createElement("span");
-  span.className="tag";
-  span.textContent=item;
-  interests.appendChild(span);
- });
+ [p.ville,objectives[p.objectif]]
+  .filter(Boolean)
+  .forEach(item=>{
+   const span=document.createElement("span");
+   span.className="tag";
+   span.textContent=item;
+   interests.appendChild(span);
+  });
 
  document.getElementById("demoNotice").textContent=
   profileMode==="demo"
@@ -380,9 +425,8 @@ async function likeProfile(){
  if(!activeProfiles.length||actionBusy)return;
 
  if(profileMode==="demo"){
-  demoLikes.add(profileIndex);
   await nextProfile();
-  notice("❤️ Like fictif enregistré.");
+  notice("❤️ Like fictif.");
   return;
  }
 
@@ -414,7 +458,6 @@ window.nextProfile=nextProfile;
 window.likeProfile=likeProfile;
 window.backFromProfiles=backFromProfiles;
 </script>
-
 <script type="module">
 import {initializeApp} from
 "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
@@ -493,9 +536,11 @@ function errorText(error){
 
  const code=error?.code||"";
 
- if(code==="permission-denied"||
-    code==="firestore/permission-denied"){
-  return "Accès refusé. Vérifie les règles Firestore et la vérification de ton e-mail.";
+ if(
+  code==="permission-denied"||
+  code==="firestore/permission-denied"
+ ){
+  return "Accès refusé par Firestore. Vérifie que les nouvelles règles sont publiées.";
  }
 
  if(code==="auth/email-already-in-use"){
@@ -510,19 +555,12 @@ function errorText(error){
   return "Mot de passe trop faible.";
  }
 
- if(
-  code==="auth/invalid-credential"||
-  code==="auth/wrong-password"
- ){
+ if(code==="auth/invalid-credential"){
   return "E-mail ou mot de passe incorrect.";
  }
 
- if(code==="auth/popup-blocked"){
-  return "La fenêtre Google a été bloquée.";
- }
-
  if(code==="auth/unauthorized-domain"){
-  return "Le domaine GitHub Pages doit être autorisé dans Firebase Authentication.";
+  return "Autorise le domaine GitHub Pages dans Firebase Authentication.";
  }
 
  return error?.message||"Une erreur est survenue.";
@@ -533,23 +571,25 @@ function verified(user){
 }
 
 function profileFromForm(prefix){
+ const editing=prefix==="edit";
+
  const pseudo=document.getElementById(
-  prefix==="edit"?"editPseudo":"name"
+  editing?"editPseudo":"name"
  ).value.trim();
 
  const birthdate=document.getElementById(
-  prefix==="edit"?"editBirthdate":"birthdate"
+  editing?"editBirthdate":"birthdate"
  ).value;
 
  const ville=document.getElementById(
-  prefix==="edit"?"editVille":"ville"
+  editing?"editVille":"ville"
  ).value.trim();
 
  const objectif=document.getElementById(
-  prefix==="edit"?"editObjectif":"objectif"
+  editing?"editObjectif":"objectif"
  ).value;
 
- const bio=prefix==="edit"
+ const bio=editing
   ?document.getElementById("editBio").value.trim()
   :"";
 
@@ -591,6 +631,8 @@ async function savePrivateProfile(user,data){
  await setDoc(ref,payload);
 }
 
+/* INSCRIPTION */
+
 document.getElementById("registerForm")
 .addEventListener("submit",async e=>{
  e.preventDefault();
@@ -619,6 +661,8 @@ document.getElementById("registerForm")
  }
 });
 
+/* CONNEXION */
+
 document.getElementById("loginForm")
 .addEventListener("submit",async e=>{
  e.preventDefault();
@@ -641,12 +685,15 @@ document.getElementById("loginForm")
 document.getElementById("googleLogin")
 .addEventListener("click",async()=>{
  try{
-  const provider=new GoogleAuthProvider();
-  await signInWithPopup(auth,provider);
+  await signInWithPopup(
+   auth,new GoogleAuthProvider()
+  );
  }catch(error){
   notice(errorText(error));
  }
 });
+
+/* MODIFICATION DU PROFIL */
 
 document.getElementById("editProfile")
 .addEventListener("click",async()=>{
@@ -711,6 +758,8 @@ document.getElementById("editProfileForm")
  }
 });
 
+/* PROFIL PUBLIC */
+
 async function refreshVisibility(){
  const user=auth.currentUser;
  if(!user)return;
@@ -754,7 +803,7 @@ document.getElementById("publishProfile")
 
   const p=privateSnap.data();
 
-  if(p.age<18){
+  if(calculateAge(p.birthdate)<18){
    throw new Error("Profil réservé aux adultes.");
   }
 
@@ -762,7 +811,7 @@ document.getElementById("publishProfile")
    doc(db,"publicProfiles",user.uid),
    {
     pseudo:p.pseudo,
-    age:p.age,
+    age:calculateAge(p.birthdate),
     ville:p.ville,
     objectif:p.objectif,
     bio:p.bio||"",
@@ -795,7 +844,7 @@ document.getElementById("hideProfile")
  }
 });
 
-/* DÉCOUVERTE DES PROFILS */
+/* DÉCOUVERTE */
 
 async function loadRealProfiles(){
  if(loadingProfiles||!moreProfilesAvailable)return;
@@ -898,7 +947,7 @@ document.getElementById("loadMore")
  }
 });
 
-/* ❤️ VRAIS LIKES */
+/* ❤️ LIKES CORRIGÉS */
 
 function likeId(from,to){
  return from+"_"+to;
@@ -920,11 +969,14 @@ async function saveRealLike(profile){
 
  actionBusy=true;
 
- const likeButton=document.getElementById("likeButton");
- likeButton.disabled=true;
+ const button=document.getElementById("likeButton");
+ button.disabled=true;
+
+ let likeSaved=false;
 
  try{
   await reload(user);
+  await user.getIdToken(true);
 
   if(!verified(user)){
    throw new Error(
@@ -932,11 +984,9 @@ async function saveRealLike(profile){
    );
   }
 
-  const targetRef=doc(
-   db,"publicProfiles",profile.id
+  const target=await getDoc(
+   doc(db,"publicProfiles",profile.id)
   );
-
-  const target=await getDoc(targetRef);
 
   if(!target.exists()){
    throw new Error(
@@ -950,15 +1000,20 @@ async function saveRealLike(profile){
 
   const existingLike=await getDoc(myLikeRef);
 
-  let alreadyLiked=existingLike.exists();
-
-  if(!alreadyLiked){
+  if(!existingLike.exists()){
    await setDoc(myLikeRef,{
     from:user.uid,
     to:profile.id,
     createdAt:serverTimestamp()
    });
   }
+
+  likeSaved=true;
+
+  /*
+   Les nouvelles règles permettent de consulter
+   un like réciproque même s'il n'existe pas.
+  */
 
   const reciprocalRef=doc(
    db,"likes",likeId(profile.id,user.uid)
@@ -991,18 +1046,25 @@ async function saveRealLike(profile){
   await nextProfile();
 
   if(matched){
-   notice("💕 C'est un match ! Vous vous aimez tous les deux !");
-  }else if(alreadyLiked){
+   notice("💕 C'est un match !");
+  }else if(existingLike.exists()){
    notice("❤️ Tu avais déjà liké ce profil.");
   }else{
-   notice("❤️ Like enregistré !");
+   notice("❤️ Like enregistré dans Firebase !");
   }
 
  }catch(error){
-  notice(errorText(error));
+  if(likeSaved){
+   notice(
+    "❤️ Like enregistré, mais la vérification du match a échoué : "
+    +errorText(error)
+   );
+  }else{
+   notice(errorText(error));
+  }
  }finally{
   actionBusy=false;
-  likeButton.disabled=false;
+  button.disabled=false;
  }
 }
 
@@ -1065,7 +1127,7 @@ document.getElementById("viewMatches")
  }
 });
 
-/* COMPTE ET DÉCONNEXION */
+/* COMPTE */
 
 document.getElementById("logout")
 .addEventListener("click",async()=>{
@@ -1093,6 +1155,7 @@ document.getElementById("refreshVerification")
  try{
   if(auth.currentUser){
    await reload(auth.currentUser);
+   await auth.currentUser.getIdToken(true);
    renderAccount(auth.currentUser);
   }
  }catch(error){
@@ -1130,6 +1193,5 @@ function renderAccount(user){
 
 onAuthStateChanged(auth,renderAccount);
 </script>
-</main>
 </body>
 </html>
