@@ -109,6 +109,60 @@ small{display:block;margin:12px 0;line-height:1.5}
  display:block;width:100%;max-width:270px;
  margin:8px 0;
 }
+ 
+.voice-player{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ width:100%;
+ min-width:210px;
+ max-width:290px;
+ padding:10px;
+ border-radius:22px;
+ background:#ffe1e9;
+ color:#9f4263;
+ white-space:normal;
+}
+
+.voice-play{
+ flex:none;
+ width:42px;
+ height:42px;
+ margin:0;
+ padding:0;
+ border-radius:50%;
+ background:#d65c82;
+ color:white;
+ font-size:18px;
+}
+
+.voice-wave{
+ display:flex;
+ flex:1;
+ align-items:center;
+ justify-content:space-between;
+ gap:2px;
+ height:32px;
+ cursor:pointer;
+}
+
+.voice-bar{
+ flex:1;
+ max-width:4px;
+ border-radius:5px;
+ background:#e8a5ba;
+}
+
+.voice-bar.played{
+ background:#d65c82;
+}
+
+.voice-time{
+ font-size:12px;
+ font-weight:bold;
+ min-width:34px;
+}
+ 
 #photoStatus,#profilePhotoStatus{
  color:#bd5275;overflow-wrap:anywhere;
 }
@@ -1695,15 +1749,93 @@ function renderChatMessage(data,u){
 
    bubble.appendChild(video);
 
-  }else if(type==="audio"){
-   const audio=document.createElement("audio");
 
-   audio.src=url;
-   audio.controls=true;
-   audio.preload="metadata";
-   audio.className="chat-audio";
+}else if(type==="audio"){
+  const player=document.createElement("div");
+  player.className="voice-player";
 
-   bubble.appendChild(audio);
+  const play=document.createElement("button");
+  play.className="voice-play";
+  play.type="button";
+  play.textContent="▶";
+
+  const wave=document.createElement("div");
+  wave.className="voice-wave";
+
+  const bars=[];
+
+  for(let i=0;i<28;i++){
+    const bar=document.createElement("span");
+    bar.className="voice-bar";
+    bar.style.height=(8+(i*13%23))+"px";
+    wave.appendChild(bar);
+    bars.push(bar);
+  }
+
+  const time=document.createElement("span");
+  time.className="voice-time";
+  time.textContent="0:00";
+
+  const audio=new Audio(url);
+  audio.preload="metadata";
+
+  function formatTime(seconds){
+    if(!Number.isFinite(seconds))return "0:00";
+    const m=Math.floor(seconds/60);
+    const s=Math.floor(seconds%60);
+    return m+":"+String(s).padStart(2,"0");
+  }
+
+  audio.addEventListener("loadedmetadata",()=>{
+    time.textContent=formatTime(audio.duration);
+  });
+
+  play.onclick=async()=>{
+    if(audio.paused){
+      try{
+        await audio.play();
+      }catch(error){
+        console.error("Lecture impossible",error);
+      }
+    }else{
+      audio.pause();
+    }
+  };
+
+  audio.addEventListener("play",()=>{
+    play.textContent="❚❚";
+  });
+
+  audio.addEventListener("pause",()=>{
+    play.textContent="▶";
+  });
+
+  audio.addEventListener("timeupdate",()=>{
+    const progress=audio.duration
+      ?audio.currentTime/audio.duration
+      :0;
+
+    const active=Math.floor(progress*bars.length);
+
+    bars.forEach((bar,i)=>{
+      bar.classList.toggle("played",i<active);
+    });
+
+    time.textContent=formatTime(audio.currentTime);
+  });
+
+  audio.addEventListener("ended",()=>{
+    play.textContent="▶";
+    time.textContent=formatTime(audio.duration);
+    bars.forEach(bar=>bar.classList.remove("played"));
+  });
+
+  player.appendChild(play);
+  player.appendChild(wave);
+  player.appendChild(time);
+
+  bubble.appendChild(player);
+  
   }
  }
 
