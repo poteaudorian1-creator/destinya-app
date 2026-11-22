@@ -1784,4 +1784,950 @@ $("profilePhotoInput").addEventListener(
   } finally {
    uploadingProfilePhoto = false;
 
-   $("choosePro
+   
+$("chooseProfilePhoto").disabled = false;
+   input.value = "";
+  }
+ }
+);
+
+/* =========================================
+   DECOUVRIR LES PROFILS
+========================================= */
+
+async function loadRealProfiles() {
+ if (loadingProfiles || !moreProfilesAvailable) return;
+
+ const user = auth.currentUser;
+ if (!user) return;
+
+ loadingProfiles = true;
+ $("loadMore").disabled = true;
+
+ try {
+  let profilesQuery = query(
+   collection(db, "publicProfiles"),
+   limit(PAGE_SIZE)
+  );
+
+  if (lastProfileDoc) {
+   profilesQuery = query(
+    collection(db, "publicProfiles"),
+    startAfter(lastProfileDoc),
+    limit(PAGE_SIZE)
+   );
+  }
+
+  const snapshot = await getDocs(profilesQuery);
+
+  if (snapshot.docs.length) {
+   lastProfileDoc = snapshot.docs[snapshot.docs.length - 1];
+  }
+
+  moreProfilesAvailable =
+   snapshot.docs.length === PAGE_SIZE;
+
+  for (const item of snapshot.docs) {
+   const profile = item.data();
+
+   if (item.id === user.uid) continue;
+   if (profile.visible !== true) continue;
+   if (typeof profile.age !== "number" || profile.age < 18) continue;
+   if (activeProfiles.some(p => p.id === item.id)) continue;
+
+   activeProfiles.push({
+    id: item.id,
+    name: profile.pseudo || "Membre",
+    age: profile.age,
+    ville: profile.ville || "",
+    objectif: profile.objectif || "amitie",
+    bio: profile.bio || "",
+    photoURL: profile.photoURL || ""
+   });
+  }
+
+  renderProfile();
+
+ } catch (error) {
+  notice(errorText(error));
+ } finally {
+  loadingProfiles = false;
+  $("loadMore").disabled = false;
+ }
+}
+
+window.loadRealProfiles = loadRealProfiles;
+
+$("discoverReal").addEventListener("click", async () => {
+ try {
+  await requireAdultProfile();
+
+  profileIndex = 0;
+  activeProfiles = [];
+  lastProfileDoc = null;
+  moreProfilesAvailable = true;
+  returnPage = "account";
+
+  showPage("profiles");
+  renderProfile();
+  await loadRealProfiles();
+
+ } catch (error) {
+  notice(errorText(error));
+ }
+});
+
+$("loadMore").addEventListener("click", async () => {
+ const previous = activeProfiles.length;
+ await loadRealProfiles();
+
+ if (activeProfiles.length > previous) {
+  profileIndex = previous;
+  renderProfile();
+ }
+});
+
+/* =========================================
+   LIKES ET MATCHS
+========================================= */
+
+function makeMatchId(a, b) {
+ return [a, b].sort().join("_");
+}
+
+async function saveRealLike(profile) {
+ const user = auth.currentUser;
+
+ if (!user || !profile || actionBusy) return;
+
+ actionBusy = true;
+ $("likeButton").disabled = true;
+
+ try {
+  await requireAdultProfile();
+
+  if (profile.id === user.uid) {
+   throw Error("Tu ne peux pas liker ton profil.");
+  }
+
+  const target = await getDoc(
+   doc(db, "publicProfiles", profile.id)
+  );
+
+  if (!target.exists() || target.data().visible !== true) {
+   throw Error("Ce profil n'est plus disponible.");
+  }
+
+  const likeRef = doc(
+   db, "likes", user.uid + "_" + profile.id
+  );
+
+  const previous = await getDoc(likeRef);
+
+  if (!previous.exists()) {
+   await setDoc(likeRef, {
+    from: user.uid,
+    to: profile.id,
+    createdAt: serverTimestamp()
+   });
+  }
+
+  const reciprocal = await getDoc(
+   doc(db, "likes", profile.id + "_" + user.uid)
+  );
+
+  let matched = false;
+
+  if (reciprocal.exists()) {
+   const members = [user.uid, profile.id].sort();
+
+   const matchRef = doc(
+    db, "matches", makeMatchId(user.uid, profile.id)
+   );
+
+   const existing = await getDoc(matchRef);
+
+   if (!existing.exists()) {
+    await setDoc(matchRef, {
+     members,
+     createdAt: serverTimestamp()
+    });
+   }
+
+   matched = true;
+  }
+
+  actionBusy = false;
+  await nextProfile();
+
+  notice(
+   matched
+    ? "💕 C'est un match ! Ouvre tes messages."
+    : "❤️ Like enregistré !"
+  );
+
+ } catch (error) {
+  notice(errorText(error));
+ } finally {
+  actionBusy = false;
+  $("likeButton").disabled = false;
+ }
+}
+
+window.saveRealLike = saveRealLike;
+
+/* =========================================
+   RECUPERER LES MATCHS
+========================================= */
+
+async function getMyMatches() {
+ const user = await requireAdultProfile();
+
+ const matchesQuery = query(
+  collection(db, "matches"),
+  where("members", "array-contains", user.uid),
+  limit(50)
+ );
+
+ const snapshot = await getDocs(matchesQuery);
+ const matches = [];
+
+ for (const item of snapshot.docs) {
+  const members = item.data().members || [];
+
+  if (!Array.isArray(members)) continue;
+
+  const otherId = members.find(id => id !== user.uid);
+  if (!otherId) continue;
+
+  let name = "Membre indisponible";
+  let photoURL = "";
+
+  try {
+   const profile = await getDoc(
+    doc(db, "publicProfiles", otherId)
+   );
+
+   if (profile.exists()) {
+    name = profile.data().pseudo || "Membre";
+    photoURL = profile.data().photoURL || "";
+   }
+  } catch (error) {
+   console.warn(error);
+  }
+
+  matches.push({
+   id: item.id,
+   otherId,
+   name,
+   photoURL
+  });
+ }
+
+ return matches;
+}
+
+/* =========================================
+   AFFICHER LES MATCHS
+========================================= */
+
+async function displayMatches(page) {
+ showPage(page);
+
+ const container = $(
+  page === "matches"
+   ? "matchesList"
+   : "conversationsList"
+ );
+
+ container.textContent = "Chargement...";
+
+ try {
+  const matches = await getMyMatches();
+  container.replaceChildren();
+
+  if (!matches.length) {
+   container.textContent = "Aucun match pour le moment 💗";
+   return;
+  }
+
+  for (const match of matches) {
+   const card = document.createElement("div");
+   card.className = "match";
+
+   if (
+    typeof match.photoURL === "string" &&
+    match.photoURL.startsWith("https://")
+   ) {
+    const image = document.createElement("img");
+    image.src = match.photoURL;
+    image.alt = "Photo de " + match.name;
+    image.className = "profile-photo";
+    image.loading = "lazy";
+    card.appendChild(image);
+   }
+
+   const title = document.createElement("h3");
+   title.textContent = "💕 " + match.name;
+
+   const button = document.createElement("button");
+   button.className = "primary";
+   button.textContent = "💬 Ouvrir la conversation";
+
+   button.addEventListener("click", () => {
+    openChat(match.id, match.name);
+   });
+
+   card.append(title, button);
+   container.appendChild(card);
+  }
+
+ } catch (error) {
+  container.textContent = errorText(error);
+ }
+}
+
+$("viewMatches").addEventListener("click", () => {
+ displayMatches("matches");
+});
+
+$("openMessages").addEventListener("click", () => {
+ displayMatches("messages");
+});
+
+/* =========================================
+   FERMER UNE CONVERSATION
+========================================= */
+
+function stopChat() {
+ if (unsubscribeChat) {
+  unsubscribeChat();
+  unsubscribeChat = null;
+ }
+
+ activeMatchId = null;
+ recordingMatchId = null;
+
+ if (mediaRecorder?.state === "recording") {
+  try {
+   mediaRecorder.stop();
+  } catch (error) {
+   console.warn(error);
+  }
+ }
+
+ microphoneStream?.getTracks().forEach(
+  track => track.stop()
+ );
+}
+
+window.stopChat = stopChat;
+
+/* =========================================
+   AFFICHER UN MESSAGE
+========================================= */
+
+function renderChatMessage(data, user) {
+ const bubble = document.createElement("div");
+
+ bubble.className = "bubble " +
+  (data.senderId === user.uid ? "mine" : "theirs");
+
+ const type = data.type || "text";
+
+ const url = typeof data.mediaUrl === "string"
+  ? data.mediaUrl
+  : typeof data.imageUrl === "string"
+   ? data.imageUrl
+   : "";
+
+ if (url.startsWith("https://")) {
+  if (type === "image" || type === "gif") {
+   const image = document.createElement("img");
+   image.src = url;
+   image.className = "chat-photo";
+   image.alt = "Image envoyée";
+   image.loading = "lazy";
+   bubble.appendChild(image);
+
+  } else if (type === "video") {
+   const video = document.createElement("video");
+   video.src = url;
+   video.controls = true;
+   video.playsInline = true;
+   video.preload = "metadata";
+   video.className = "chat-video";
+   bubble.appendChild(video);
+
+  } else if (type === "audio") {
+   const player = document.createElement("div");
+   player.className = "voice-player";
+
+   const play = document.createElement("button");
+   play.type = "button";
+   play.className = "voice-play";
+   play.textContent = "▶";
+
+   const wave = document.createElement("div");
+   wave.className = "voice-wave";
+
+   const bars = [];
+
+   for (let index = 0; index < 28; index++) {
+    const bar = document.createElement("span");
+    bar.className = "voice-bar";
+    bar.style.height =
+     (8 + (index * 13 % 23)) + "px";
+
+    wave.appendChild(bar);
+    bars.push(bar);
+   }
+
+   const time = document.createElement("span");
+   time.className = "voice-time";
+   time.textContent = "0:00";
+
+   const audio = new Audio(url);
+   audio.preload = "metadata";
+
+   function formatTime(seconds) {
+    if (!Number.isFinite(seconds)) return "0:00";
+
+    return Math.floor(seconds / 60) + ":" +
+     String(Math.floor(seconds % 60)).padStart(2, "0");
+   }
+
+   audio.addEventListener("loadedmetadata", () => {
+    time.textContent = formatTime(audio.duration);
+   });
+
+   play.addEventListener("click", async () => {
+    try {
+     if (audio.paused) {
+      await audio.play();
+     } else {
+      audio.pause();
+     }
+    } catch (error) {
+     console.error(error);
+    }
+   });
+
+   audio.addEventListener("play", () => {
+    play.textContent = "❚❚";
+   });
+
+   audio.addEventListener("pause", () => {
+    play.textContent = "▶";
+   });
+
+   audio.addEventListener("timeupdate", () => {
+    const progress = audio.duration
+     ? audio.currentTime / audio.duration
+     : 0;
+
+    const active = Math.floor(progress * bars.length);
+
+    bars.forEach((bar, index) => {
+     bar.classList.toggle("played", index < active);
+    });
+
+    time.textContent = formatTime(audio.currentTime);
+   });
+
+   audio.addEventListener("ended", () => {
+    play.textContent = "▶";
+    bars.forEach(bar => bar.classList.remove("played"));
+   });
+
+   player.append(play, wave, time);
+   bubble.appendChild(player);
+  }
+ }
+
+ if (typeof data.text === "string" && data.text) {
+  const content = document.createElement("span");
+  content.textContent = data.text;
+  bubble.appendChild(content);
+ }
+
+ const time = document.createElement("small");
+
+ time.textContent = data.createdAt?.toDate
+  ? data.createdAt.toDate().toLocaleTimeString(
+    "fr-FR",
+    { hour: "2-digit", minute: "2-digit" }
+   )
+  : "Envoi...";
+
+ bubble.appendChild(time);
+
+ return bubble;
+}
+
+/* =========================================
+   OUVRIR UNE CONVERSATION
+========================================= */
+
+async function openChat(matchId, name) {
+ const user = auth.currentUser;
+ if (!user) return;
+
+ stopChat();
+
+ try {
+  await requireAdultProfile();
+
+  const match = await getDoc(
+   doc(db, "matches", matchId)
+  );
+
+  if (
+   !match.exists() ||
+   !Array.isArray(match.data().members) ||
+   !match.data().members.includes(user.uid)
+  ) {
+   throw Error("Conversation inaccessible.");
+  }
+
+  activeMatchId = matchId;
+  showPage("chat");
+
+  $("chatTitle").textContent = "💬 " + name;
+  $("chatList").textContent = "Chargement...";
+  $("photoStatus").textContent = "";
+  $("recordingStatus").textContent = "";
+
+  const messagesQuery = query(
+   collection(db, "matches", matchId, "messages"),
+   orderBy("createdAt", "desc"),
+   limit(100)
+  );
+
+  unsubscribeChat = onSnapshot(
+   messagesQuery,
+   snapshot => {
+    const list = $("chatList");
+    list.replaceChildren();
+
+    if (snapshot.empty) {
+     const paragraph = document.createElement("p");
+     paragraph.textContent =
+      "Dis bonjour pour commencer 💗";
+     list.appendChild(paragraph);
+    }
+
+    const messages = [...snapshot.docs].reverse();
+
+    for (const item of messages) {
+     list.appendChild(
+      renderChatMessage(item.data(), user)
+     );
+    }
+
+    list.scrollTop = list.scrollHeight;
+   },
+   error => {
+    notice(errorText(error));
+   }
+  );
+
+ } catch (error) {
+  stopChat();
+  notice(errorText(error));
+ }
+}
+
+/* =========================================
+   ENVOYER UN MESSAGE TEXTE
+========================================= */
+
+$("chatForm").addEventListener("submit", async event => {
+ event.preventDefault();
+
+ const input = $("chatInput");
+ const content = input.value.trim();
+
+ if (!activeMatchId || !content || sending) return;
+
+ sending = true;
+ $("sendMessage").disabled = true;
+
+ try {
+  const user = await requireAdultProfile();
+  const matchId = activeMatchId;
+
+  const match = await getDoc(
+   doc(db, "matches", matchId)
+  );
+
+  if (
+   !match.exists() ||
+   !match.data().members?.includes(user.uid)
+  ) {
+   throw Error("Conversation inaccessible.");
+  }
+
+  await addDoc(
+   collection(db, "matches", matchId, "messages"),
+   {
+    senderId: user.uid,
+    text: content,
+    createdAt: serverTimestamp()
+   }
+  );
+
+  input.value = "";
+
+ } catch (error) {
+  notice(errorText(error));
+ } finally {
+  sending = false;
+  $("sendMessage").disabled = false;
+ }
+});
+
+/* =========================================
+   FORMATS AUTORISES
+========================================= */
+
+const allowedMediaTypes = {
+ "image/jpeg": { ext: "jpg", type: "image", max: 5 },
+ "image/png": { ext: "png", type: "image", max: 5 },
+ "image/webp": { ext: "webp", type: "image", max: 5 },
+ "image/gif": { ext: "gif", type: "image", max: 5 },
+ "video/mp4": { ext: "mp4", type: "video", max: 20 },
+ "video/webm": { ext: "webm", type: "video", max: 20 },
+ "audio/webm": { ext: "webm", type: "audio", max: 10 },
+ "audio/mp4": { ext: "m4a", type: "audio", max: 10 },
+ "audio/ogg": { ext: "ogg", type: "audio", max: 10 },
+ "audio/mpeg": { ext: "mp3", type: "audio", max: 10 }
+};
+
+function validateMedia(file) {
+ if (!file) {
+  throw Error("Sélectionne un fichier.");
+ }
+
+ const info = allowedMediaTypes[file.type];
+
+ if (!info) {
+  throw Error("Format de fichier non autorisé.");
+ }
+
+ if (file.size <= 0) {
+  throw Error("Le fichier est vide.");
+ }
+
+ if (file.size > info.max * 1024 * 1024) {
+  throw Error(
+   "Fichier trop volumineux. Maximum : " +
+   info.max + " Mo."
+  );
+ }
+
+ return info;
+}
+
+/* =========================================
+   ENVOYER UN MEDIA
+========================================= */
+
+async function sendChatMedia(file, expectedMatchId = null) {
+ if (uploadingMedia) {
+  throw Error("Un envoi est déjà en cours.");
+ }
+
+ uploadingMedia = true;
+
+ try {
+  const user = await requireAdultProfile();
+  const matchId = expectedMatchId || activeMatchId;
+
+  if (!matchId) {
+   throw Error("Ouvre une conversation.");
+  }
+
+  if (
+   expectedMatchId &&
+   activeMatchId !== expectedMatchId
+  ) {
+   throw Error("La conversation a changé.");
+  }
+
+  const info = validateMedia(file);
+
+  const match = await getDoc(
+   doc(db, "matches", matchId)
+  );
+
+  if (
+   !match.exists() ||
+   !Array.isArray(match.data().members) ||
+   !match.data().members.includes(user.uid)
+  ) {
+   throw Error("Conversation inaccessible.");
+  }
+
+  $("photoStatus").textContent = "📤 Envoi du fichier...";
+
+  const filename = crypto.randomUUID() + "." + info.ext;
+
+  const path =
+   "matchMedia/" + matchId + "/" +
+   user.uid + "/" + filename;
+
+  const mediaRef = ref(storage, path);
+
+  await uploadBytes(mediaRef, file, {
+   contentType: file.type
+  });
+
+  const url = await getDownloadURL(mediaRef);
+
+  const message = {
+   senderId: user.uid,
+   text: "",
+   type: info.type,
+   createdAt: serverTimestamp()
+  };
+
+  if (info.type === "image") {
+   message.imageUrl = url;
+  } else {
+   message.mediaUrl = url;
+  }
+
+  await addDoc(
+   collection(db, "matches", matchId, "messages"),
+   message
+  );
+
+  $("photoStatus").textContent = "💕 Fichier envoyé !";
+
+ } finally {
+  uploadingMedia = false;
+ }
+}
+
+/* =========================================
+   CHOISIR PHOTO, GIF ET VIDEO
+========================================= */
+
+$("choosePhoto").addEventListener("click", () => {
+ if (!activeMatchId) {
+  notice("Ouvre une conversation.");
+  return;
+ }
+ $("photoInput").click();
+});
+
+$("chooseGif").addEventListener("click", () => {
+ if (!activeMatchId) {
+  notice("Ouvre une conversation.");
+  return;
+ }
+ $("gifInput").click();
+});
+
+$("chooseVideo").addEventListener("click", () => {
+ if (!activeMatchId) {
+  notice("Ouvre une conversation.");
+  return;
+ }
+ $("videoInput").click();
+});
+
+async function handleSelectedMedia(inputId) {
+ const input = $(inputId);
+ const file = input.files?.[0];
+
+ if (!file) return;
+
+ const buttons = [
+  "choosePhoto",
+  "chooseGif",
+  "chooseVideo"
+ ];
+
+ buttons.forEach(id => {
+  $(id).disabled = true;
+ });
+
+ try {
+  const info = validateMedia(file);
+
+  if (
+   inputId === "photoInput" &&
+   (info.type !== "image" || file.type === "image/gif")
+  ) {
+   throw Error("Choisis une photo JPG, PNG ou WebP.");
+  }
+
+  if (
+   inputId === "gifInput" &&
+   file.type !== "image/gif"
+  ) {
+   throw Error("Choisis un GIF animé.");
+  }
+
+  if (
+   inputId === "videoInput" &&
+   info.type !== "video"
+  ) {
+   throw Error("Choisis une vidéo MP4 ou WebM.");
+  }
+
+  await sendChatMedia(file);
+
+ } catch (error) {
+  $("photoStatus").textContent = errorText(error);
+ } finally {
+  buttons.forEach(id => {
+   $(id).disabled = false;
+  });
+
+  input.value = "";
+ }
+}
+
+$("photoInput").addEventListener("change", () => {
+ handleSelectedMedia("photoInput");
+});
+
+$("gifInput").addEventListener("change", () => {
+ handleSelectedMedia("gifInput");
+});
+
+$("videoInput").addEventListener("change", () => {
+ handleSelectedMedia("videoInput");
+});
+
+/* =========================================
+   ENREGISTRER UN VOCAL
+========================================= */
+
+$("startRecording").addEventListener("click", async () => {
+ if (!activeMatchId) {
+  notice("Ouvre une conversation.");
+  return;
+ }
+
+ if (mediaRecorder?.state === "recording") return;
+
+ try {
+  await requireAdultProfile();
+
+  if (
+   !navigator.mediaDevices?.getUserMedia ||
+   typeof MediaRecorder === "undefined"
+  ) {
+   throw Error("Enregistrement vocal indisponible.");
+  }
+
+  const supportedTypes = [
+   "audio/webm",
+   "audio/mp4",
+   "audio/ogg"
+  ];
+
+  const mimeType = supportedTypes.find(
+   type => MediaRecorder.isTypeSupported(type)
+  );
+
+  if (!mimeType) {
+   throw Error("Aucun format audio compatible.");
+  }
+
+  microphoneStream =
+   await navigator.mediaDevices.getUserMedia({
+    audio: true
+   });
+
+  audioChunks = [];
+  recordingMatchId = activeMatchId;
+
+  mediaRecorder = new MediaRecorder(
+   microphoneStream,
+   { mimeType }
+  );
+
+  mediaRecorder.addEventListener("dataavailable", event => {
+   if (event.data.size > 0) {
+    audioChunks.push(event.data);
+   }
+  });
+
+  mediaRecorder.addEventListener("stop", async () => {
+   $("stopRecording").classList.add("hidden");
+   $("startRecording").disabled = false;
+
+   microphoneStream?.getTracks().forEach(
+    track => track.stop()
+   );
+
+   microphoneStream = null;
+
+   const targetMatch = recordingMatchId;
+   recordingMatchId = null;
+
+   try {
+    if (!targetMatch || activeMatchId !== targetMatch) {
+     $("recordingStatus").textContent =
+      "Enregistrement annulé.";
+     return;
+    }
+
+    const blob = new Blob(audioChunks, {
+     type: mimeType
+    });
+
+    const ext = allowedMediaTypes[mimeType].ext;
+
+    const file = new File(
+     [blob],
+     "vocal." + ext,
+     { type: mimeType }
+    );
+
+    $("recordingStatus").textContent =
+     "📤 Envoi du vocal...";
+
+    await sendChatMedia(file, targetMatch);
+
+    $("recordingStatus").textContent =
+     "🎙️ Message vocal envoyé !";
+
+   } catch (error) {
+    $("recordingStatus").textContent =
+     errorText(error);
+   } finally {
+    audioChunks = [];
+    mediaRecorder = null;
+   }
+  });
+
+  mediaRecorder.start();
+
+  $("startRecording").disabled = true;
+  $("stopRecording").classList.remove("hidden");
+
+  $("recordingStatus").textContent =
+   "🔴 Enregistrement en cours...";
+
+ } catch (error) {
+  microphoneStream?.getTracks().forEach(
+   track => track.stop()
+  );
+
+  microphoneStream = null;
+  $("recordingStatus").textContent = errorText(error);
+ }
+});
+
+/* =========================================
+   ARRETER ET ENVOYER LE VOCAL
+========================================= */
+
+$("stopRecording").addEventListener("click", () => {
+ if (mediaRecorder?.state === "re
