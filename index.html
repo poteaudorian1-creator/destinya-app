@@ -1081,15 +1081,20 @@ $("logout").addEventListener("click",async()=>{
 
 /* MODIFIER MON PROFIL */
 
-$("editProfile").addEventListener("click",async()=>{
- const u=auth.currentUser;
- if(!u)return;
+const message={
+  senderId:u.uid,
+  text:"",
+  type:info.type,
+  createdAt:serverTimestamp()
+};
 
- try{
-  const s=await getDoc(doc(db,"Users",u.uid));
-  const p=s.exists()?s.data():{};
+if(info.type==="image"){
+  message.imageUrl=url;
+}else{
+  message.mediaUrl=url;
+}
 
-  $("editPseudo").value=p.pseudo||u.displayName||"";
+
   $("editBirthdate").value=p.birthdate||"";
   $("editVille").value=p.ville||"";
   $("editObjectif").value=p.objectif||"serieux";
