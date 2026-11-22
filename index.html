@@ -743,8 +743,8 @@ async function savePrivate(user,data){
  ...data,
 profilTest:false, 
   createdAt:old.exists()
-   createdAt:old.exists()
-   :serverTimestamp(),
+   ?old.data().createdAt
+:serverTimestamp(),
   updatedAt:serverTimestamp()
  });
 }
