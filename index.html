@@ -4,7 +4,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#ffe0e5">
 <title>Destinya 💗</title>
 <style>
 *{box-sizing:border-box}
@@ -34,10 +33,9 @@ button{
  border:0;border-radius:25px;
  font-size:16px;font-weight:bold;cursor:pointer
 }
-button:disabled{opacity:.5}
+button:disabled{opacity:.5;cursor:wait}
 .primary{background:#d65c82;color:white}
 .secondary{background:#ffe1e8;color:#a94368}
-.hidden{display:none!important}
 small{display:block;margin:12px 0;line-height:1.5}
 #message{color:#a94368;min-height:24px}
 .card{
@@ -205,11 +203,11 @@ Retour
 <button class="secondary" onclick="nextProfile()">
 ❌ Passer
 </button>
-<button class="primary" onclick="likeProfile()">
+<button id="likeButton" class="primary"
+ onclick="likeProfile()">
 ❤️ J'aime
 </button>
 </div>
-<p id="likesCount"></p>
 <small id="demoNotice"></small>
 <button id="loadMore" class="secondary hidden">
 Charger d'autres profils
@@ -242,30 +240,27 @@ let loadingProfiles=false;
 let actionBusy=false;
 
 const PAGE_SIZE=20;
-const likedDemoProfiles=new Set();
+const demoLikes=new Set();
 
 const demoProfiles=[
  {
   name:"Camille",age:26,ville:"Paris",
   avatar:"🌸",objectif:"amitie",
-  bio:"J'aime les promenades et les livres.",
-  interests:["Lecture","Nature"]
+  bio:"J'aime les promenades et les livres."
  },
  {
   name:"Alex",age:29,ville:"Lyon",
   avatar:"🎨",objectif:"serieux",
-  bio:"Passionné de musique et de voyages.",
-  interests:["Musique","Voyages"]
+  bio:"Passionné de musique et de voyages."
  },
  {
   name:"Léa",age:31,ville:"Lille",
   avatar:"🦋",objectif:"sans_engagement",
-  bio:"J'adore cuisiner et le cinéma.",
-  interests:["Cuisine","Cinéma"]
+  bio:"J'adore cuisiner et le cinéma."
  }
 ];
 
-const objectiveLabels={
+const objectives={
  amitie:"Amitié",
  serieux:"Relation sérieuse",
  sans_engagement:"Sans engagement"
@@ -288,7 +283,6 @@ function renderProfile(){
  const card=document.getElementById("swipeCard");
  const actions=document.getElementById("profileActions");
  const more=document.getElementById("loadMore");
- const count=document.getElementById("profileCount");
 
  more.classList.toggle(
   "hidden",
@@ -296,35 +290,39 @@ function renderProfile(){
  );
 
  if(!activeProfiles.length){
-  count.textContent="Aucun profil disponible.";
+  document.getElementById("profileCount").textContent=
+   "Aucun profil disponible.";
   card.classList.add("hidden");
   actions.classList.add("hidden");
-  document.getElementById("likesCount").textContent="";
-  document.getElementById("demoNotice").textContent="";
   return;
  }
+
+ const p=activeProfiles[profileIndex];
 
  card.classList.remove("hidden");
  actions.classList.remove("hidden");
 
- const p=activeProfiles[profileIndex];
- count.textContent=
+ document.getElementById("profileCount").textContent=
   `Profil ${profileIndex+1} sur ${activeProfiles.length} chargés`;
 
  document.getElementById("profileType").textContent=
   profileMode==="demo"?"PROFIL FICTIF":"PROFIL PUBLIC";
+
  document.getElementById("profileAvatar").textContent=
   p.avatar||"💗";
+
  document.getElementById("profileName").textContent=
   `${p.name}, ${p.age} ans`;
- document.getElementById("profileBio").textContent=p.bio||"";
+
+ document.getElementById("profileBio").textContent=
+  p.bio||"";
 
  const interests=document.getElementById("profileInterests");
  interests.replaceChildren();
 
  const tags=profileMode==="demo"
-  ?p.interests
-  :[p.ville,objectiveLabels[p.objectif]];
+  ?[p.ville,objectives[p.objectif]]
+  :[p.ville,objectives[p.objectif]];
 
  tags.filter(Boolean).forEach(item=>{
   const span=document.createElement("span");
@@ -333,15 +331,10 @@ function renderProfile(){
   interests.appendChild(span);
  });
 
- document.getElementById("likesCount").textContent=
-  profileMode==="demo"
-  ?`❤️ Likes fictifs : ${likedDemoProfiles.size}`
-  :"❤️ Les likes sont enregistrés dans Firebase.";
-
  document.getElementById("demoNotice").textContent=
   profileMode==="demo"
-  ?"Démonstration avec des profils fictifs."
-  :"Un match apparaît si vous vous aimez tous les deux.";
+  ?"Ces profils sont fictifs."
+  :"Un match apparaît lorsque deux membres se likent.";
 }
 
 function openDemo(){
@@ -379,7 +372,7 @@ async function nextProfile(){
    notice("Aucun autre profil disponible.");
   }
  }else{
-  notice("Tu as parcouru tous les profils chargés.");
+  notice("Tu as parcouru tous les profils.");
  }
 }
 
@@ -387,8 +380,9 @@ async function likeProfile(){
  if(!activeProfiles.length||actionBusy)return;
 
  if(profileMode==="demo"){
-  likedDemoProfiles.add(profileIndex);
+  demoLikes.add(profileIndex);
   await nextProfile();
+  notice("❤️ Like fictif enregistré.");
   return;
  }
 
@@ -420,22 +414,38 @@ window.nextProfile=nextProfile;
 window.likeProfile=likeProfile;
 window.backFromProfiles=backFromProfiles;
 </script>
+
 <script type="module">
 import {initializeApp} from
 "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 
 import {
- getAuth,createUserWithEmailAndPassword,
- signInWithEmailAndPassword,signInWithPopup,
- GoogleAuthProvider,signOut,onAuthStateChanged,
- updateProfile,sendEmailVerification,reload
+ getAuth,
+ createUserWithEmailAndPassword,
+ signInWithEmailAndPassword,
+ signInWithPopup,
+ GoogleAuthProvider,
+ signOut,
+ onAuthStateChanged,
+ updateProfile,
+ sendEmailVerification,
+ reload
 } from
 "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 import {
- getFirestore,doc,setDoc,getDoc,deleteDoc,
- collection,getDocs,serverTimestamp,
- query,limit,startAfter,where
+ getFirestore,
+ doc,
+ setDoc,
+ getDoc,
+ deleteDoc,
+ collection,
+ getDocs,
+ serverTimestamp,
+ query,
+ limit,
+ startAfter,
+ where
 } from
 "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
@@ -455,6 +465,7 @@ const db=getFirestore(app);
 
 function calculateAge(value){
  if(!value)return -1;
+
  const birth=new Date(value+"T12:00:00");
  const today=new Date();
 
@@ -470,90 +481,158 @@ function calculateAge(value){
    today.getMonth()===birth.getMonth()&&
    today.getDate()<birth.getDate()
   )
- )age--;
+ ){
+  age--;
+ }
 
  return age;
 }
 
 function errorText(error){
- const messages={
-  "auth/email-already-in-use":"Adresse e-mail déjà utilisée.",
-  "auth/invalid-email":"Adresse e-mail invalide.",
-  "auth/weak-password":"Mot de passe trop faible.",
-  "auth/invalid-credential":"Identifiants incorrects.",
-  "auth/unauthorized-domain":"Domaine non autorisé.",
-  "permission-denied":"Accès refusé. Vérifie les règles Firestore.",
-  "failed-precondition":"Un index Firebase est nécessaire.",
-  "AGE_INVALIDE":"Application réservée aux adultes."
- };
- return messages[error.code||error.message]||
-  "Une erreur est survenue. Réessaie.";
+ console.error("Destinya Firebase:",error);
+
+ const code=error?.code||"";
+
+ if(code==="permission-denied"||
+    code==="firestore/permission-denied"){
+  return "Accès refusé. Vérifie les règles Firestore et la vérification de ton e-mail.";
+ }
+
+ if(code==="auth/email-already-in-use"){
+  return "Cette adresse e-mail possède déjà un compte.";
+ }
+
+ if(code==="auth/invalid-email"){
+  return "Adresse e-mail invalide.";
+ }
+
+ if(code==="auth/weak-password"){
+  return "Mot de passe trop faible.";
+ }
+
+ if(
+  code==="auth/invalid-credential"||
+  code==="auth/wrong-password"
+ ){
+  return "E-mail ou mot de passe incorrect.";
+ }
+
+ if(code==="auth/popup-blocked"){
+  return "La fenêtre Google a été bloquée.";
+ }
+
+ if(code==="auth/unauthorized-domain"){
+  return "Le domaine GitHub Pages doit être autorisé dans Firebase Authentication.";
+ }
+
+ return error?.message||"Une erreur est survenue.";
 }
 
-async function createUserProfile(user,details){
- const age=calculateAge(details.birthdate);
- if(age<18||age>120)throw new Error("AGE_INVALIDE");
+function verified(user){
+ return !!user?.emailVerified;
+}
 
- await setDoc(doc(db,"Users",user.uid),{
-  pseudo:details.pseudo,
-  birthdate:details.birthdate,
-  age,
-  bio:"",
-  ville:details.ville,
-  objectif:details.objectif,
-  photoURL:"",
+function profileFromForm(prefix){
+ const pseudo=document.getElementById(
+  prefix==="edit"?"editPseudo":"name"
+ ).value.trim();
+
+ const birthdate=document.getElementById(
+  prefix==="edit"?"editBirthdate":"birthdate"
+ ).value;
+
+ const ville=document.getElementById(
+  prefix==="edit"?"editVille":"ville"
+ ).value.trim();
+
+ const objectif=document.getElementById(
+  prefix==="edit"?"editObjectif":"objectif"
+ ).value;
+
+ const bio=prefix==="edit"
+  ?document.getElementById("editBio").value.trim()
+  :"";
+
+ const age=calculateAge(birthdate);
+
+ if(age<18||age>120){
+  throw new Error(
+   "Destinya est réservé aux personnes de 18 ans et plus."
+  );
+ }
+
+ if(!pseudo||!ville){
+  throw new Error("Complète le pseudo et la ville.");
+ }
+
+ return {pseudo,birthdate,age,ville,objectif,bio};
+}
+
+async function savePrivateProfile(user,data){
+ const ref=doc(db,"Users",user.uid);
+ const existing=await getDoc(ref);
+
+ const payload={
+  ...data,
   profilTest:false,
-  createdAt:serverTimestamp()
- });
+  updatedAt:serverTimestamp()
+ };
+
+ if(existing.exists()){
+  const previous=existing.data();
+
+  if(previous.createdAt){
+   payload.createdAt=previous.createdAt;
+  }
+ }else{
+  payload.createdAt=serverTimestamp();
+ }
+
+ await setDoc(ref,payload);
 }
 
 document.getElementById("registerForm")
-.addEventListener("submit",async event=>{
- event.preventDefault();
-
- const details={
-  pseudo:document.getElementById("name").value.trim(),
-  birthdate:document.getElementById("birthdate").value,
-  ville:document.getElementById("ville").value.trim(),
-  objectif:document.getElementById("objectif").value
- };
-
- const age=calculateAge(details.birthdate);
- if(!details.pseudo||!details.ville||age<18||age>120){
-  notice("Vérifie tes informations. Réservé aux 18 ans et plus.");
-  return;
- }
+.addEventListener("submit",async e=>{
+ e.preventDefault();
 
  try{
+  const data=profileFromForm("register");
+
+  const email=document.getElementById("email").value.trim();
+  const password=document.getElementById("password").value;
+
   const result=await createUserWithEmailAndPassword(
-   auth,
-   document.getElementById("email").value.trim(),
-   document.getElementById("password").value
+   auth,email,password
   );
 
-  await updateProfile(result.user,{displayName:details.pseudo});
-  await createUserProfile(result.user,details);
+  await updateProfile(result.user,{
+   displayName:data.pseudo
+  });
 
-  try{
-   await sendEmailVerification(result.user);
-   notice("Compte créé. Vérifie ton e-mail.");
-  }catch{
-   notice("Compte créé. Demande la vérification depuis ton compte.");
-  }
+  await savePrivateProfile(result.user,data);
+  await sendEmailVerification(result.user);
+
+  renderAccount(result.user);
+  notice("Compte créé ! Vérifie ton adresse e-mail.");
  }catch(error){
   notice(errorText(error));
  }
 });
 
 document.getElementById("loginForm")
-.addEventListener("submit",async event=>{
- event.preventDefault();
+.addEventListener("submit",async e=>{
+ e.preventDefault();
+
  try{
-  await signInWithEmailAndPassword(
-   auth,
-   document.getElementById("loginEmail").value.trim(),
-   document.getElementById("loginPassword").value
-  );
+  const email=document.getElementById(
+   "loginEmail"
+  ).value.trim();
+
+  const password=document.getElementById(
+   "loginPassword"
+  ).value;
+
+  await signInWithEmailAndPassword(auth,email,password);
  }catch(error){
   notice(errorText(error));
  }
@@ -562,13 +641,8 @@ document.getElementById("loginForm")
 document.getElementById("googleLogin")
 .addEventListener("click",async()=>{
  try{
-  const result=await signInWithPopup(
-   auth,new GoogleAuthProvider()
-  );
-  const snap=await getDoc(doc(db,"Users",result.user.uid));
-  if(!snap.exists()){
-   notice("Connexion réussie. Complète ton profil.");
-  }
+  const provider=new GoogleAuthProvider();
+  await signInWithPopup(auth,provider);
  }catch(error){
   notice(errorText(error));
  }
@@ -578,53 +652,60 @@ document.getElementById("editProfile")
 .addEventListener("click",async()=>{
  const user=auth.currentUser;
  if(!user)return;
- showPage("editProfilePage");
 
  try{
   const snap=await getDoc(doc(db,"Users",user.uid));
-  const p=snap.exists()?snap.data():{};
 
-  document.getElementById("editPseudo").value=
-   p.pseudo||user.displayName||"";
-  document.getElementById("editBirthdate").value=
-   p.birthdate||"";
-  document.getElementById("editVille").value=p.ville||"";
-  document.getElementById("editObjectif").value=
-   p.objectif||"serieux";
-  document.getElementById("editBio").value=p.bio||"";
+  if(snap.exists()){
+   const p=snap.data();
+
+   document.getElementById("editPseudo").value=
+    p.pseudo||"";
+
+   document.getElementById("editBirthdate").value=
+    p.birthdate||"";
+
+   document.getElementById("editVille").value=
+    p.ville||"";
+
+   document.getElementById("editObjectif").value=
+    p.objectif||"serieux";
+
+   document.getElementById("editBio").value=
+    p.bio||"";
+  }else{
+   document.getElementById("editPseudo").value=
+    user.displayName||"";
+
+   document.getElementById("editBirthdate").value="";
+   document.getElementById("editVille").value="";
+   document.getElementById("editBio").value="";
+  }
+
+  showPage("editProfilePage");
  }catch(error){
   notice(errorText(error));
  }
 });
 
 document.getElementById("editProfileForm")
-.addEventListener("submit",async event=>{
- event.preventDefault();
+.addEventListener("submit",async e=>{
+ e.preventDefault();
+
  const user=auth.currentUser;
  if(!user)return;
 
- const pseudo=document.getElementById("editPseudo").value.trim();
- const birthdate=document.getElementById("editBirthdate").value;
- const ville=document.getElementById("editVille").value.trim();
- const objectif=document.getElementById("editObjectif").value;
- const bio=document.getElementById("editBio").value.trim();
- const age=calculateAge(birthdate);
-
- if(!pseudo||!ville||age<18||age>120){
-  notice("Vérifie tes informations. Réservé aux 18 ans et plus.");
-  return;
- }
-
  try{
-  await setDoc(doc(db,"Users",user.uid),{
-   pseudo,birthdate,age,ville,objectif,bio,
-   profilTest:false,
-   updatedAt:serverTimestamp()
-  },{merge:true});
+  const data=profileFromForm("edit");
 
-  await updateProfile(user,{displayName:pseudo});
+  await savePrivateProfile(user,data);
+
+  await updateProfile(user,{
+   displayName:data.pseudo
+  });
+
   showPage("account");
-  notice("Profil enregistré avec succès !");
+  notice("💗 Profil enregistré !");
  }catch(error){
   notice(errorText(error));
  }
@@ -638,10 +719,11 @@ async function refreshVisibility(){
   const snap=await getDoc(
    doc(db,"publicProfiles",user.uid)
   );
+
   document.getElementById("visibilityInfo").textContent=
    snap.exists()
-   ?"Ton profil est visible par les membres."
-   :"Ton profil est privé.";
+   ?"🌸 Ton profil est public."
+   :"🔒 Ton profil est privé.";
  }catch(error){
   document.getElementById("visibilityInfo").textContent=
    errorText(error);
@@ -655,40 +737,42 @@ document.getElementById("publishProfile")
 
  try{
   await reload(user);
-  if(!user.emailVerified){
-   notice("Vérifie d'abord ton adresse e-mail.");
-   return;
+
+  if(!verified(user)){
+   throw new Error(
+    "Vérifie d'abord ton adresse e-mail."
+   );
   }
 
-  const snap=await getDoc(doc(db,"Users",user.uid));
-  if(!snap.exists()){
-   notice("Complète d'abord ton profil.");
-   return;
+  const privateSnap=await getDoc(
+   doc(db,"Users",user.uid)
+  );
+
+  if(!privateSnap.exists()){
+   throw new Error("Complète d'abord ton profil.");
   }
 
-  const p=snap.data();
-  if(
-   !Number.isInteger(p.age)||p.age<18||
-   !p.pseudo||!p.ville||
-   !["amitie","serieux","sans_engagement"]
-    .includes(p.objectif)
-  ){
-   notice("Vérifie ton profil avant publication.");
-   return;
+  const p=privateSnap.data();
+
+  if(p.age<18){
+   throw new Error("Profil réservé aux adultes.");
   }
 
-  await setDoc(doc(db,"publicProfiles",user.uid),{
-   pseudo:p.pseudo,
-   age:p.age,
-   ville:p.ville,
-   objectif:p.objectif,
-   bio:p.bio||"",
-   visible:true,
-   updatedAt:serverTimestamp()
-  });
+  await setDoc(
+   doc(db,"publicProfiles",user.uid),
+   {
+    pseudo:p.pseudo,
+    age:p.age,
+    ville:p.ville,
+    objectif:p.objectif,
+    bio:p.bio||"",
+    visible:true,
+    updatedAt:serverTimestamp()
+   }
+  );
 
-  notice("Ton profil est maintenant visible !");
   await refreshVisibility();
+  notice("🌸 Ton profil est maintenant visible !");
  }catch(error){
   notice(errorText(error));
  }
@@ -700,15 +784,18 @@ document.getElementById("hideProfile")
  if(!user)return;
 
  try{
-  await deleteDoc(doc(db,"publicProfiles",user.uid));
-  notice("Ton profil a été masqué.");
+  await deleteDoc(
+   doc(db,"publicProfiles",user.uid)
+  );
+
   await refreshVisibility();
+  notice("🔒 Ton profil est masqué.");
  }catch(error){
   notice(errorText(error));
  }
 });
 
-/* Découverte : 20 profils par page */
+/* DÉCOUVERTE DES PROFILS */
 
 async function loadRealProfiles(){
  if(loadingProfiles||!moreProfilesAvailable)return;
@@ -717,43 +804,45 @@ async function loadRealProfiles(){
  if(!user)return;
 
  loadingProfiles=true;
- const button=document.getElementById("loadMore");
- button.disabled=true;
 
  try{
-  const ref=collection(db,"publicProfiles");
-  const q=lastProfileDoc
-   ?query(ref,startAfter(lastProfileDoc),limit(PAGE_SIZE))
-   :query(ref,limit(PAGE_SIZE));
+  let q=query(
+   collection(db,"publicProfiles"),
+   limit(PAGE_SIZE)
+  );
+
+  if(lastProfileDoc){
+   q=query(
+    collection(db,"publicProfiles"),
+    startAfter(lastProfileDoc),
+    limit(PAGE_SIZE)
+   );
+  }
 
   const results=await getDocs(q);
 
-  if(auth.currentUser?.uid!==user.uid)return;
-
-  if(!results.empty){
+  if(results.docs.length){
    lastProfileDoc=results.docs[results.docs.length-1];
   }
-  moreProfilesAvailable=results.size===PAGE_SIZE;
 
-  const ids=new Set(activeProfiles.map(p=>p.id));
+  moreProfilesAvailable=results.docs.length===PAGE_SIZE;
 
   for(const item of results.docs){
    const p=item.data();
-   if(
-    item.id===user.uid||ids.has(item.id)||
-    p.visible!==true||p.age<18||!p.pseudo
-   )continue;
+
+   if(item.id===user.uid)continue;
+   if(p.visible!==true)continue;
+   if(typeof p.age!=="number"||p.age<18)continue;
 
    activeProfiles.push({
     id:item.id,
-    name:p.pseudo,
+    name:p.pseudo||"Membre",
     age:p.age,
-    ville:p.ville,
-    objectif:p.objectif,
+    ville:p.ville||"",
+    objectif:p.objectif||"amitie",
     bio:p.bio||"",
     avatar:"💗"
    });
-   ids.add(item.id);
   }
 
   renderProfile();
@@ -761,21 +850,10 @@ async function loadRealProfiles(){
   notice(errorText(error));
  }finally{
   loadingProfiles=false;
-  button.disabled=false;
  }
 }
 
 window.loadRealProfiles=loadRealProfiles;
-
-document.getElementById("loadMore")
-.addEventListener("click",async()=>{
- const previous=activeProfiles.length;
- await loadRealProfiles();
- if(activeProfiles.length>previous){
-  profileIndex=previous;
-  renderProfile();
- }
-});
 
 document.getElementById("discoverReal")
 .addEventListener("click",async()=>{
@@ -783,7 +861,10 @@ document.getElementById("discoverReal")
  if(!user)return;
 
  try{
-  const snap=await getDoc(doc(db,"Users",user.uid));
+  const snap=await getDoc(
+   doc(db,"Users",user.uid)
+  );
+
   if(!snap.exists()){
    notice("Complète d'abord ton profil.");
    return;
@@ -798,16 +879,29 @@ document.getElementById("discoverReal")
 
   showPage("profiles");
   renderProfile();
+
   await loadRealProfiles();
  }catch(error){
   notice(errorText(error));
  }
 });
 
-/* Likes réels et matchs */
+document.getElementById("loadMore")
+.addEventListener("click",async()=>{
+ const previous=activeProfiles.length;
+
+ await loadRealProfiles();
+
+ if(activeProfiles.length>previous){
+  profileIndex=previous;
+  renderProfile();
+ }
+});
+
+/* ❤️ VRAIS LIKES */
 
 function likeId(from,to){
- return `${from}_${to}`;
+ return from+"_"+to;
 }
 
 function matchId(a,b){
@@ -816,6 +910,7 @@ function matchId(a,b){
 
 async function saveRealLike(profile){
  const user=auth.currentUser;
+
  if(!user||!profile||actionBusy)return;
 
  if(user.uid===profile.id){
@@ -825,41 +920,69 @@ async function saveRealLike(profile){
 
  actionBusy=true;
 
- try{
-  const target=await getDoc(
-   doc(db,"publicProfiles",profile.id)
-  );
+ const likeButton=document.getElementById("likeButton");
+ likeButton.disabled=true;
 
-  if(!target.exists()){
-   notice("Ce profil n'est plus disponible.");
-   return;
+ try{
+  await reload(user);
+
+  if(!verified(user)){
+   throw new Error(
+    "Vérifie ton adresse e-mail avant de liker."
+   );
   }
 
-  await setDoc(
-   doc(db,"likes",likeId(user.uid,profile.id)),
-   {
+  const targetRef=doc(
+   db,"publicProfiles",profile.id
+  );
+
+  const target=await getDoc(targetRef);
+
+  if(!target.exists()){
+   throw new Error(
+    "Ce profil n'est plus disponible."
+   );
+  }
+
+  const myLikeRef=doc(
+   db,"likes",likeId(user.uid,profile.id)
+  );
+
+  const existingLike=await getDoc(myLikeRef);
+
+  let alreadyLiked=existingLike.exists();
+
+  if(!alreadyLiked){
+   await setDoc(myLikeRef,{
     from:user.uid,
     to:profile.id,
     createdAt:serverTimestamp()
-   }
+   });
+  }
+
+  const reciprocalRef=doc(
+   db,"likes",likeId(profile.id,user.uid)
   );
 
-  const reciprocal=await getDoc(
-   doc(db,"likes",likeId(profile.id,user.uid))
-  );
+  const reciprocal=await getDoc(reciprocalRef);
 
   let matched=false;
 
   if(reciprocal.exists()){
    const members=[user.uid,profile.id].sort();
 
-   await setDoc(
-    doc(db,"matches",matchId(user.uid,profile.id)),
-    {
+   const matchRef=doc(
+    db,"matches",matchId(user.uid,profile.id)
+   );
+
+   const existingMatch=await getDoc(matchRef);
+
+   if(!existingMatch.exists()){
+    await setDoc(matchRef,{
      members,
      createdAt:serverTimestamp()
-    }
-   );
+    });
+   }
 
    matched=true;
   }
@@ -867,19 +990,25 @@ async function saveRealLike(profile){
   actionBusy=false;
   await nextProfile();
 
-  notice(
-   matched
-   ?"💕 C'est un match ! Vous vous aimez tous les deux !"
-   :"❤️ Like enregistré !"
-  );
+  if(matched){
+   notice("💕 C'est un match ! Vous vous aimez tous les deux !");
+  }else if(alreadyLiked){
+   notice("❤️ Tu avais déjà liké ce profil.");
+  }else{
+   notice("❤️ Like enregistré !");
+  }
+
  }catch(error){
   notice(errorText(error));
  }finally{
   actionBusy=false;
+  likeButton.disabled=false;
  }
 }
 
 window.saveRealLike=saveRealLike;
+
+/* 💕 MES MATCHS */
 
 document.getElementById("viewMatches")
 .addEventListener("click",async()=>{
@@ -909,6 +1038,7 @@ document.getElementById("viewMatches")
   for(const item of results.docs){
    const members=item.data().members||[];
    const otherId=members.find(id=>id!==user.uid);
+
    if(!otherId)continue;
 
    const profile=await getDoc(
@@ -929,10 +1059,13 @@ document.getElementById("viewMatches")
    div.append(name,info);
    list.appendChild(div);
   }
+
  }catch(error){
   list.textContent=errorText(error);
  }
 });
+
+/* COMPTE ET DÉCONNEXION */
 
 document.getElementById("logout")
 .addEventListener("click",async()=>{
@@ -983,8 +1116,8 @@ function renderAccount(user){
 
  document.getElementById("verificationInfo").textContent=
   user.emailVerified
-  ?"Adresse e-mail vérifiée."
-  :"Adresse e-mail non vérifiée.";
+  ?"✅ Adresse e-mail vérifiée."
+  :"⚠️ Adresse e-mail non vérifiée.";
 
  document.getElementById("verifyEmail")
   .classList.toggle("hidden",user.emailVerified);
@@ -997,5 +1130,6 @@ function renderAccount(user){
 
 onAuthStateChanged(auth,renderAccount);
 </script>
+</main>
 </body>
 </html>
