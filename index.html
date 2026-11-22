@@ -3,1381 +3,984 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Destinya 💕</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Destinya 💗</title>
 <style>
-:root{
-  --rose:#d65783;
-  --pale:#ffe2e9;
-  --text:#614455;
-}
 *{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:linear-gradient(145deg,#fff0f0,#ffd9df);
-  color:var(--text);
-}
-header{
-  text-align:center;
-  padding:20px;
-  color:#b84770;
-}
-header h1{margin:0;font-size:38px}
-main{
-  max-width:650px;
-  margin:auto;
-  padding:12px 14px 95px;
-}
+body{margin:0;font-family:Arial,sans-serif;color:#654252;background:linear-gradient(145deg,#fff0ee,#ffd7e1);min-height:100vh}
+header{text-align:center;padding:22px 10px;color:#bb4775}
+header h1{font-size:40px;margin:5px}
+main{max-width:520px;margin:auto;padding:12px 16px 100px}
 .page{display:none}
 .page.active{display:block}
-.panel{
-  background:white;
-  border-radius:28px;
-  padding:25px 20px;
-  margin-bottom:18px;
-  box-shadow:0 8px 25px #b94a6520;
-}
+.panel{background:#fff;border-radius:28px;padding:24px 20px;margin-bottom:18px;box-shadow:0 8px 24px #b9537020}
 h2{text-align:center;color:#bd5279}
-p{line-height:1.5}
-input,select,textarea{
-  width:100%;
-  padding:15px;
-  margin:8px 0 13px;
-  border:1px solid #edc3d0;
-  border-radius:15px;
-  font:inherit;
-  background:white;
-  color:#543746;
-}
-textarea{min-height:90px}
-button{
-  width:100%;
-  padding:15px;
-  margin:7px 0;
-  border:0;
-  border-radius:30px;
-  background:var(--rose);
-  color:white;
-  font-size:17px;
-  font-weight:bold;
-  cursor:pointer;
-}
-button.secondary{
-  background:var(--pale);
-  color:#a6436d;
-}
+input,select,textarea{width:100%;padding:14px;border:1px solid #eac1cd;border-radius:15px;margin:8px 0 13px;font:inherit;background:white}
+textarea{min-height:100px}
+button{width:100%;padding:15px;margin:7px 0;border:0;border-radius:28px;background:#d65783;color:white;font-size:16px;font-weight:bold;cursor:pointer}
+button.secondary{background:#ffe1e9;color:#a3446a}
 button:disabled{opacity:.55}
-.small{font-size:13px;color:#8d7080}
-.center{text-align:center}
 .hidden{display:none!important}
-#notice{
-  padding:12px;
-  text-align:center;
-  color:#a63b63;
-  white-space:pre-wrap;
-}
-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:white;
-  display:none;
-  justify-content:space-around;
-  box-shadow:0 -3px 20px #0001;
-  z-index:5;
-}
-nav button{
-  background:white;
-  color:#b74a73;
-  border-radius:0;
-  width:25%;
-  font-size:12px;
-  padding:12px 3px;
-  margin:0;
-}
-nav button span{
-  display:block;
-  font-size:23px;
-  margin-bottom:4px;
-}
-.photo-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:9px;
-}
-.photo-grid img{
-  width:100%;
-  height:135px;
-  object-fit:cover;
-  border-radius:15px;
-}
-.swipe-card{
-  background:white;
-  border-radius:24px;
-  overflow:hidden;
-  touch-action:pan-y;
-  box-shadow:0 8px 24px #0002;
-  transition:transform .2s;
-}
-.swipe-card img{
-  display:block;
-  width:100%;
-  height:350px;
-  object-fit:cover;
-  background:#fce3eb;
-}
-.swipe-card .details{padding:18px}
-.swipe-actions{
-  display:flex;
-  gap:12px;
-}
-.swipe-actions button{flex:1}
-.match-item{
-  padding:15px;
-  border-bottom:1px solid #f4d5df;
-  cursor:pointer;
-}
-.chat-messages{
-  height:340px;
-  overflow:auto;
-  background:#fff5f7;
-  padding:12px;
-  border-radius:16px;
-}
-.bubble{
-  padding:11px;
-  margin:9px 0;
-  max-width:83%;
-  background:#ffe0e9;
-  border-radius:17px;
-  overflow-wrap:anywhere;
-}
-.bubble.mine{
-  background:#d65783;
-  color:white;
-  margin-left:auto;
-}
-.bubble img{
-  max-width:100%;
-  border-radius:10px;
-}
+.small{font-size:13px;color:#856978}
+.center{text-align:center}
+#notice{color:#ad365d;text-align:center;white-space:pre-wrap;min-height:25px}
+nav{display:none;position:fixed;bottom:0;left:0;right:0;background:white;box-shadow:0 -3px 15px #0001;z-index:10}
+nav button{width:25%;margin:0;padding:12px 2px;background:white;color:#b54d77;font-size:12px;border-radius:0}
+nav span{display:block;font-size:24px}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.gallery img{width:100%;height:120px;object-fit:cover;border-radius:12px}
+.photo-item{position:relative}
+.photo-item button{padding:6px;font-size:12px}
+.card{overflow:hidden;border-radius:24px;background:white;touch-action:pan-y}
+.card>img{width:100%;height:330px;object-fit:cover;background:#ffe2e9}
+.card .info{padding:20px}
+.actions{display:flex;gap:10px}
+.actions button{flex:1}
+.match{padding:15px;border-bottom:1px solid #f1d0d9}
+.chatbox{height:350px;overflow:auto;background:#fff5f8;padding:12px;border-radius:15px}
+.bubble{max-width:85%;background:#ffe0e9;padding:12px;margin:8px 0;border-radius:16px;overflow-wrap:anywhere}
+.bubble.mine{background:#d65783;color:white;margin-left:auto}
+.bubble img{max-width:100%;border-radius:10px}
 .bubble audio{max-width:100%}
-.filters{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-.filters label{font-size:13px}
-.filters input,.filters select{margin:5px 0}
-#recaptcha-container{margin:12px 0}
+.filters{display:flex;gap:10px}
+.filters label{width:50%}
 </style>
 </head>
 <body>
-
 <header>
-  <h1>💗 Destinya</h1>
-  <p>Des rencontres qui comptent</p>
+<h1>💗 Destinya</h1>
+<p>Des rencontres qui comptent</p>
 </header>
 
 <main>
-
 <section id="home" class="page active">
-  <div class="panel center">
-    <h2>Bienvenue sur Destinya 💕</h2>
-    <p>Rencontres sérieuses, amitié et nouvelles histoires.</p>
-    <button onclick="showPage('register')">Créer un compte</button>
-    <button onclick="showPage('login')" class="secondary">
-      Se connecter
-    </button>
-  </div>
+<div class="panel center">
+<h2>Bienvenue 💕</h2>
+<p>Rencontres, amitié et belles histoires.</p>
+<button onclick="showPage('register')">Créer un compte</button>
+<button class="secondary" onclick="showPage('login')">Se connecter</button>
+</div>
 </section>
 
 <section id="register" class="page">
-  <div class="panel">
-    <h2>💕 Inscription</h2>
-    <form id="registerForm">
-      <input id="regPseudo" placeholder="Pseudo" required maxlength="40">
-      <label>Date de naissance</label>
-      <input id="regBirth" type="date" required>
-      <input id="regCity" placeholder="Ville" required>
-      <select id="regGoal" required>
-        <option value="serieux">Relation sérieuse</option>
-        <option value="amitie">Amitié</option>
-        <option value="sans_engagement">Sans engagement</option>
-      </select>
-      <input id="regEmail" type="email" placeholder="E-mail" required>
-      <input id="regPassword" type="password"
-        placeholder="Mot de passe (6 caractères minimum)"
-        minlength="6" required>
-      <button type="submit">M'inscrire</button>
-    </form>
-    <button class="secondary" onclick="showPage('home')">Retour</button>
-  </div>
+<div class="panel">
+<h2>Inscription 💕</h2>
+<form id="registerForm">
+<input id="regPseudo" placeholder="Pseudo" maxlength="40" required>
+<label>Date de naissance</label>
+<input id="regBirth" type="date" required>
+<input id="regCity" placeholder="Ville" maxlength="80" required>
+<select id="regGoal">
+<option value="serieux">Relation sérieuse</option>
+<option value="amitie">Amitié</option>
+<option value="sans_engagement">Sans engagement</option>
+</select>
+<input id="regEmail" type="email" placeholder="E-mail" required>
+<input id="regPassword" type="password" placeholder="Mot de passe" minlength="6" required>
+<button>S'inscrire</button>
+</form>
+<button class="secondary" onclick="showPage('home')">Retour</button>
+</div>
 </section>
 
 <section id="login" class="page">
-  <div class="panel">
-    <h2>Connexion 💕</h2>
-    <form id="loginForm">
-      <input id="loginEmail" type="email" placeholder="E-mail" required>
-      <input id="loginPassword" type="password"
-        placeholder="Mot de passe" required>
-      <button type="submit">Se connecter</button>
-    </form>
-    <button id="googleBtn" class="secondary">
-      🌐 Continuer avec Google
-    </button>
-    <button class="secondary" onclick="showPage('phone')">
-      📱 Continuer avec un numéro
-    </button>
-    <button class="secondary" onclick="showPage('home')">Retour</button>
-  </div>
+<div class="panel">
+<h2>Connexion 💕</h2>
+<form id="loginForm">
+<input id="loginEmail" type="email" placeholder="E-mail" required>
+<input id="loginPassword" type="password" placeholder="Mot de passe" required>
+<button>Se connecter</button>
+</form>
+<button id="googleBtn" class="secondary">🌐 Continuer avec Google</button>
+<button class="secondary" onclick="showPage('phone')">📱 Continuer avec un numéro</button>
+<button class="secondary" onclick="showPage('home')">Retour</button>
+</div>
 </section>
 
 <section id="phone" class="page">
-  <div class="panel">
-    <h2>📱 Mon numéro</h2>
-    <p>Entre ton numéro au format international.</p>
-    <input id="phoneNumber" type="tel" placeholder="+33612345678">
-    <div id="recaptcha-container"></div>
-    <button id="sendSms">📩 Recevoir mon code SMS</button>
-    <div id="smsConfirm" class="hidden">
-      <input id="smsCode" inputmode="numeric"
-        placeholder="Code reçu par SMS">
-      <button id="confirmSms">Valider mon code</button>
-    </div>
-    <button class="secondary" onclick="showPage('login')">Retour</button>
-  </div>
+<div class="panel">
+<h2>Connexion SMS 📱</h2>
+<input id="phoneNumber" type="tel" placeholder="+33612345678">
+<div id="recaptcha-container"></div>
+<button id="sendSms">Recevoir mon code</button>
+<div id="smsSection" class="hidden">
+<input id="smsCode" inputmode="numeric" placeholder="Code SMS">
+<button id="confirmSms">Valider</button>
+</div>
+<button class="secondary" onclick="showPage('login')">Retour</button>
+</div>
 </section>
 
 <section id="account" class="page">
-  <div class="panel center">
-    <h2>Bienvenue sur Destinya !</h2>
-    <p id="accountIdentity"></p>
-    <p id="accountStatus"></p>
-    <button id="verifyEmailBtn" class="secondary hidden">
-      Vérifier mon adresse e-mail
-    </button>
-    <button onclick="showPage('profile')">✏️ Compléter mon profil</button>
-    <button id="publishBtn">🌸 Rendre mon profil visible</button>
-    <button id="hideBtn" class="secondary">🔒 Masquer mon profil</button>
-    <p id="visibilityStatus"></p>
-    <button onclick="showPage('discover')">💕 Découvrir les membres</button>
-    <button onclick="showPage('matches')">❤️ Mes matchs</button>
-    <button onclick="showPage('matches')">💬 Messages</button>
-    <button id="logoutBtn" class="secondary">Se déconnecter</button>
-  </div>
+<div class="panel center">
+<h2>Mon compte 💗</h2>
+<p id="identity"></p>
+<p id="verification"></p>
+<button id="verifyBtn" class="secondary hidden">Envoyer un e-mail de vérification</button>
+<button id="refreshBtn" class="secondary">Actualiser la vérification</button>
+<button onclick="showPage('profile')">✏️ Modifier mon profil</button>
+<button id="publishBtn">🌸 Rendre mon profil visible</button>
+<button id="hideBtn" class="secondary">🔒 Masquer mon profil</button>
+<p id="visibility"></p>
+<button onclick="showPage('discover')">💕 Découvrir les membres</button>
+<button onclick="showPage('matches')">❤️ Matchs et messages</button>
+<button id="logoutBtn" class="secondary">Se déconnecter</button>
+</div>
 </section>
 
 <section id="profile" class="page">
-  <div class="panel">
-    <h2>✏️ Mon profil</h2>
-    <form id="profileForm">
-      <input id="profilePseudo" placeholder="Pseudo" maxlength="40" required>
-      <label>Date de naissance</label>
-      <input id="profileBirth" type="date" required>
-      <input id="profileCity" placeholder="Ville" required>
-      <select id="profileGoal">
-        <option value="serieux">Relation sérieuse</option>
-        <option value="amitie">Amitié</option>
-        <option value="sans_engagement">Sans engagement</option>
-      </select>
-      <textarea id="profileBio" maxlength="500"
-        placeholder="Parle de toi..."></textarea>
-      <button type="submit">Enregistrer mon profil</button>
-    </form>
-    <h3>📸 Mes photos (maximum 6)</h3>
-    <p class="small">JPG, PNG ou WebP, 5 Mo maximum par photo.</p>
-    <input id="profilePhotosInput" type="file"
-      accept="image/jpeg,image/png,image/webp"
-      multiple>
-    <button id="uploadPhotosBtn">Ajouter mes photos</button>
-    <div id="myPhotos" class="photo-grid"></div>
-    <button class="secondary" onclick="showPage('account')">Retour</button>
-  </div>
+<div class="panel">
+<h2>Mon profil ✏️</h2>
+<form id="profileForm">
+<input id="profilePseudo" placeholder="Pseudo" maxlength="40" required>
+<label>Date de naissance</label>
+<input id="profileBirth" type="date" required>
+<input id="profileCity" placeholder="Ville" maxlength="80" required>
+<select id="profileGoal">
+<option value="serieux">Relation sérieuse</option>
+<option value="amitie">Amitié</option>
+<option value="sans_engagement">Sans engagement</option>
+</select>
+<textarea id="profileBio" maxlength="500" placeholder="Parle de toi..."></textarea>
+<button id="saveProfileBtn">Enregistrer mon profil</button>
+</form>
+<h3>📸 Mes photos (maximum 6)</h3>
+<input id="photoFiles" type="file" accept="image/jpeg,image/png,image/webp" multiple>
+<button id="uploadPhotosBtn">Ajouter mes photos</button>
+<div id="myPhotos" class="gallery"></div>
+<button class="secondary" onclick="showPage('account')">Retour</button>
+</div>
 </section>
 
 <section id="discover" class="page">
-  <div class="panel">
-    <h2>💕 Découvrir</h2>
-    <h3>🔎 Mes filtres</h3>
-    <div class="filters">
-      <label>Âge minimum
-        <input id="minAge" type="number" min="18" max="120" value="18">
-      </label>
-      <label>Âge maximum
-        <input id="maxAge" type="number" min="18" max="120" value="80">
-      </label>
-    </div>
-    <input id="filterCity" placeholder="Ville (facultatif)">
-    <select id="filterGoal">
-      <option value="">Tous les objectifs</option>
-      <option value="serieux">Relation sérieuse</option>
-      <option value="amitie">Amitié</option>
-      <option value="sans_engagement">Sans engagement</option>
-    </select>
-    <button id="searchBtn">Rechercher</button>
-  </div>
-
-  <div id="swipeCard" class="swipe-card hidden">
-    <img id="memberPhoto" alt="Photo du membre">
-    <div class="details">
-      <h2 id="memberName"></h2>
-      <p id="memberInfo"></p>
-      <p id="memberBio"></p>
-      <div id="memberGallery" class="photo-grid"></div>
-    </div>
-  </div>
-
-  <div class="swipe-actions">
-    <button id="passBtn" class="secondary">❌ Passer</button>
-    <button id="likeBtn">❤️ J'aime</button>
-  </div>
-  <p id="discoverStatus" class="center"></p>
+<div class="panel">
+<h2>💕 Découvrir</h2>
+<h3>Filtres de recherche</h3>
+<div class="filters">
+<label>Âge minimum<input id="minAge" type="number" min="18" max="120" value="18"></label>
+<label>Âge maximum<input id="maxAge" type="number" min="18" max="120" value="80"></label>
+</div>
+<input id="filterCity" placeholder="Ville (facultatif)">
+<select id="filterGoal">
+<option value="">Tous les objectifs</option>
+<option value="serieux">Relation sérieuse</option>
+<option value="amitie">Amitié</option>
+<option value="sans_engagement">Sans engagement</option>
+</select>
+<button id="searchBtn">Rechercher</button>
+</div>
+<div id="swipeCard" class="card hidden">
+<img id="memberPhoto" alt="Photo de profil">
+<div class="info">
+<h2 id="memberName"></h2>
+<p id="memberDetails"></p>
+<p id="memberBio"></p>
+<div id="memberPhotos" class="gallery"></div>
+</div>
+</div>
+<div class="actions">
+<button id="passBtn" class="secondary">❌ Passer</button>
+<button id="likeBtn">❤️ J'aime</button>
+</div>
+<p id="discoverStatus" class="center"></p>
 </section>
 
 <section id="matches" class="page">
-  <div class="panel">
-    <h2>❤️ Mes matchs</h2>
-    <div id="matchesList"></div>
-  </div>
+<div class="panel">
+<h2>❤️ Mes matchs</h2>
+<div id="matchesList"></div>
+</div>
 </section>
 
 <section id="chat" class="page">
-  <div class="panel">
-    <h2 id="chatTitle">💬 Discussion</h2>
-    <div id="chatMessages" class="chat-messages"></div>
-
-    <form id="chatForm">
-      <input id="chatText" placeholder="Écris ton message..."
-        maxlength="2000">
-      <button type="submit">Envoyer 💌</button>
-    </form>
-
-    <h3>📸 Photos et GIFs</h3>
-    <input id="chatPhotoInput" type="file"
-      accept="image/jpeg,image/png,image/webp,image/gif">
-    <button id="sendPhotoBtn" class="secondary">
-      Envoyer une image
-    </button>
-
-    <input id="gifUrl" type="url"
-      placeholder="Coller un lien direct vers un GIF HTTPS">
-    <button id="sendGifBtn" class="secondary">Envoyer le GIF</button>
-
-    <h3>🎤 Message vocal</h3>
-    <button id="recordBtn" class="secondary">🎙️ Enregistrer</button>
-    <button id="stopRecordBtn" class="secondary" disabled>
-      ⏹️ Arrêter et envoyer
-    </button>
-
-    <button class="secondary" onclick="showPage('matches')">
-      Retour aux matchs
-    </button>
-  </div>
+<div class="panel">
+<h2 id="chatTitle">Discussion 💬</h2>
+<div id="chatMessages" class="chatbox"></div>
+<form id="chatForm">
+<input id="chatText" maxlength="2000" placeholder="Écris un message...">
+<button>Envoyer 💌</button>
+</form>
+<input id="chatPhoto" type="file" accept="image/jpeg,image/png,image/webp">
+<button id="sendPhotoBtn" class="secondary">📸 Envoyer une photo</button>
+<input id="gifUrl" type="url" placeholder="Lien HTTPS direct d'un GIF">
+<button id="sendGifBtn" class="secondary">🎞️ Envoyer le GIF</button>
+<button id="recordBtn" class="secondary">🎤 Enregistrer un vocal</button>
+<button id="stopBtn" class="secondary" disabled>⏹️ Arrêter et envoyer</button>
+<button class="secondary" onclick="showPage('matches')">Retour aux matchs</button>
+</div>
 </section>
 
 <p id="notice" role="status"></p>
 </main>
 
-<nav id="bottomNav">
-  <button onclick="showPage('account')"><span>🏠</span>Accueil</button>
-  <button onclick="showPage('discover')"><span>💕</span>Découvrir</button>
-  <button onclick="showPage('matches')"><span>❤️</span>Matchs</button>
-  <button onclick="showPage('profile')"><span>👤</span>Profil</button>
+<nav id="nav">
+<button onclick="showPage('account')"><span>🏠</span>Accueil</button>
+<button onclick="showPage('discover')"><span>💕</span>Découvrir</button>
+<button onclick="showPage('matches')"><span>❤️</span>Matchs</button>
+<button onclick="showPage('profile')"><span>👤</span>Profil</button>
 </nav>
 
 <script>
 function showPage(id){
-  document.querySelectorAll(".page").forEach(
-    page=>page.classList.toggle("active",page.id===id)
-  );
-  document.getElementById("bottomNav").style.display=
-    window.currentUser ? "flex" : "none";
-  window.scrollTo(0,0);
-  if(window.pageOpened)window.pageOpened(id);
+ document.querySelectorAll(".page").forEach(p=>{
+  p.classList.toggle("active",p.id===id);
+ });
+ document.getElementById("nav").style.display=
+  window.destinyaUser?"flex":"none";
+ window.scrollTo(0,0);
+ if(window.destinyaPageOpened)window.destinyaPageOpened(id);
 }
 </script>
 
 <script type="module">
-
-import {initializeApp} from
-"https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import {
-  getAuth,
-  onAuthStateChanged,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-  sendEmailVerification,
-  RecaptchaVerifier,
-  signInWithPhoneNumber
+ getAuth,onAuthStateChanged,createUserWithEmailAndPassword,
+ signInWithEmailAndPassword,GoogleAuthProvider,signInWithPopup,
+ signOut,sendEmailVerification,RecaptchaVerifier,
+ signInWithPhoneNumber,reload,updateProfile
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-
 import {
-  getFirestore,
-  doc,
-  getDoc,
-  getDocs,
-  setDoc,
-  deleteDoc,
-  addDoc,
-  collection,
-  query,
-  where,
-  orderBy,
-  serverTimestamp
+ getFirestore,doc,getDoc,getDocs,setDoc,deleteDoc,
+ addDoc,collection,query,where,orderBy,limit,startAfter,
+ serverTimestamp,onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-
 import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL
+ getStorage,ref,uploadBytes,getDownloadURL
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
 
-// CONFIGURATION DESTINYA
-
 const firebaseConfig={
-  apiKey:"AIzaSyA2yKCe2eo2WFC09ZNyrgPb-eWjOeQIChM",
-  authDomain:"destinya-4279b.firebaseapp.com",
-  projectId:"destinya-4279b",
-  storageBucket:"destinya-4279b.firebasestorage.app",
-  messagingSenderId:"562278259631",
-  appId:"1:562278259631:web:8e907c2d0c7ab1ee072d5a",
-  measurementId:"G-KJN8SNFXYE"
+ apiKey:"AIzaSyA2yKCe2eo2WFC09ZNyrgPb-eWjOeQIChM",
+ authDomain:"destinya-4279b.firebaseapp.com",
+ projectId:"destinya-4279b",
+ storageBucket:"destinya-4279b.firebasestorage.app",
+ messagingSenderId:"562278259631",
+ appId:"1:562278259631:web:8e907c2d0c7ab1ee072d5a",
+ measurementId:"G-KJN8SNFXYE"
 };
 
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
 const storage=getStorage(app);
-
 const $=id=>document.getElementById(id);
 
-let user=null;
-let myProfile=null;
-let publicProfile=null;
-let profiles=[];
-let profileIndex=0;
-let currentMatch=null;
-let chatTimer=null;
-let recaptcha=null;
-let smsResult=null;
-let recorder=null;
-let chunks=[];
-let recordStream=null;
+let user=null,privateProfile=null,publicProfile=null;
+let profiles=[],profileIndex=0;
+let cursor=null,hasMore=true,loading=false;
+let currentMatch=null,unsubscribe=null;
+let recaptcha=null,smsConfirmation=null;
+let recorder=null,stream=null,chunks=[];
+let busy=false;
 
-const MAX_FILE=5*1024*1024;
+const MAX_SIZE=5*1024*1024;
+const PAGE_SIZE=20;
 
-function notice(message){
-  $("notice").textContent=message;
+function notice(s){$("notice").textContent=s}
+
+function errorText(e){
+ console.error("Destinya",e);
+ const errors={
+  "permission-denied":"Accès refusé par les règles Firestore. Vérifie les règles Users et publicProfiles.",
+  "storage/unauthorized":"Accès refusé par les règles Storage.",
+  "auth/invalid-credential":"E-mail ou mot de passe incorrect.",
+  "auth/too-many-requests":"Trop de tentatives. Réessaie plus tard.",
+  "auth/email-already-in-use":"Cette adresse e-mail est déjà utilisée.",
+  "auth/unauthorized-domain":"Domaine non autorisé dans Firebase Authentication.",
+  "auth/operation-not-allowed":"Méthode de connexion non activée dans Firebase."
+ };
+ return errors[e?.code]||e?.message||"Erreur inconnue.";
 }
 
-function errorMessage(e){
-  console.error(e);
-  const code=e?.code||"";
-  const messages={
-    "auth/too-many-requests":"Trop de tentatives. Réessaie plus tard.",
-    "auth/invalid-credential":"Identifiants incorrects.",
-    "auth/email-already-in-use":"Cet e-mail est déjà utilisé.",
-    "auth/invalid-phone-number":"Numéro de téléphone incorrect.",
-    "auth/captcha-check-failed":"Vérifie le reCAPTCHA et le domaine autorisé.",
-    "auth/operation-not-allowed":"Méthode de connexion non autorisée.",
-    "permission-denied":"Accès refusé par les règles Firebase.",
-    "storage/unauthorized":"Accès au stockage refusé."
-  };
-  notice(messages[code]||e?.message||"Une erreur est survenue.");
-}
+function fail(e){notice(errorText(e))}
 
 function verified(){
-  return !!user&&(user.emailVerified||!!user.phoneNumber);
+ return !!user&&(
+  user.emailVerified===true||
+  !!user.phoneNumber
+ );
 }
 
-function ageFromBirth(birth){
-  const d=new Date(birth+"T12:00:00");
-  if(Number.isNaN(d.getTime()))return -1;
-  const now=new Date();
-  let age=now.getFullYear()-d.getFullYear();
-  const month=now.getMonth()-d.getMonth();
-  if(month<0||(month===0&&now.getDate()<d.getDate()))age--;
-  return age;
+function adult(){
+ return verified()&&privateProfile&&
+  privateProfile.age>=18&&privateProfile.age<=120;
 }
 
-function safeText(element,value){
-  element.textContent=String(value??"");
+function ageOf(value){
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(value))return -1;
+ const [y,m,d]=value.split("-").map(Number);
+ const birth=new Date(y,m-1,d);
+ if(birth.getFullYear()!==y||
+    birth.getMonth()!==m-1||
+    birth.getDate()!==d)return -1;
+ const now=new Date();
+ let age=now.getFullYear()-y;
+ if(now.getMonth()<m-1||
+    (now.getMonth()===m-1&&now.getDate()<d))age--;
+ return age;
 }
 
-function makeImage(url){
-  const img=document.createElement("img");
-  img.src=url;
-  img.alt="Photo";
-  img.loading="lazy";
-  return img;
+function validProfile(data){
+ const age=ageOf(data.birthdate);
+ if(age<18||age>120)throw Error("Destinya est réservé aux adultes.");
+ if(!data.pseudo||data.pseudo.length>40||
+    !data.ville||data.ville.length>80)
+  throw Error("Vérifie ton pseudo et ta ville.");
+ if(data.bio.length>500)throw Error("Biographie trop longue.");
+ return {...data,age};
 }
 
-function matchIdFor(a,b){
-  return [a,b].sort().join("_");
+function profileFromForm(prefix){
+ return validProfile({
+  pseudo:$(prefix+"Pseudo").value.trim(),
+  birthdate:$(prefix+"Birth").value,
+  ville:$(prefix+"City").value.trim(),
+  objectif:$(prefix+"Goal").value,
+  bio:prefix==="profile"?$("profileBio").value.trim():""
+ });
 }
 
-function goalLabel(goal){
-  return {
-    serieux:"Relation sérieuse",
-    amitie:"Amitié",
-    sans_engagement:"Sans engagement"
-  }[goal]||goal;
+async function refreshUser(){
+ if(!user)return;
+ await reload(user);
+ await user.getIdToken(true);
 }
 
-function requireProfile(){
-  if(!user){
-    notice("Connecte-toi d'abord.");
-    showPage("login");
-    return false;
-  }
-  if(!verified()){
-    notice("Vérifie ton compte avant de continuer.");
-    return false;
-  }
-  if(!myProfile||myProfile.age<18){
-    notice("Complète d'abord ton profil adulte.");
-    showPage("profile");
-    return false;
-  }
-  return true;
+async function loadPrivate(){
+ if(!user)return;
+ const s=await getDoc(doc(db,"Users",user.uid));
+ privateProfile=s.exists()?s.data():null;
+ if(privateProfile){
+  $("profilePseudo").value=privateProfile.pseudo||"";
+  $("profileBirth").value=privateProfile.birthdate||"";
+  $("profileCity").value=privateProfile.ville||"";
+  $("profileGoal").value=privateProfile.objectif||"serieux";
+  $("profileBio").value=privateProfile.bio||"";
+ }
 }
 
-// INSCRIPTION E-MAIL
-
-$("registerForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  try{
-    const birth=$("regBirth").value;
-    const age=ageFromBirth(birth);
-    if(age<18||age>120){
-      notice("Destinya est réservé aux adultes.");
-      return;
-    }
-
-    const result=await createUserWithEmailAndPassword(
-      auth,
-      $("regEmail").value.trim(),
-      $("regPassword").value
-    );
-
-    user=result.user;
-    window.currentUser=user;
-
-    await saveProfile({
-      pseudo:$("regPseudo").value.trim(),
-      birthdate:birth,
-      ville:$("regCity").value.trim(),
-      objectif:$("regGoal").value,
-      bio:""
-    });
-
-    await sendEmailVerification(user);
-    showPage("account");
-    notice("Compte créé ! Vérifie ton e-mail.");
-  }catch(err){errorMessage(err);}
-});
-
-// CONNEXION E-MAIL
-
-$("loginForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  try{
-    await signInWithEmailAndPassword(
-      auth,
-      $("loginEmail").value.trim(),
-      $("loginPassword").value
-    );
-    notice("Connexion réussie !");
-  }catch(err){errorMessage(err);}
-});
-
-// GOOGLE
-
-$("googleBtn").onclick=async()=>{
-  try{
-    const provider=new GoogleAuthProvider();
-    await signInWithPopup(auth,provider);
-    notice("Connexion Google réussie !");
-  }catch(err){errorMessage(err);}
-};
-
-// TELEPHONE ET SMS
-
-async function setupRecaptcha(){
-  if(recaptcha)return recaptcha;
-
-  recaptcha=new RecaptchaVerifier(
-    auth,
-    "recaptcha-container",
-    {size:"normal"}
-  );
-
-  await recaptcha.render();
-  return recaptcha;
-}
-
-$("sendSms").onclick=async()=>{
-  try{
-    const phone=$("phoneNumber").value.trim();
-    if(!/^\+[1-9]\d{7,14}$/.test(phone)){
-      notice("Entre ton numéro au format +33612345678.");
-      return;
-    }
-
-    $("sendSms").disabled=true;
-    notice("Vérification reCAPTCHA...");
-
-    const verifier=await setupRecaptcha();
-
-    smsResult=await signInWithPhoneNumber(
-      auth,phone,verifier
-    );
-
-    $("smsConfirm").classList.remove("hidden");
-    notice("SMS envoyé ! Entre le code reçu.");
-  }catch(err){
-    errorMessage(err);
-    if(recaptcha){
-      try{recaptcha.clear();}catch(_){}
-      recaptcha=null;
-    }
-    $("recaptcha-container").replaceChildren();
-  }finally{
-    $("sendSms").disabled=false;
-  }
-};
-
-$("confirmSms").onclick=async()=>{
-  try{
-    if(!smsResult){
-      notice("Demande d'abord un SMS.");
-      return;
-    }
-    await smsResult.confirm($("smsCode").value.trim());
-    notice("Téléphone vérifié !");
-  }catch(err){errorMessage(err);}
-};
-
-// ETAT DU COMPTE
-
-onAuthStateChanged(auth,async current=>{
-  user=current;
-  window.currentUser=current;
-
-  if(!current){
-    myProfile=null;
-    publicProfile=null;
-    currentMatch=null;
-    clearInterval(chatTimer);
-    chatTimer=null;
-    $("bottomNav").style.display="none";
-    showPage("home");
-    return;
-  }
-
-  try{
-    await loadMyProfile();
-    await loadPublicProfile();
-    renderAccount();
-    showPage("account");
-  }catch(err){
-    errorMessage(err);
-    showPage("account");
-  }
-});
-
-async function loadMyProfile(){
-  if(!user)return;
-  const snap=await getDoc(doc(db,"Users",user.uid));
-  myProfile=snap.exists()?snap.data():null;
-  fillProfileForm();
-}
-
-async function loadPublicProfile(){
-  if(!user)return;
-  const snap=await getDoc(doc(db,"publicProfiles",user.uid));
-  publicProfile=snap.exists()?snap.data():null;
-  renderMyPhotos();
+async function loadPublic(){
+ if(!user)return;
+ const s=await getDoc(doc(db,"publicProfiles",user.uid));
+ publicProfile=s.exists()?s.data():null;
+ renderMyPhotos();
 }
 
 function renderAccount(){
-  safeText(
-    $("accountIdentity"),
-    user.email||user.phoneNumber||"Mon compte"
-  );
-
-  $("accountStatus").textContent=verified()
-    ?"✅ Compte vérifié."
-    :"⚠️ Vérification nécessaire.";
-
-  $("verifyEmailBtn").classList.toggle(
-    "hidden",!user.email||user.emailVerified
-  );
-
-  $("visibilityStatus").textContent=publicProfile
-    ?"🌸 Ton profil est public."
-    :"🔒 Ton profil n'est pas visible.";
+ $("identity").textContent=user.email||user.phoneNumber||"Compte Destinya";
+ $("verification").textContent=verified()?
+  "✅ Compte vérifié.":"⚠️ Compte non vérifié.";
+ $("verifyBtn").classList.toggle("hidden",!user.email||user.emailVerified);
+ $("visibility").textContent=publicProfile?
+  "🌸 Ton profil est public.":"🔒 Ton profil est privé.";
 }
 
-$("verifyEmailBtn").onclick=async()=>{
-  try{
-    await sendEmailVerification(user);
-    notice("E-mail de vérification envoyé.");
-  }catch(err){errorMessage(err);}
+// ENREGISTREMENT CORRIGÉ
+// Conserve createdAt et les champs existants.
+
+async function savePrivate(data){
+ if(!user)throw Error("Connecte-toi.");
+ const p=validProfile(data);
+ const r=doc(db,"Users",user.uid);
+ const old=await getDoc(r);
+ const previous=old.exists()?old.data():{};
+
+ const payload={
+  ...p,
+  profilTest:false,
+  createdAt:previous.createdAt||serverTimestamp(),
+  updatedAt:serverTimestamp()
+ };
+
+ await setDoc(r,payload,{merge:true});
+ privateProfile={...previous,...payload};
+ return p;
+}
+
+// CONNEXION
+
+$("registerForm").onsubmit=async e=>{
+ e.preventDefault();
+ try{
+  const p=profileFromForm("reg");
+  const result=await createUserWithEmailAndPassword(
+   auth,$("regEmail").value.trim(),$("regPassword").value
+  );
+  user=result.user;
+  window.destinyaUser=user;
+  await updateProfile(user,{displayName:p.pseudo});
+  await savePrivate(p);
+  await sendEmailVerification(user);
+  renderAccount();
+  showPage("account");
+  notice("Compte créé. Vérifie ton e-mail.");
+ }catch(e){fail(e)}
+};
+
+$("loginForm").onsubmit=async e=>{
+ e.preventDefault();
+ try{
+  await signInWithEmailAndPassword(
+   auth,$("loginEmail").value.trim(),$("loginPassword").value
+  );
+ }catch(e){fail(e)}
+};
+
+$("googleBtn").onclick=async()=>{
+ try{
+  const provider=new GoogleAuthProvider();
+  provider.setCustomParameters({prompt:"select_account"});
+  await signInWithPopup(auth,provider);
+ }catch(e){fail(e)}
+};
+
+async function prepareRecaptcha(){
+ if(recaptcha)return recaptcha;
+ recaptcha=new RecaptchaVerifier(auth,"recaptcha-container",{
+  size:"normal"
+ });
+ await recaptcha.render();
+ return recaptcha;
+}
+
+$("sendSms").onclick=async()=>{
+ try{
+  const phone=$("phoneNumber").value.trim();
+  if(!/^\+[1-9]\d{7,14}$/.test(phone))
+   throw Error("Utilise le format +33612345678.");
+  $("sendSms").disabled=true;
+  smsConfirmation=await signInWithPhoneNumber(
+   auth,phone,await prepareRecaptcha()
+  );
+  $("smsSection").classList.remove("hidden");
+  notice("Code SMS envoyé.");
+ }catch(e){
+  fail(e);
+  if(recaptcha){
+   try{recaptcha.clear()}catch(_){}
+   recaptcha=null;
+  }
+  $("recaptcha-container").replaceChildren();
+ }finally{$("sendSms").disabled=false}
+};
+
+$("confirmSms").onclick=async()=>{
+ try{
+  if(!smsConfirmation)throw Error("Demande d'abord un code.");
+  await smsConfirmation.confirm($("smsCode").value.trim());
+ }catch(e){fail(e)}
+};
+
+onAuthStateChanged(auth,async u=>{
+ user=u;
+ window.destinyaUser=u;
+ if(!u){
+  privateProfile=null;
+  publicProfile=null;
+  stopChat();
+  showPage("home");
+  return;
+ }
+ showPage("account");
+ try{
+  await loadPrivate();
+  await loadPublic();
+  renderAccount();
+  if(!privateProfile)notice("Complète ton profil pour commencer.");
+ }catch(e){fail(e)}
+});
+
+$("verifyBtn").onclick=async()=>{
+ try{
+  await sendEmailVerification(user);
+  notice("E-mail de vérification envoyé.");
+ }catch(e){fail(e)}
+};
+
+$("refreshBtn").onclick=async()=>{
+ try{
+  await refreshUser();
+  renderAccount();
+  notice("Vérification actualisée.");
+ }catch(e){fail(e)}
 };
 
 $("logoutBtn").onclick=async()=>{
-  try{
-    await signOut(auth);
-    notice("Déconnexion réussie.");
-  }catch(err){errorMessage(err);}
+ try{await signOut(auth)}catch(e){fail(e)}
 };
 
-// PROFILS PRIVES
+// PROFIL
 
-function fillProfileForm(){
-  if(!myProfile)return;
-
-  $("profilePseudo").value=myProfile.pseudo||"";
-  $("profileBirth").value=myProfile.birthdate||"";
-  $("profileCity").value=myProfile.ville||"";
-  $("profileGoal").value=myProfile.objectif||"serieux";
-  $("profileBio").value=myProfile.bio||"";
-}
-
-async function saveProfile(data){
-  if(!user)throw Error("Compte non connecté.");
-
-  const age=ageFromBirth(data.birthdate);
-  if(age<18||age>120){
-    throw Error("Destinya est réservé aux adultes.");
-  }
-
-  if(!data.pseudo||!data.ville){
-    throw Error("Pseudo et ville obligatoires.");
-  }
-
-  const payload={
-    pseudo:data.pseudo,
-    birthdate:data.birthdate,
-    age,
-    ville:data.ville,
-    objectif:data.objectif,
-    bio:data.bio||"",
-    profilTest:false,
-    createdAt:myProfile?.createdAt||serverTimestamp(),
-    updatedAt:serverTimestamp()
-  };
-
-  await setDoc(doc(db,"Users",user.uid),payload);
-  myProfile={...payload,age};
-
-}
-
-$("profileForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  try{
-    await saveProfile({
-      pseudo:$("profilePseudo").value.trim(),
-      birthdate:$("profileBirth").value,
-      ville:$("profileCity").value.trim(),
-      objectif:$("profileGoal").value,
-      bio:$("profileBio").value.trim()
-    });
-    notice("💕 Profil enregistré !");
-    showPage("account");
-  }catch(err){errorMessage(err);}
-});
+$("profileForm").onsubmit=async e=>{
+ e.preventDefault();
+ if(busy)return;
+ busy=true;
+ $("saveProfileBtn").disabled=true;
+ try{
+  const p=profileFromForm("profile");
+  await savePrivate(p);
+  await updateProfile(user,{displayName:p.pseudo});
+  notice("💕 Profil privé enregistré !");
+  showPage("account");
+  // Le profil public n'est pas modifié automatiquement.
+  // Cela évite qu'un refus public bloque la sauvegarde privée.
+ }catch(e){fail(e)}
+ finally{
+  busy=false;
+  $("saveProfileBtn").disabled=false;
+ }
+};
 
 // PUBLICATION
 
 async function publishProfile(){
-  if(!requireProfile())return;
+ if(!adult())throw Error("Complète et vérifie ton profil.");
+ const photos=publicProfile?.photos||
+  (publicProfile?.photoURL?[publicProfile.photoURL]:[]);
 
-  const photos=publicProfile?.photos||(
-    publicProfile?.photoURL?[publicProfile.photoURL]:[]
-  );
+ const payload={
+  pseudo:privateProfile.pseudo,
+  age:privateProfile.age,
+  ville:privateProfile.ville,
+  objectif:privateProfile.objectif,
+  bio:privateProfile.bio||"",
+  visible:true,
+  updatedAt:serverTimestamp()
+ };
+ if(photos.length){
+  payload.photos=photos.slice(0,6);
+  payload.photoURL=photos[0];
+ }
 
-  const payload={
-    pseudo:myProfile.pseudo,
-    age:myProfile.age,
-    ville:myProfile.ville,
-    objectif:myProfile.objectif,
-    bio:myProfile.bio,
-    visible:true,
-    updatedAt:serverTimestamp()
-  };
-
-  if(photos.length){
-    payload.photoURL=photos[0];
-    payload.photos=photos.slice(0,6);
-  }
-
-  await setDoc(doc(db,"publicProfiles",user.uid),payload);
-  publicProfile={...payload};
-  renderAccount();
+ await setDoc(doc(db,"publicProfiles",user.uid),payload);
+ publicProfile={...payload};
+ renderAccount();
 }
 
 $("publishBtn").onclick=async()=>{
-  try{
-    await publishProfile();
-    notice("🌸 Ton profil est maintenant visible !");
-  }catch(err){errorMessage(err);}
+ try{
+  await refreshUser();
+  await loadPrivate();
+  await publishProfile();
+  notice("🌸 Profil public mis à jour !");
+ }catch(e){fail(e)}
 };
 
 $("hideBtn").onclick=async()=>{
-  try{
-    if(!user)return;
-    await deleteDoc(doc(db,"publicProfiles",user.uid));
-    publicProfile=null;
-    renderAccount();
-    notice("Profil masqué.");
-  }catch(err){errorMessage(err);}
+ try{
+  if(!user)return;
+  await deleteDoc(doc(db,"publicProfiles",user.uid));
+  publicProfile=null;
+  renderAccount();
+  notice("Profil masqué.");
+ }catch(e){fail(e)}
 };
 
-// SIX PHOTOS DE PROFIL
+// PHOTOS
+
+function photoList(p){
+ if(Array.isArray(p?.photos)&&p.photos.length)
+  return p.photos.filter(x=>typeof x==="string");
+ return typeof p?.photoURL==="string"?[p.photoURL]:[];
+}
 
 function renderMyPhotos(){
-  $("myPhotos").replaceChildren();
-
-  const photos=publicProfile?.photos||(
-    publicProfile?.photoURL?[publicProfile.photoURL]:[]
-  );
-
-  photos.forEach(url=>{
-    $("myPhotos").appendChild(makeImage(url));
-  });
+ const box=$("myPhotos");
+ box.replaceChildren();
+ photoList(publicProfile).forEach(url=>{
+  const img=document.createElement("img");
+  img.src=url;
+  img.alt="Ma photo";
+  box.appendChild(img);
+ });
 }
 
 async function uploadImage(file,path){
-  if(!file||file.size>MAX_FILE||file.size<=0){
-    throw Error("Fichier invalide ou supérieur à 5 Mo.");
-  }
+ const types={
+  "image/jpeg":"jpg",
+  "image/png":"png",
+  "image/webp":"webp"
+ };
+ if(!file||!types[file.type]||
+    file.size<=0||file.size>MAX_SIZE)
+  throw Error("Photo JPG, PNG ou WebP de 5 Mo maximum.");
 
-  const allowed=[
-    "image/jpeg","image/png","image/webp"
-  ];
-
-  if(!allowed.includes(file.type)){
-    throw Error("Format non autorisé.");
-  }
-
-  const extension={
-    "image/jpeg":"jpg",
-    "image/png":"png",
-    "image/webp":"webp"
-  }[file.type];
-
-  const fileRef=ref(
-    storage,
-    path+"/"+crypto.randomUUID()+"."+extension
-  );
-
-  await uploadBytes(fileRef,file,{
-    contentType:file.type
-  });
-
-  return getDownloadURL(fileRef);
+ const r=ref(storage,path+"/"+crypto.randomUUID()+"."+types[file.type]);
+ await uploadBytes(r,file,{contentType:file.type});
+ return await getDownloadURL(r);
 }
 
 $("uploadPhotosBtn").onclick=async()=>{
-  try{
-    if(!requireProfile())return;
-
-    if(!publicProfile){
-      await publishProfile();
-    }
-
-    const files=[...$("profilePhotosInput").files];
-
-    let photos=[...(
-      publicProfile?.photos||
-      (publicProfile?.photoURL?[publicProfile.photoURL]:[])
-    )];
-
-    if(!files.length){
-      notice("Choisis une ou plusieurs photos.");
-      return;
-    }
-
-    if(photos.length+files.length>6){
-      notice("Maximum 6 photos par profil.");
-      return;
-    }
-
-    $("uploadPhotosBtn").disabled=true;
-
-    for(const file of files){
-      const url=await uploadImage(
-        file,
-        "profilePhotos/"+user.uid
-      );
-      photos.push(url);
-    }
-
-    await setDoc(
-      doc(db,"publicProfiles",user.uid),
-      {
-        photos,
-        photoURL:photos[0],
-        updatedAt:serverTimestamp()
-      },
-      {merge:true}
-    );
-
-    publicProfile={
-      ...publicProfile,
-      photos,
-      photoURL:photos[0]
-    };
-
-    renderMyPhotos();
-    notice("📸 Photos enregistrées !");
-  }catch(err){errorMessage(err);}
-  finally{$("uploadPhotosBtn").disabled=false;}
+ if(busy)return;
+ busy=true;
+ $("uploadPhotosBtn").disabled=true;
+ try{
+  if(!adult())throw Error("Complète et vérifie ton profil.");
+  if(!publicProfile)throw Error("Rends d'abord ton profil visible.");
+  const files=[...$("photoFiles").files];
+  const photos=photoList(publicProfile);
+  if(!files.length)throw Error("Sélectionne des photos.");
+  if(files.length+photos.length>6)
+   throw Error("Maximum 6 photos.");
+  for(const file of files){
+   const url=await uploadImage(file,"profilePhotos/"+user.uid);
+   photos.push(url);
+  }
+  await setDoc(doc(db,"publicProfiles",user.uid),{
+   photos,
+   photoURL:photos[0],
+   updatedAt:serverTimestamp()
+  },{merge:true});
+  publicProfile={...publicProfile,photos,photoURL:photos[0]};
+  renderMyPhotos();
+  $("photoFiles").value="";
+  notice("📸 Photos enregistrées !");
+ }catch(e){fail(e)}
+ finally{
+  busy=false;
+  $("uploadPhotosBtn").disabled=false;
+ }
 };
 
-// DECOUVERTE ET FILTRES
+// DÉCOUVERTE ET FILTRES
+// Pagination pour éviter de charger tous les profils.
 
-async function loadProfiles(){
-  try{
-    if(!requireProfile())return;
+async function loadProfiles(reset=true){
+ if(loading||!adult())return;
+ loading=true;
+ try{
+  if(reset){
+   profiles=[];
+   profileIndex=0;
+   cursor=null;
+   hasMore=true;
+  }
+  if(!hasMore)return;
 
-    $("discoverStatus").textContent="Chargement...";
+  const base=collection(db,"publicProfiles");
+  const q=cursor?
+   query(base,startAfter(cursor),limit(PAGE_SIZE)):
+   query(base,limit(PAGE_SIZE));
 
-    const result=await getDocs(
-      collection(db,"publicProfiles")
-    );
+  const snap=await getDocs(q);
+  if(snap.docs.length)cursor=snap.docs[snap.docs.length-1];
+  hasMore=snap.docs.length===PAGE_SIZE;
 
-    const min=Number($("minAge").value)||18;
-    const max=Number($("maxAge").value)||120;
-    const city=$("filterCity").value.trim().toLowerCase();
-    const goal=$("filterGoal").value;
+  const min=Number($("minAge").value)||18;
+  const max=Number($("maxAge").value)||120;
+  const city=$("filterCity").value.trim().toLowerCase();
+  const goal=$("filterGoal").value;
 
-    if(min>max){
-      notice("L'âge minimum dépasse l'âge maximum.");
-      return;
-    }
+  if(min>max)throw Error("Âges incorrects.");
 
-    profiles=result.docs
-      .map(d=>({id:d.id,...d.data()}))
-      .filter(p=>
-        p.id!==user.uid &&
-        p.visible===true &&
-        p.age>=min &&
-        p.age<=max &&
-        (!city||(p.ville||"").toLowerCase().includes(city)) &&
-        (!goal||p.objectif===goal)
-      );
-
-    profileIndex=0;
-    renderDiscovery();
-  }catch(err){errorMessage(err);}
+  for(const d of snap.docs){
+   const p=d.data();
+   if(d.id===user.uid||p.visible!==true||
+      p.age<min||p.age>max||
+      (city&&!String(p.ville||"").toLowerCase().includes(city))||
+      (goal&&p.objectif!==goal))continue;
+   profiles.push({id:d.id,...p});
+  }
+  renderDiscovery();
+ }catch(e){fail(e)}
+ finally{loading=false}
 }
 
 function renderDiscovery(){
-  const p=profiles[profileIndex];
+ const p=profiles[profileIndex];
+ $("swipeCard").classList.toggle("hidden",!p);
+ if(!p){
+  $("discoverStatus").textContent="Aucun profil disponible avec ces filtres.";
+  return;
+ }
+ $("discoverStatus").textContent=
+  `Profil ${profileIndex+1} sur ${profiles.length}`;
 
-  if(!p){
-    $("swipeCard").classList.add("hidden");
-    $("discoverStatus").textContent=
-      "Aucun autre profil avec ces filtres.";
-    return;
-  }
+ $("memberName").textContent=(p.pseudo||"Membre")+", "+p.age+" ans";
+ $("memberDetails").textContent=(p.ville||"")+" • "+({
+  serieux:"Relation sérieuse",
+  amitie:"Amitié",
+  sans_engagement:"Sans engagement"
+ }[p.objectif]||"");
+ $("memberBio").textContent=p.bio||"";
 
-  $("swipeCard").classList.remove("hidden");
-  $("discoverStatus").textContent=
-    (profileIndex+1)+" / "+profiles.length;
-
-  safeText($("memberName"),p.pseudo+", "+p.age+" ans");
-  safeText($("memberInfo"),p.ville+" • "+goalLabel(p.objectif));
-  safeText($("memberBio"),p.bio||"");
-
-  const photos=p.photos||(
-    p.photoURL?[p.photoURL]:[]
-  );
-
-  $("memberPhoto").src=photos[0]||
-    "data:image/svg+xml,"+
-    encodeURIComponent(
-      '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400">'+
-      '<rect width="400" height="400" fill="#ffe2e9"/>'+
-      '<text x="200" y="225" text-anchor="middle" font-size="110">💕</text>'+
-      '</svg>'
-    );
-
-  $("memberGallery").replaceChildren();
-
-  photos.slice(1,6).forEach(url=>{
-    $("memberGallery").appendChild(makeImage(url));
-  });
+ const photos=photoList(p);
+ const placeholder="data:image/svg+xml,"+encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="#ffe2e9"/><text x="200" y="230" font-size="110" text-anchor="middle">💕</text></svg>'
+ );
+ $("memberPhoto").src=photos[0]||placeholder;
+ $("memberPhotos").replaceChildren();
+ photos.slice(1,6).forEach(url=>{
+  const img=document.createElement("img");
+  img.src=url;
+  img.alt="Photo du membre";
+  $("memberPhotos").appendChild(img);
+ });
 }
 
-function nextProfile(){
-  profileIndex++;
-  renderDiscovery();
+async function nextProfile(){
+ profileIndex++;
+ if(profileIndex>=profiles.length&&hasMore)
+  await loadProfiles(false);
+ else renderDiscovery();
 }
+
+function matchId(a,b){return [a,b].sort().join("_")}
 
 async function likeProfile(){
-  try{
-    if(!requireProfile())return;
-
-    const target=profiles[profileIndex];
-    if(!target)return;
-
-    const mineId=user.uid+"_"+target.id;
-    const otherId=target.id+"_"+user.uid;
-
-    await setDoc(doc(db,"likes",mineId),{
-      from:user.uid,
-      to:target.id,
-      createdAt:serverTimestamp()
+ if(busy||!adult())return;
+ const p=profiles[profileIndex];
+ if(!p)return;
+ busy=true;
+ $("likeBtn").disabled=true;
+ try{
+  const mine=doc(db,"likes",user.uid+"_"+p.id);
+  const previous=await getDoc(mine);
+  if(!previous.exists()){
+   await setDoc(mine,{
+    from:user.uid,to:p.id,createdAt:serverTimestamp()
+   });
+  }
+  const reverse=await getDoc(doc(db,"likes",p.id+"_"+user.uid));
+  if(reverse.exists()){
+   const id=matchId(user.uid,p.id);
+   const matchRef=doc(db,"matches",id);
+   const old=await getDoc(matchRef);
+   if(!old.exists()){
+    await setDoc(matchRef,{
+     members:[user.uid,p.id].sort(),
+     createdAt:serverTimestamp()
     });
-
-    const reciprocal=await getDoc(
-      doc(db,"likes",otherId)
-    );
-
-    if(reciprocal.exists()){
-      const id=matchIdFor(user.uid,target.id);
-      await setDoc(doc(db,"matches",id),{
-        members:[user.uid,target.id].sort(),
-        createdAt:serverTimestamp()
-      });
-
-      notice("❤️ C'est un match avec "+target.pseudo+" !");
-    }else{
-      notice("💕 Like envoyé !");
-    }
-
-    nextProfile();
-  }catch(err){errorMessage(err);}
+   }
+   notice("❤️ C'est un match !");
+  }else notice("💕 Like envoyé !");
+  await nextProfile();
+ }catch(e){fail(e)}
+ finally{
+  busy=false;
+  $("likeBtn").disabled=false;
+ }
 }
 
-$("searchBtn").onclick=loadProfiles;
+$("searchBtn").onclick=()=>loadProfiles(true);
 $("passBtn").onclick=nextProfile;
 $("likeBtn").onclick=likeProfile;
 
-// SWIPE TACTILE
-
-let touchStartX=0;
-let touchStartY=0;
-
+let touchX=0,touchY=0;
 $("swipeCard").addEventListener("touchstart",e=>{
-  touchStartX=e.changedTouches[0].screenX;
-  touchStartY=e.changedTouches[0].screenY;
+ touchX=e.changedTouches[0].screenX;
+ touchY=e.changedTouches[0].screenY;
 },{passive:true});
-
 $("swipeCard").addEventListener("touchend",e=>{
-  const dx=e.changedTouches[0].screenX-touchStartX;
-  const dy=e.changedTouches[0].screenY-touchStartY;
-
-  if(Math.abs(dx)<90||Math.abs(dy)>Math.abs(dx))return;
-
-  if(dx>0)likeProfile();
-  else nextProfile();
+ const dx=e.changedTouches[0].screenX-touchX;
+ const dy=e.changedTouches[0].screenY-touchY;
+ if(Math.abs(dx)<90||Math.abs(dy)>Math.abs(dx))return;
+ if(dx>0)likeProfile();
+ else nextProfile();
 },{passive:true});
 
 // MATCHS
 
 async function loadMatches(){
-  try{
-    if(!requireProfile())return;
-
-    $("matchesList").textContent="Chargement...";
-
-    const result=await getDocs(
-      query(
-        collection(db,"matches"),
-        where("members","array-contains",user.uid)
-      )
-    );
-
-    $("matchesList").replaceChildren();
-
-    if(result.empty){
-      $("matchesList").textContent="Pas encore de matchs 💕";
-      return;
-    }
-
-    for(const matchDoc of result.docs){
-      const data=matchDoc.data();
-      const otherId=data.members.find(id=>id!==user.uid);
-
-      let name="Membre Destinya";
-
-      try{
-        const p=await getDoc(
-          doc(db,"publicProfiles",otherId)
-        );
-        if(p.exists())name=p.data().pseudo||name;
-      }catch(_){}
-
-      const item=document.createElement("div");
-      item.className="match-item";
-      item.textContent="❤️ "+name+" — Ouvrir la discussion";
-      item.onclick=()=>openChat(matchDoc.id,name);
-      $("matchesList").appendChild(item);
-    }
-  }catch(err){errorMessage(err);}
-}
-
-// MESSAGERIE
-
-function openChat(matchId,name){
-  currentMatch=matchId;
-  safeText($("chatTitle"),"💬 "+name);
-  showPage("chat");
-}
-
-async function loadChat(){
-  if(!currentMatch||!user)return;
-
-  try{
-    const result=await getDocs(
-      query(
-        collection(db,"matches",currentMatch,"messages"),
-        orderBy("createdAt","asc")
-      )
-    );
-
-    const box=$("chatMessages");
-    box.replaceChildren();
-
-    result.forEach(d=>{
-      const msg=d.data();
-      const bubble=document.createElement("div");
-
-      bubble.className="bubble"+
-        (msg.senderId===user.uid?" mine":"");
-
-      if(msg.type==="image"||msg.type==="gif"){
-        const img=makeImage(msg.imageUrl);
-        bubble.appendChild(img);
-      }else if(msg.type==="audio"){
-        const audio=document.createElement("audio");
-        audio.controls=true;
-        audio.src=msg.audioUrl;
-        bubble.appendChild(audio);
-      }else{
-        bubble.textContent=msg.text||"";
-      }
-
-      box.appendChild(bubble);
-    });
-
-    box.scrollTop=box.scrollHeight;
-  }catch(err){
-    clearInterval(chatTimer);
-    chatTimer=null;
-    errorMessage(err);
+ if(!adult())return;
+ const box=$("matchesList");
+ box.textContent="Chargement...";
+ try{
+  const snap=await getDocs(query(
+   collection(db,"matches"),
+   where("members","array-contains",user.uid)
+  ));
+  box.replaceChildren();
+  if(snap.empty){
+   box.textContent="Aucun match pour le moment 💗";
+   return;
   }
+  for(const m of snap.docs){
+   const other=m.data().members.find(id=>id!==user.uid);
+   let name="Membre Destinya";
+   try{
+    const p=await getDoc(doc(db,"publicProfiles",other));
+    if(p.exists())name=p.data().pseudo||name;
+   }catch(_){}
+   const div=document.createElement("div");
+   div.className="match";
+   const btn=document.createElement("button");
+   btn.textContent="💬 Discuter avec "+name;
+   btn.onclick=()=>openChat(m.id,name);
+   div.appendChild(btn);
+   box.appendChild(div);
+  }
+ }catch(e){fail(e)}
 }
 
-async function sendChatMessage(payload){
-  if(!requireProfile()||!currentMatch)return;
+// CHAT
 
-  await addDoc(
-    collection(db,"matches",currentMatch,"messages"),
-    {
-      senderId:user.uid,
-      createdAt:serverTimestamp(),
-      ...payload
+function stopChat(){
+ if(unsubscribe){
+  unsubscribe();
+  unsubscribe=null;
+ }
+ currentMatch=null;
+}
+
+async function openChat(id,name){
+ try{
+  const s=await getDoc(doc(db,"matches",id));
+  if(!s.exists()||!s.data().members.includes(user.uid))
+   throw Error("Conversation inaccessible.");
+  stopChat();
+  currentMatch=id;
+  $("chatTitle").textContent="💬 "+name;
+  showPage("chat");
+
+  unsubscribe=onSnapshot(query(
+   collection(db,"matches",id,"messages"),
+   orderBy("createdAt","desc"),
+   limit(50)
+  ),snap=>{
+   const box=$("chatMessages");
+   box.replaceChildren();
+   [...snap.docs].reverse().forEach(d=>{
+    const msg=d.data();
+    const bubble=document.createElement("div");
+    bubble.className="bubble"+(msg.senderId===user.uid?" mine":"");
+    if((msg.type==="image"||msg.type==="gif")&&
+       typeof msg.imageUrl==="string"){
+     const img=document.createElement("img");
+     img.src=msg.imageUrl;
+     img.alt="Image envoyée";
+     bubble.appendChild(img);
+    }else if(msg.type==="audio"&&
+             typeof msg.audioUrl==="string"){
+     const audio=document.createElement("audio");
+     audio.controls=true;
+     audio.src=msg.audioUrl;
+     bubble.appendChild(audio);
+    }else{
+     bubble.textContent=msg.text||"";
     }
-  );
-
-  await loadChat();
+    box.appendChild(bubble);
+   });
+   box.scrollTop=box.scrollHeight;
+  },fail);
+ }catch(e){fail(e)}
 }
 
-$("chatForm").addEventListener("submit",async e=>{
-  e.preventDefault();
+async function sendMessage(data){
+ if(!adult()||!currentMatch)
+  throw Error("Conversation inaccessible.");
+ await addDoc(collection(db,"matches",currentMatch,"messages"),{
+  senderId:user.uid,
+  createdAt:serverTimestamp(),
+  ...data
+ });
+}
 
-  const text=$("chatText").value.trim();
-  if(!text)return;
-
-  try{
-    await sendChatMessage({text});
-    $("chatText").value="";
-  }catch(err){errorMessage(err);}
-});
-
-// PHOTO DANS LE CHAT
+$("chatForm").onsubmit=async e=>{
+ e.preventDefault();
+ const value=$("chatText").value.trim();
+ if(!value)return;
+ try{
+  await sendMessage({text:value});
+  $("chatText").value="";
+ }catch(e){fail(e)}
+};
 
 $("sendPhotoBtn").onclick=async()=>{
-  try{
-    const file=$("chatPhotoInput").files[0];
-    if(!file||!currentMatch)return;
-
-    const url=await uploadImage(
-      file,
-      "matchPhotos/"+currentMatch
-    );
-
-    await sendChatMessage({
-      text:"",
-      type:"image",
-      imageUrl:url
-    });
-
-    $("chatPhotoInput").value="";
-    notice("📸 Photo envoyée.");
-  }catch(err){errorMessage(err);}
+ try{
+  const file=$("chatPhoto").files[0];
+  if(!file)throw Error("Choisis une photo.");
+  const url=await uploadImage(file,"matchPhotos/"+currentMatch);
+  await sendMessage({text:"",type:"image",imageUrl:url});
+  $("chatPhoto").value="";
+  notice("📸 Photo envoyée.");
+ }catch(e){fail(e)}
 };
-
-// GIF PAR LIEN DIRECT
 
 $("sendGifBtn").onclick=async()=>{
-  try{
-    const url=$("gifUrl").value.trim();
-    const parsed=new URL(url);
-
-    if(parsed.protocol!=="https:"||
-       !/\.gif(?:$|[?#])/i.test(url)){
-      notice("Utilise un lien HTTPS direct vers un fichier .gif.");
-      return;
-    }
-
-    await sendChatMessage({
-      text:"",
-      type:"gif",
-      imageUrl:url
-    });
-
-    $("gifUrl").value="";
-    notice("GIF envoyé !");
-  }catch(err){errorMessage(err);}
+ try{
+  const url=$("gifUrl").value.trim();
+  const parsed=new URL(url);
+  if(parsed.protocol!=="https:"||!/\.gif(?:[?#]|$)/i.test(url))
+   throw Error("Utilise un lien HTTPS direct vers un GIF.");
+  await sendMessage({text:"",type:"gif",imageUrl:url});
+  $("gifUrl").value="";
+  notice("GIF envoyé.");
+ }catch(e){fail(e)}
 };
 
-// MESSAGES VOCAUX
+// VOCAL
 
 $("recordBtn").onclick=async()=>{
+ try{
+  if(!adult()||!currentMatch)throw Error("Ouvre une conversation.");
+  if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder)
+   throw Error("Micro non disponible sur ce navigateur.");
+
+  stream=await navigator.mediaDevices.getUserMedia({audio:true});
+  const id=currentMatch;
+  chunks=[];
+  recorder=new MediaRecorder(stream);
+  recorder.ondataavailable=e=>{
+   if(e.data.size)chunks.push(e.data);
+  };
+  recorder.onstop=async()=>{
+   try{
+    stream.getTracks().forEach(t=>t.stop());
+    const blob=new Blob(chunks,{type:recorder.mimeType});
+    if(!blob.size||blob.size>MAX_SIZE)
+     throw Error("Vocal limité à 5 Mo.");
+    const ext=blob.type.includes("mp4")?"mp4":"webm";
+    const r=ref(storage,
+     "matchPhotos/"+id+"/"+crypto.randomUUID()+"."+ext
+    );
+    await uploadBytes(r,blob,{contentType:blob.type});
+    const url=await getDownloadURL(r);
+    await sendMessage({text:"",type:"audio",audioUrl:url});
+    notice("🎤 Vocal envoyé.");
+   }catch(e){fail(e)}
+   finally{
+    $("recordBtn").disabled=false;
+    $("stopBtn").disabled=true;
+   }
+  };
+  recorder.start();
+  $("recordBtn").disabled=true;
+  $("stopBtn").disabled=false;
+  notice("🎙️ Enregistrement en cours...");
+ }catch(e){fail(e)}
+};
+
+$("stopBtn").onclick=()=>{
+ if(recorder?.state==="recording")recorder.stop();
+};
+
+// NAVIGATION
+
+window.destinyaPageOpened=async id=>{
+ if(!user)return;
+ if(id==="account"){
   try{
-    if(!currentMatch||!requireProfile())return;
-
-    if(!navigator.mediaDevices?.getUserMedia||
-       !window.MediaRecorder){
-      notice("Enregistrement vocal non pris en charge.");
-      return;
-    }
-
-    recordStream=await navigator.mediaDevices.getUserMedia({
-      audio:true
-    });
-
-    chunks=[];
-    recorder=new MediaRecorder(recordStream);
-
-    recorder.ondataavailable=e=>{
-      if(e.data.size>0)chunks.push(e.data);
-    };
-
-    recorder.onstop=async()=>{
-      try{
-        const blob=new Blob(chunks,{
-          type:recorder.mimeType||"audio/webm"
-        });
-
-        recordStream.getTracks().forEach(t=>t.stop());
-        recordStream=null;
-
-        if(blob.size>MAX_FILE){
-          throw Error("Vocal trop volumineux (5 Mo maximum).");
-        }
-
-        const extension=blob.type.includes("mp4")?"mp4":"webm";
-        const fileRef=ref(
-        
-          storage,
-          "matchPhotos/"+currentMatch+"/"+
-          crypto.randomUUID()+"."+extension
-        );
-
-        await uploadBytes(fileRef,blob,{
-          contentType:blob.type
-        });
-
-        const url=await getDownloadURL(fileRef);
-
-        await sendChatMessage({
-          text:"",
-          type:"audio",
-          audioUrl:url
-        });
-
-        notice("🎤 Vocal envoyé !");
-      }catch(err){
-        errorMessage(err);
-      }finally{
-        $("recordBtn").disabled=false;
-        $("stopRecordBtn").disabled=true;
-      }
-    };
-
-    recorder.start();
-
-    $("recordBtn").disabled=true;
-    $("stopRecordBtn").disabled=false;
-    notice("🎙️ Enregistrement en cours...");
-
-  }catch(err){
-    errorMessage(err);
+   await loadPrivate();
+   await loadPublic();
+   renderAccount();
+  }catch(e){fail(e)}
+ }
+ if(id==="profile"){
+  try{
+   await loadPrivate();
+   await loadPublic();
+  }catch(e){fail(e)}
+ }
+ if(id==="discover"){
+  if(!adult()){
+   notice("Complète ton profil et vérifie ton compte.");
+   return;
   }
-};
-
-$("stopRecordBtn").onclick=()=>{
-  if(recorder?.state==="recording"){
-    recorder.stop();
-  }
-};
-
-// CHANGEMENT DE PAGE
-
-window.pageOpened=async id=>{
-  clearInterval(chatTimer);
-  chatTimer=null;
-
-  if(!user)return;
-
-  if(id==="account"){
-    try{
-      await loadMyProfile();
-      await loadPublicProfile();
-      renderAccount();
-    }catch(err){
-      errorMessage(err);
-    }
-  }
-
-  if(id==="profile"){
-    try{
-      await loadMyProfile();
-      await loadPublicProfile();
-    }catch(err){
-      errorMessage(err);
-    }
-  }
-
-  if(id==="discover"){
-    await loadProfiles();
-  }
-
-  if(id==="matches"){
-    await loadMatches();
-  }
-
-  if(id==="chat"){
-    await loadChat();
-    chatTimer=setInterval(loadChat,5000);
-  }
+  await loadProfiles(true);
+ }
+ if(id==="matches")await loadMatches();
+ if(id!=="chat"&&currentMatch)stopChat();
 };
 
 </script>
