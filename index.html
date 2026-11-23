@@ -1375,6 +1375,46 @@ onAuthStateChanged(
  }
 );
 
+let verificationEnCours = false;
+
+async function verifierEmailAutomatiquement() {
+  const user = auth.currentUser;
+
+  if (!user || user.emailVerified || verificationEnCours) {
+    return;
+  }
+
+  verificationEnCours = true;
+
+  try {
+    await refreshAuth(user);
+    renderAccount(user);
+
+    if (user.emailVerified) {
+      notice("✅ Adresse e-mail vérifiée !");
+      await ensureProfile(user);
+    }
+  } catch (error) {
+    console.error("Vérification e-mail :", error);
+  } finally {
+    verificationEnCours = false;
+  }
+}
+
+window.addEventListener(
+  "focus",
+  verifierEmailAutomatiquement
+);
+
+document.addEventListener(
+  "visibilitychange",
+  () => {
+    if (!document.hidden) {
+      verifierEmailAutomatiquement();
+    }
+  }
+);
+ 
 /* =========================================
    VÉRIFICATION E-MAIL
 ========================================= */
