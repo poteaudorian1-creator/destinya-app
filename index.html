@@ -1932,13 +1932,31 @@ try {
 }
 
   
+const likeRef = doc(
+  db, "likes", user.uid + "_" + profile.id
+);
+
+let existingLike;
+
 try {
-  await setDoc(likeRef, {
-    from: user.uid,
-    to: profile.id,
-    createdAt: serverTimestamp()
-  });
+  existingLike = await getDoc(likeRef);
 } catch (error) {
+  throw Error("LECTURE LIKE REFUSÉE : " + error.message);
+}
+
+if (!existingLike.exists()) {
+  try {
+    await setDoc(likeRef, {
+      from: user.uid,
+      to: profile.id,
+      createdAt: serverTimestamp()
+    });
+  } catch (error) {
+    throw Error("ÉCRITURE LIKE REFUSÉE : " + error.message);
+  }
+}
+  
+
   throw Error("ÉCRITURE LIKE REFUSÉE : " + error.message);
 }
   
@@ -1946,10 +1964,7 @@ try {
     }
   } catch (error) {
     throw Error(
-      "Étape lecture ou écriture du like : " +
-      error.message
-    );
-  }
+  
 
 const reciprocal = await getDoc(
   doc(db, "likes", profile.id + "_" + user.uid)
