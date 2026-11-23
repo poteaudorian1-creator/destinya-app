@@ -397,7 +397,20 @@ Retour
 <!-- PAGE DES FILTRES -->
 <section id="searchFilters" class="hidden">
   <h2>💕 Mes filtres</h2>
-  <div id="searchFiltersContent"></div>
+  <label for="filtreGenre">Je recherche :</label>
+<select id="filtreGenre">
+  <option value="tous">Tout le monde</option>
+  <option value="homme">Hommes</option>
+  <option value="femme">Femmes</option>
+</select>
+ 
+<label for="ageMin">Âge minimum :</label>
+<input type="number" id="ageMin"
+       min="18" max="100" value="18">
+
+<label for="ageMax">Âge maximum :</label>
+<input type="number" id="ageMax"
+       min="18" max="100" value="100">
 
   <button class="primary"
     id="applySearchFilters">
@@ -412,20 +425,7 @@ Retour
  
 <section id="profiles" class="hidden">
 <h2>💕 Découvrir</h2>
- <label for="filtreGenre">Je recherche :</label>
-<select id="filtreGenre">
-  <option value="tous">Tout le monde</option>
-  <option value="homme">Hommes</option>
-  <option value="femme">Femmes</option>
-</select>
  
-<label for="ageMin">Âge minimum :</label>
-<input type="number" id="ageMin"
-       min="18" max="100" value="18">
-
-<label for="ageMax">Âge maximum :</label>
-<input type="number" id="ageMax"
-       min="18" max="100" value="100">
  
  <p id="profileCount"></p>
 <div id="swipeCard" class="card hidden">
