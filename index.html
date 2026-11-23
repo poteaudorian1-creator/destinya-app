@@ -1532,6 +1532,12 @@ $("editProfile").addEventListener(
    $("editBio").value =
     profile.bio || "";
 
+$("editGenre").value =
+  profile.genre || "";
+
+$("editOrientation").value =
+  profile.orientation || "";
+ 
    const publicSnapshot = await getDoc(
     doc(
      db,
