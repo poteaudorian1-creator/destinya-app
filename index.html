@@ -2996,6 +2996,35 @@ $("backToMessages").addEventListener("click", () => {
  displayMatches("messages");
 });
 
+document.getElementById("detectLocation")
+.addEventListener("click", () => {
+  const status = document.getElementById("locationStatus");
+
+  if (!navigator.geolocation) {
+    status.textContent = "❌ Localisation non disponible.";
+    return;
+  }
+
+  status.textContent = "📍 Recherche de votre position...";
+
+  navigator.geolocation.getCurrentPosition(
+    position => {
+      status.textContent = "✅ Position détectée !";
+      console.log("Position détectée", position.coords.accuracy);
+    },
+    error => {
+      status.textContent =
+        "❌ Impossible de récupérer la position : " +
+        error.message;
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 15000,
+      maximumAge: 0
+    }
+  );
+});
+ 
 </script>
 </body>
 </html>
