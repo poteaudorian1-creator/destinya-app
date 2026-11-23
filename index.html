@@ -1861,6 +1861,16 @@ async function loadRealProfiles() {
 
   for (const item of snapshot.docs) {
    const profile = item.data();
+   
+const filtreGenre = $("filtreGenre").value;
+
+if (
+  filtreGenre !== "tous" &&
+  profile.genre !== filtreGenre
+) {
+  continue;
+}
+   
 
    if (item.id === user.uid) continue;
    if (profile.visible !== true) continue;
@@ -1889,6 +1899,19 @@ async function loadRealProfiles() {
 }
 
 window.loadRealProfiles = loadRealProfiles;
+ 
+$("filtreGenre").addEventListener("change", async () => {
+  if (loadingProfiles) return;
+
+  profileIndex = 0;
+  activeProfiles = [];
+  lastProfileDoc = null;
+  moreProfilesAvailable = true;
+
+  renderProfile();
+  await loadRealProfiles();
+});
+ 
 
 $("discoverReal").addEventListener("click", async () => {
  try {
