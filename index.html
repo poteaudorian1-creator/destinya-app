@@ -1940,11 +1940,9 @@ async function saveRealLike(profile) {
     );
   }
 
-
-
-const reciprocal = {
-  exists: () => false
-};
+const reciprocal = await getDoc(
+  doc(db, "likes", profile.id + "_" + user.uid)
+);
 
 
   let matched = false;
