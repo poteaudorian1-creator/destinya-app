@@ -1923,8 +1923,14 @@ async function saveRealLike(profile) {
   );
 
  
-  try {
-    const existingLike = await getDoc(likeRef);
+let existingLike;
+
+try {
+  existingLike = await getDoc(likeRef);
+} catch (error) {
+  throw Error("LECTURE LIKE REFUSÉE : " + error.message);
+}
+  
 
     if (!existingLike.exists()) {
       await setDoc(likeRef, {
