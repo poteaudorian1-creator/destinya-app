@@ -1978,24 +1978,46 @@ $("ageMax").addEventListener("change", actualiserFiltreAge);
  
  
 
+
 $("discoverReal").addEventListener("click", async () => {
- try {
-  await requireAdultProfile();
-
-  profileIndex = 0;
-  activeProfiles = [];
-  lastProfileDoc = null;
-  moreProfilesAvailable = true;
-  returnPage = "account";
-
-  showPage("profiles");
-  renderProfile();
-  await loadRealProfiles();
-
- } catch (error) {
-  notice(errorText(error));
- }
+  try {
+    await requireAdultProfile();
+    returnPage = "account";
+    showPage("searchFilters");
+  } catch (error) {
+    notice(errorText(error));
+  }
 });
+
+$("applySearchFilters").addEventListener("click", async () => {
+  try {
+    const min = Number($("ageMin").value);
+    const max = Number($("ageMax").value);
+
+    if (
+      !Number.isInteger(min) ||
+      !Number.isInteger(max) ||
+      min < 18 ||
+      max > 100 ||
+      min > max
+    ) {
+      notice("Vérifie la tranche d'âge.");
+      return;
+    }
+
+    profileIndex = 0;
+    activeProfiles = [];
+    lastProfileDoc = null;
+    moreProfilesAvailable = true;
+
+    showPage("profiles");
+    renderProfile();
+    await loadRealProfiles();
+  } catch (error) {
+    notice(errorText(error));
+  }
+});
+ 
 
 $("loadMore").addEventListener("click", async () => {
  const previous = activeProfiles.length;
