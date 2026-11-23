@@ -1930,13 +1930,18 @@ try {
 } catch (error) {
   throw Error("LECTURE LIKE REFUSÉE : " + error.message);
 }
-  
 
-    if (!existingLike.exists()) {
-      await setDoc(likeRef, {
-        from: user.uid,
-        to: profile.id,
-        createdAt: serverTimestamp()
+  
+try {
+  await setDoc(likeRef, {
+    from: user.uid,
+    to: profile.id,
+    createdAt: serverTimestamp()
+  });
+} catch (error) {
+  throw Error("ÉCRITURE LIKE REFUSÉE : " + error.message);
+}
+  
       });
     }
   } catch (error) {
