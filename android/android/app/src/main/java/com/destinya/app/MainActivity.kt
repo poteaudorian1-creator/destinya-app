@@ -28,7 +28,7 @@ class MainActivity : Activity() {
             .setAcceptCookie(true)
 
         webView.loadUrl(
-            "https://poteaudorian1-creator.github.io/destinya-app/"
+            "https://destinya-app.pages.dev/"
         )
     }
 
