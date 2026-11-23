@@ -876,6 +876,14 @@ function formProfile(editing) {
   editing ? "editObjectif" : "objectif"
  ).value;
 
+ const genre = editing
+  ? $("editGenre").value
+  : "";
+
+ const orientation = editing
+  ? $("editOrientation").value
+  : "";
+ 
  const bio = editing
   ? $("editBio").value.trim()
   : "";
