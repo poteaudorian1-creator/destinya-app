@@ -1936,6 +1936,30 @@ $("filtreGenre").addEventListener("change", async () => {
   await loadRealProfiles();
 });
  
+async function actualiserFiltreAge() {
+  if (loadingProfiles) return;
+
+  const min = Number($("ageMin").value);
+  const max = Number($("ageMax").value);
+
+  if (min < 18 || max > 100 || min > max) {
+    notice("Vérifie la tranche d'âge.");
+    return;
+  }
+
+  profileIndex = 0;
+  activeProfiles = [];
+  lastProfileDoc = null;
+  moreProfilesAvailable = true;
+
+  renderProfile();
+  await loadRealProfiles();
+}
+
+$("ageMin").addEventListener("change", actualiserFiltreAge);
+$("ageMax").addEventListener("change", actualiserFiltreAge);
+ 
+ 
 
 $("discoverReal").addEventListener("click", async () => {
  try {
