@@ -1995,29 +1995,119 @@ const reciprocal = await getDoc(
   actionBusy = false;
   await nextProfile();
 
-  notice(
-   matched
-    ? "💕 C'est un match ! Ouvre tes messages."
-    : "❤️ Like enregistré !"
-  );
-
- 
-} catch (error) {
-  console.error("Erreur LIKE Destinya :", error);
-  notice(
-    "Erreur LIKE : " +
-    (error.code || "inconnue") +
-    " — " +
-    (error.message || "aucun détail")
-  );
   
- } finally {
-  actionBusy = false;
-  $("likeButton").disabled = false;
- }
+async function saveRealLike(profile) {
+  const user = auth.currentUser;
+
+  if (!user || !profile || actionBusy) return;
+
+  actionBusy = true;
+  $("likeButton").disabled = true;
+
+  try {
+    await requireAdultProfile();
+
+    if (profile.id === user.uid) {
+      throw Error("Tu ne peux pas liker ton profil.");
+    }
+
+    let target;
+    try {
+      target = await getDoc(
+        doc(db, "publicProfiles", profile.id)
+      );
+    } catch (error) {
+      throw Error("LECTURE PROFIL REFUSÉE : " + error.message);
+    }
+
+    if (!target.exists() || target.data().visible !== true) {
+      throw Error("Ce profil n'est plus disponible.");
+    }
+
+    const likeRef = doc(
+      db, "likes", user.uid + "_" + profile.id
+    );
+
+    let existingLike;
+    try {
+      existingLike = await getDoc(likeRef);
+    } catch (error) {
+      throw Error("LECTURE LIKE REFUSÉE : " + error.message);
+    }
+
+    if (!existingLike.exists()) {
+      try {
+        await setDoc(likeRef, {
+          from: user.uid,
+          to: profile.id,
+          createdAt: serverTimestamp()
+        });
+      } catch (error) {
+        throw Error("ÉCRITURE LIKE REFUSÉE : " + error.message);
+      }
+    }
+
+    let reciprocal;
+    try {
+      reciprocal = await getDoc(
+        doc(db, "likes", profile.id + "_" + user.uid)
+      );
+    } catch (error) {
+      throw Error("LECTURE LIKE RÉCIPROQUE REFUSÉE : " + error.message);
+    }
+
+    let matched = false;
+
+    if (reciprocal.exists()) {
+      const members = [user.uid, profile.id].sort();
+      const matchRef = doc(
+        db, "matches", makeMatchId(user.uid, profile.id)
+      );
+
+      let existingMatch;
+      try {
+        existingMatch = await getDoc(matchRef);
+      } catch (error) {
+        throw Error("LECTURE MATCH REFUSÉE : " + error.message);
+      }
+
+      if (!existingMatch.exists()) {
+        try {
+          await setDoc(matchRef, {
+            members,
+            createdAt: serverTimestamp()
+          });
+        } catch (error) {
+          throw Error("ÉCRITURE MATCH REFUSÉE : " + error.message);
+        }
+      }
+
+      matched = true;
+    }
+
+    actionBusy = false;
+    await nextProfile();
+
+    notice(
+      matched
+        ? "💕 C'est un match ! Ouvre tes messages."
+        : "❤️ Like enregistré !"
+    );
+
+  } catch (error) {
+    console.error("Erreur LIKE Destinya :", error);
+    notice(
+      "Erreur LIKE : " +
+      (error.message || "Erreur inconnue")
+    );
+  } finally {
+    actionBusy = false;
+    $("likeButton").disabled = false;
+  }
 }
 
 window.saveRealLike = saveRealLike;
+ 
 
 /* =========================================
    RECUPERER LES MATCHS
