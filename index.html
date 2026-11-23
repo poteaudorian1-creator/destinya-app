@@ -1887,6 +1887,18 @@ if (
    if (item.id === user.uid) continue;
    if (profile.visible !== true) continue;
    if (typeof profile.age !== "number" || profile.age < 18) continue;
+   
+const ageMin = Number($("ageMin").value);
+const ageMax = Number($("ageMax").value);
+
+if (
+  ageMin > ageMax ||
+  profile.age < ageMin ||
+  profile.age > ageMax
+) {
+  continue;
+}
+   
    if (activeProfiles.some(p => p.id === item.id)) continue;
 
    activeProfiles.push({
