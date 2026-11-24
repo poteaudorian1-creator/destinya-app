@@ -661,6 +661,24 @@ function renderProfile(){
   `${p.name}, ${p.age} ans`;
  document.getElementById("profileBio").textContent=p.bio||"";
 
+const genres = {
+  femme: "Femme",
+  homme: "Homme"
+};
+
+const orientations = {
+  hetero: "Hétéro",
+  gay: "Gay",
+  lesbienne: "Lesbienne",
+  bi: "Bisexuel(le)"
+};
+
+document.getElementById("profileGenre").textContent =
+  "Genre : " + (genres[p.genre] || "Non renseigné");
+
+document.getElementById("profileOrientation").textContent =
+  "Orientation : " + (orientations[p.orientation] || "Non renseignée");
+ 
  const interests=document.getElementById("profileInterests");
  interests.replaceChildren();
 
