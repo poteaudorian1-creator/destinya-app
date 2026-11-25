@@ -2044,6 +2044,19 @@ if (
    
    if (activeProfiles.some(p => p.id === item.id)) continue;
 
+const [alreadyLiked, alreadyPassed] = await Promise.all([
+  getDoc(doc(
+    db, "likes", user.uid + "_" + item.id
+  )),
+  getDoc(doc(
+    db, "passes", user.uid, "profiles", item.id
+  ))
+]);
+
+if (alreadyLiked.exists() || alreadyPassed.exists()) {
+  continue;
+ }
+   
    activeProfiles.push({
     id: item.id,
     name: profile.pseudo || "Membre",
