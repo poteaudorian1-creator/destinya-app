@@ -2255,7 +2255,9 @@ async function saveRealLike(profile) {
     }
 
     actionBusy = false;
-    await nextProfile();
+    
+await nextProfile(true);
+   
 
     notice(
       matched
