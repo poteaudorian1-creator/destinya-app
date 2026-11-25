@@ -2271,6 +2271,38 @@ async function saveRealLike(profile) {
 window.saveRealLike = saveRealLike;
  
 
+window.saveRealPass = async function(profile) {
+  if (actionBusy || !profile) return false;
+
+  actionBusy = true;
+
+  try {
+    const user = await requireAdultProfile();
+
+    const passRef = doc(
+      db, "passes", user.uid,
+      "profiles", profile.id
+    );
+
+    const existing = await getDoc(passRef);
+
+    if (!existing.exists()) {
+      await setDoc(passRef, {
+        createdAt: serverTimestamp()
+      });
+    }
+
+    return true;
+
+  } catch (error) {
+    notice(errorText(error));
+    return false;
+
+  } finally {
+    actionBusy = false;
+  }
+};
+ 
 /* =========================================
    RECUPERER LES MATCHS
 ========================================= */
