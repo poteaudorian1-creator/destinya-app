@@ -694,9 +694,16 @@ document.getElementById("profileOrientation").textContent =
   "Un match apparaît lorsque deux membres se likent.";
 }
 
-async function nextProfile(){
+async function nextProfile(liked = false){
  if(!activeProfiles.length||actionBusy)return;
 
+ if (!liked && window.saveRealPass) {
+  const saved = await window.saveRealPass(
+    activeProfiles[profileIndex]
+  );
+  if (!saved) return;
+ }
+ 
  if(profileIndex+1<activeProfiles.length){
   profileIndex++;
   renderProfile();
