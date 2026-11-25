@@ -704,24 +704,23 @@ async function nextProfile(liked = false){
   if (!saved) return;
  }
  
- if(profileIndex+1<activeProfiles.length){
-  profileIndex++;
-  renderProfile();
-  return;
+ 
+ activeProfiles.splice(profileIndex, 1);
+
+ if (profileIndex >= activeProfiles.length) {
+  profileIndex = 0;
  }
 
- if(moreProfilesAvailable&&window.loadRealProfiles){
-  const previous=activeProfiles.length;
+ while (!activeProfiles.length && moreProfilesAvailable && window.loadRealProfiles) {
   await window.loadRealProfiles();
-  if(activeProfiles.length>previous){
-   profileIndex=previous;
-   renderProfile();
-  }else{
-   notice("Aucun autre profil disponible.");
-  }
- }else{
-  notice("Tu as parcouru tous les profils.");
  }
+
+ renderProfile();
+
+ if (!activeProfiles.length) {
+  notice("Aucun autre profil disponible.");
+ }
+ 
 }
 
 async function likeProfile(){
