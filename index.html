@@ -711,7 +711,7 @@ async function nextProfile(liked = false){
   profileIndex = 0;
  }
 
- while (!activeProfiles.length && moreProfilesAvailable && window.loadRealProfiles) {
+ if (!activeProfiles.length && moreProfilesAvailable && window.loadRealProfiles) {
   await window.loadRealProfiles();
  }
 
@@ -720,6 +720,7 @@ async function nextProfile(liked = false){
  if (!activeProfiles.length) {
   notice("Aucun autre profil disponible.");
  }
+ 
  
 }
 
