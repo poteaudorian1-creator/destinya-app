@@ -3170,52 +3170,85 @@ document.getElementById("detectLocation")
   );
 });
  
+
 let voiceStream = null;
+let voiceUser = null;
+let voiceBusy = false;
 
 $("startVoice").addEventListener("click", async () => {
- try {
-  await requireAdultProfile();
+ if (voiceBusy || voiceStream) return;
 
-  if (voiceStream) return;
+ voiceBusy = true;
+ $("startVoice").disabled = true;
+
+ try {
+  const user = await requireAdultProfile();
 
   voiceStream = await navigator.mediaDevices.getUserMedia({
    audio: true,
    video: false
   });
 
-  $("voiceStatus").textContent =
-   "Microphone activé";
+  voiceUser = user.uid;
 
-  $("startVoice").disabled = true;
+  await setDoc(doc(db, "voiceQueue", user.uid), {
+   preference: $("voiceGender").value,
+   updatedAt: serverTimestamp()
+  });
+
+  $("voiceStatus").textContent =
+   "🔎 Recherche d'un partenaire...";
+
   $("stopVoice").classList.remove("hidden");
+  $("nextVoice").classList.remove("hidden");
+  $("voiceGender").disabled = true;
 
-$("nextVoice").classList.remove("hidden");
-  
  } catch (error) {
+  await window.stopVoiceCall();
   $("voiceStatus").textContent =
-   "Impossible d'activer le microphone.";
+   "Erreur : " + error.message;
+ } finally {
+  voiceBusy = false;
+  $("startVoice").disabled = !!voiceStream;
  }
 });
 
-window.stopVoiceCall = function() {
+window.stopVoiceCall = async function() {
  if (voiceStream) {
   voiceStream.getTracks().forEach(track => track.stop());
   voiceStream = null;
  }
 
- $("startVoice").disabled = false;
+ try {
+  if (voiceUser) {
+   await deleteDoc(doc(db, "voiceQueue", voiceUser));
+  }
+ } catch (error) {
+  console.error(error);
+ }
+
+ voiceUser = null;
+
+ $("startVoice").disabled = voiceBusy;
+ $("voiceGender").disabled = false;
  $("stopVoice").classList.add("hidden");
- 
-$("nextVoice").classList.add("hidden");
- 
+ $("nextVoice").classList.add("hidden");
+
  $("voiceStatus").textContent =
   "Prêt à rencontrer quelqu'un";
 };
 
 $("stopVoice").addEventListener("click", window.stopVoiceCall);
 
+$("nextVoice").addEventListener("click", async () => {
+ if (voiceBusy) return;
+ await window.stopVoiceCall();
+ $("startVoice").click();
+});
+
 $("voicePage").querySelector("button.secondary")
  .addEventListener("click", window.stopVoiceCall);
+ 
  
 </script>
 </body>
