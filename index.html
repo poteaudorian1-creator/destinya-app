@@ -3189,6 +3189,8 @@ $("startVoice").addEventListener("click", async () => {
   $("startVoice").disabled = true;
   $("stopVoice").classList.remove("hidden");
 
+$("nextVoice").classList.remove("hidden");
+  
  } catch (error) {
   $("voiceStatus").textContent =
    "Impossible d'activer le microphone.";
