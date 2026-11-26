@@ -579,6 +579,44 @@ Retour aux messages
 </section>
 
 <p id="message" role="status" aria-live="polite"></p>
+ 
+<section id="voicePage" class="hidden">
+
+ <div style="background:linear-gradient(145deg,#ffa34d,#ff1681);border-radius:25px;padding:25px;color:white;text-align:center;">
+
+  <h2 style="color:white;">Destinya Voice</h2>
+
+  <p>Fais de nouvelles rencontres vocales</p>
+
+  <button id="startVoice"
+   style="width:180px;height:180px;border-radius:50%;border:8px solid white;background:linear-gradient(#ff994d,#ff1681);font-size:65px;margin:40px auto;">
+   📞
+  </button>
+
+  <h2 style="color:white;">Commence l'aventure !</h2>
+
+  <p>Avec qui souhaites-tu discuter ?</p>
+
+  <select id="voiceGender">
+   <option value="tous">⚥ Peu importe</option>
+   <option value="homme">♂ Homme</option>
+   <option value="femme">♀ Femme</option>
+  </select>
+
+  <p id="voiceStatus">Prêt à rencontrer quelqu'un</p>
+
+  <button id="stopVoice" class="hidden">
+   🔴 Raccrocher
+  </button>
+
+  <button class="secondary" onclick="showPage('account')">
+   ← Retour
+  </button>
+
+ </div>
+
+</section>
+ 
 </main>
 
 <script>
