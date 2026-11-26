@@ -3166,6 +3166,48 @@ document.getElementById("detectLocation")
   );
 });
  
+let voiceStream = null;
+
+$("startVoice").addEventListener("click", async () => {
+ try {
+  await requireAdultProfile();
+
+  if (voiceStream) return;
+
+  voiceStream = await navigator.mediaDevices.getUserMedia({
+   audio: true,
+   video: false
+  });
+
+  $("voiceStatus").textContent =
+   "Microphone activé";
+
+  $("startVoice").disabled = true;
+  $("stopVoice").classList.remove("hidden");
+
+ } catch (error) {
+  $("voiceStatus").textContent =
+   "Impossible d'activer le microphone.";
+ }
+});
+
+window.stopVoiceCall = function() {
+ if (voiceStream) {
+  voiceStream.getTracks().forEach(track => track.stop());
+  voiceStream = null;
+ }
+
+ $("startVoice").disabled = false;
+ $("stopVoice").classList.add("hidden");
+ $("voiceStatus").textContent =
+  "Prêt à rencontrer quelqu'un";
+};
+
+$("stopVoice").addEventListener("click", window.stopVoiceCall);
+
+$("voicePage").querySelector("button.secondary")
+ .addEventListener("click", window.stopVoiceCall);
+ 
 </script>
 </body>
 </html>
