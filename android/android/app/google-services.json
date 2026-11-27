@@ -62,6 +62,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562278259631:android:0e4f92978b3667ff072d5a",
+        "android_client_info": {
+          "package_name": "com.flirtrencontre.myapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "562278259631-2sfed2vedsu5vjakqp7n5v7j6kukb1fi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlTIfnwACRB9Eq6LLU4f4sJpel0F0xgSo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "562278259631-2sfed2vedsu5vjakqp7n5v7j6kukb1fi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
