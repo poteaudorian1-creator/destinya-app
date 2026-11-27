@@ -9,7 +9,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.destinya.app"
+        applicationId = "com.flirtrencontre.myapp"
         minSdk = 24
         targetSdk = 35
         versionCode = 4
